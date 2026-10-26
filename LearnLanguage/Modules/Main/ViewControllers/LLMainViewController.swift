@@ -273,6 +273,16 @@ final class LLMainViewController: NSViewController, SidebarViewControllerDelegat
         }
     }
     
+    func openLearningHome() {
+        _ = view
+        guard !isOverlayTransitioning else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in self?.openLearningHome() }
+            return
+        }
+        while !overlayStack.isEmpty { popOverlayPage(animated: false) }
+        sidebarVC.selectModule(.learning)
+    }
+
     // MARK: - SidebarViewControllerDelegate
     
     func sidebarViewController(_ vc: LLSidebarViewController, didSelectModule module: SidebarModule) {

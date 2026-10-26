@@ -1,409 +1,84 @@
-//
-//  LLDatabaseInitializer.swift
-//  LearnLanguage
-//
-//  数据库初始化管理器
-//  负责首次安装、版本检查和增量更新
-//
-
 import Foundation
 import WCDBSwift
 
 final class LLDatabaseInitializer {
-    
     static let shared = LLDatabaseInitializer()
-    
-    // 数据库版本号（自动跟随 App 版本号）
-    private var currentDBVersion: Int {
-        guard let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String,
-              let versionNumber = Int(version) else {
-            return 1 // 默认版本号
+    private let resourceOverride: URL?
+    private let localOverride: URL?
+    private let versionOverride: String?
+
+    init(resourceURL: URL? = nil, localURL: URL? = nil, version: String? = nil) {
+        resourceOverride = resourceURL
+        localOverride = localURL
+        versionOverride = version
+    }
+
+    private var localURL: URL {
+        localOverride ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("LearnLanguage.db")
+    }
+
+    private func resource() throws -> (url: URL, version: String) {
+        guard let url = resourceOverride ?? Bundle.main.url(forResource: "LearnLanguage", withExtension: "db") else {
+            throw NSError(domain: "LLDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "缺少初始词库，请重新安装完整应用。"])
         }
-        return versionNumber
+        if let versionOverride { return (url, versionOverride) }
+        if let manifestURL = Bundle.main.url(forResource: "dictionary-manifest", withExtension: "json"),
+           let object = try JSONSerialization.jsonObject(with: Data(contentsOf: manifestURL)) as? [String: Any],
+           let hash = object["sha256"] as? String { return (url, hash) }
+        return (url, LLBackupArchive.checksum(try Data(contentsOf: url, options: .mappedIfSafe)))
     }
-    
-    // 版本号存储key
-    private let versionKey = "database_version"
-    
-    // Resources 中的数据库文件名
-    private let resourceDBName = "LearnLanguage.db"
-    
-    // 本地数据库路径
-    private var localDBPath: String {
-        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        return documentPath + "/LearnLanguage.db"
-    }
-    
-    // Resources 中的数据库路径
-    private var resourceDBPath: String? {
-        return Bundle.main.path(forResource: "LearnLanguage", ofType: "db")
-    }
-    
-    private init() {}
-    
-    // MARK: - 公开方法
-    
-    /// 初始化数据库（在 App 启动时调用）
-    func initializeDatabase() {
-        LLLogger.info("\n" + String(repeating: "=", count: 60))
-        LLLogger.info("🗄️ 开始数据库初始化...")
-        LLLogger.info(String(repeating: "=", count: 60))
-        
-        let fileManager = FileManager.default
-        let localExists = fileManager.fileExists(atPath: localDBPath)
-        
-        if !localExists {
-            // 首次安装：直接复制数据库
-            LLLogger.info("📦 首次安装，复制数据库文件...")
-            copyDatabaseFromResources()
-            saveCurrentVersion()
-        } else {
-            // 检查版本号
-            let savedVersion = getSavedVersion()
-            LLLogger.info("📊 本地数据库版本：\(savedVersion)")
-            LLLogger.info("📊 资源数据库版本：\(currentDBVersion)")
-            
-            if savedVersion < currentDBVersion {
-                // 需要更新
-                LLLogger.info("🔄 检测到数据库更新，开始增量更新...")
-                performIncrementalUpdate(from: savedVersion, to: currentDBVersion)
-                saveCurrentVersion()
-            } else {
-                LLLogger.info("✅ 数据库已是最新版本")
-            }
-        }
-        
-        LLLogger.info(String(repeating: "=", count: 60))
-        LLLogger.info("✅ 数据库初始化完成")
-        LLLogger.info(String(repeating: "=", count: 60) + "\n")
-    }
-    
-    // MARK: - 私有方法
-    
-    /// 从 Resources 复制数据库到本地
-    private func copyDatabaseFromResources() {
-        guard let resourcePath = resourceDBPath else {
-            LLLogger.error("❌ 错误：找不到 Resources 中的数据库文件")
-            return
-        }
-        
-        let fileManager = FileManager.default
-        
+
+    @discardableResult
+    func initializeDatabase(forceUpdate: Bool = false) -> Bool {
         do {
-            // 如果本地已存在，先删除（包括 WAL 相关文件）
-            if fileManager.fileExists(atPath: localDBPath) {
-                try fileManager.removeItem(atPath: localDBPath)
-            }
-            
-            // 删除可能存在的 WAL 和 SHM 文件
-            let walPath = localDBPath + "-wal"
-            let shmPath = localDBPath + "-shm"
-            if fileManager.fileExists(atPath: walPath) {
-                try? fileManager.removeItem(atPath: walPath)
-            }
-            if fileManager.fileExists(atPath: shmPath) {
-                try? fileManager.removeItem(atPath: shmPath)
-            }
-            
-            // 复制文件
-            try fileManager.copyItem(atPath: resourcePath, toPath: localDBPath)
-            
-            // 设置文件为可读写
-            try fileManager.setAttributes([.posixPermissions: 0o666], ofItemAtPath: localDBPath)
-            
-            LLLogger.info("✅ 数据库文件复制成功")
-            LLLogger.info("   源路径：\(resourcePath)")
-            LLLogger.info("   目标路径：\(localDBPath)")
-            
+            try prepareDatabase(at: localURL, forceUpdate: forceUpdate)
+            return true
         } catch {
-            LLLogger.error("❌ 复制数据库文件失败：\(error)")
+            LLLogger.error("数据库准备失败，将在下次启动重试：\(error)")
+            return false
         }
     }
-    
-    /// 执行增量更新
-    private func performIncrementalUpdate(from oldVersion: Int, to newVersion: Int) {
-        guard let resourcePath = resourceDBPath else {
-            LLLogger.error("❌ 错误：找不到 Resources 中的数据库文件")
-            return
+
+    /// Also prepares restored databases in a staging directory, before live files change.
+    func prepareDatabase(at destination: URL, forceUpdate: Bool = false) throws {
+        let source = try resource()
+        let fm = FileManager.default
+        if !fm.fileExists(atPath: destination.path) {
+            try fm.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+            let staged = destination.deletingLastPathComponent().appendingPathComponent(".initial-\(UUID().uuidString).db")
+            defer { try? fm.removeItem(at: staged) }
+            try LLSQLiteConnection.snapshot(from: source.url, to: staged, immutableSource: true)
+            try LLSQLiteConnection.validateDatabase(at: staged)
+            try LLContentMigrator.migrate(local: staged, resource: source.url, version: source.version, copiedFromResource: true)
+            try fm.moveItem(at: staged, to: destination)
+        } else {
+            let savedVersion = try LLContentMigrator.version(at: destination)
+            if forceUpdate || savedVersion != source.version {
+                try LLSQLiteConnection.validateDatabase(at: destination)
+                try LLContentMigrator.migrate(local: destination, resource: source.url, version: source.version)
+            }
         }
-        
+    }
+
+    @discardableResult
+    func forceReinitialize() -> Bool {
+        let fm = FileManager.default
+        let temporary = fm.temporaryDirectory.appendingPathComponent("LLReset-\(UUID().uuidString)", isDirectory: true)
         do {
-            // 打开本地数据库
-            let localDB = Database(withPath: localDBPath)
-            
-            // 打开资源数据库
-            let resourceDB = Database(withPath: resourcePath)
-            
-            LLLogger.info("\n📝 开始增量更新...")
-            
-            // 1. 更新分类
-            try updateCategories(from: resourceDB, to: localDB)
-            
-            // 2. 更新词库列表
-            try updateWordLists(from: resourceDB, to: localDB)
-            
-            // 3. 更新单词数据
-            try updateWords(from: resourceDB, to: localDB)
-            
-            LLLogger.info("✅ 增量更新完成\n")
-            
+            try fm.createDirectory(at: temporary, withIntermediateDirectories: true)
+            defer { try? fm.removeItem(at: temporary) }
+            let snapshot = temporary.appendingPathComponent("LearnLanguage.db")
+            try prepareDatabase(at: snapshot)
+            try LLFileReplacementTransaction.install(["LearnLanguage.db": snapshot], in: localURL.deletingLastPathComponent(), managedPaths: ["LearnLanguage.db", "LearnLanguage.db-wal", "LearnLanguage.db-shm"])
+            return true
         } catch {
-            LLLogger.error("❌ 增量更新失败：\(error)")
+            LLLogger.error("重置数据库失败，保留原有数据：\(error)")
+            return false
         }
     }
-    
-    /// 更新分类数据
-    private func updateCategories(from sourceDB: Database, to targetDB: Database) throws {
-        LLLogger.info("\n📂 更新分类数据...")
-        
-        let tableName = "categories"
-        
-        // 获取资源数据库中的所有分类
-        let sourceCategories: [LLDBWordListCategory] = try sourceDB.getObjects(
-            on: LLDBWordListCategory.Properties.all,
-            fromTable: tableName
-        )
-        
-        // 获取本地数据库中已有的分类名称
-        let existingCategories: [LLDBWordListCategory] = try targetDB.getObjects(
-            on: LLDBWordListCategory.Properties.all,
-            fromTable: tableName
-        )
-        let existingNames = Set(existingCategories.map { $0.name })
-        
-        // 筛选出新增的分类
-        let newCategories = sourceCategories.filter { !existingNames.contains($0.name) }
-        
-        if !newCategories.isEmpty {
-            try targetDB.insert(objects: newCategories, intoTable: tableName)
-            LLLogger.info("   ✅ 新增 \(newCategories.count) 个分类")
-            for category in newCategories {
-                LLLogger.info("      - \(category.name)")
-            }
-        } else {
-            LLLogger.info("   ⏭️ 没有新增分类")
-        }
-    }
-    
-    /// 更新词库列表数据
-    private func updateWordLists(from sourceDB: Database, to targetDB: Database) throws {
-        LLLogger.info("\n📚 更新词库列表...")
-        
-        let tableName = "word_lists"
-        
-        // 获取资源数据库中的所有词库
-        let sourceWordLists: [LLDBWordList] = try sourceDB.getObjects(
-            on: LLDBWordList.Properties.all,
-            fromTable: tableName
-        )
-        
-        // 获取本地数据库中已有的词库 categoryId
-        let existingWordLists: [LLDBWordList] = try targetDB.getObjects(
-            on: LLDBWordList.Properties.all,
-            fromTable: tableName
-        )
-        let existingIds = Set(existingWordLists.compactMap { $0.categoryId })
-        
-        // 筛选出新增的词库（根据 categoryId 判断）
-        let newWordLists = sourceWordLists.filter { wordList in
-            guard let categoryId = wordList.categoryId else { return false }
-            return !existingIds.contains(categoryId)
-        }
-        
-        if !newWordLists.isEmpty {
-            // 重置 id 为 nil，让数据库自动分配
-            for wordList in newWordLists {
-                wordList.id = nil
-            }
-            
-            try targetDB.insert(objects: newWordLists, intoTable: tableName)
-            LLLogger.info("   ✅ 新增 \(newWordLists.count) 个词库")
-            
-            // 显示前10个
-            for (index, wordList) in newWordLists.prefix(10).enumerated() {
-                LLLogger.info("      \(index + 1). \(wordList.name) (\(wordList.totalWords) 词)")
-            }
-            if newWordLists.count > 10 {
-                LLLogger.info("      ... 还有 \(newWordLists.count - 10) 个词库")
-            }
-        } else {
-            LLLogger.info("   ⏭️ 没有新增词库")
-        }
-    }
-    
-    /// 更新单词数据
-    private func updateWords(from sourceDB: Database, to targetDB: Database) throws {
-        LLLogger.info("\n📖 更新单词数据...")
-        
-        let wordListTable = "word_lists"
-        let wordsTable = "words"
-        
-        // 获取本地数据库中的所有词库
-        let localWordLists: [LLDBWordList] = try targetDB.getObjects(
-            on: LLDBWordList.Properties.all,
-            fromTable: wordListTable
-        )
-        
-        // 获取资源数据库中的所有词库
-        let sourceWordLists: [LLDBWordList] = try sourceDB.getObjects(
-            on: LLDBWordList.Properties.all,
-            fromTable: wordListTable
-        )
-        
-        // 创建 categoryId 到 id 的映射
-        var sourceCategoryToId: [Int: Int] = [:]
-        for wordList in sourceWordLists {
-            if let categoryId = wordList.categoryId, let id = wordList.id {
-                sourceCategoryToId[categoryId] = id
-            }
-        }
-        
-        var totalNewWords = 0
-        var updatedWordListCount = 0
-        var syncedExistingRows = 0
-        
-        // 遍历本地词库，检查是否需要导入单词
-        for localWordList in localWordLists {
-            guard let localId = localWordList.id,
-                  let categoryId = localWordList.categoryId,
-                  let sourceId = sourceCategoryToId[categoryId] else {
-                continue
-            }
-            
-            // 检查本地词库是否已有单词
-            let localWordCount = try targetDB.getValue(
-                on: LLDBWord.Properties.id.count(),
-                fromTable: wordsTable,
-                where: LLDBWord.Properties.wordListId == localId
-            ).int32Value
-            
-            // 如果本地没有单词，从资源数据库导入
-            if localWordCount == 0 {
-                // 从资源数据库获取单词
-                let sourceWords: [LLDBWord] = try sourceDB.getObjects(
-                    on: LLDBWord.Properties.all,
-                    fromTable: wordsTable,
-                    where: LLDBWord.Properties.wordListId == sourceId
-                )
-                
-                if !sourceWords.isEmpty {
-                    // 更新 wordListId 为本地 id，并重置 id
-                    for word in sourceWords {
-                        word.id = nil
-                        word.wordListId = localId
-                    }
-                    
-                    // 插入到本地数据库
-                    try targetDB.insert(objects: sourceWords, intoTable: wordsTable)
-                    
-                    totalNewWords += sourceWords.count
-                    updatedWordListCount += 1
-                    
-                    if updatedWordListCount <= 5 {
-                        LLLogger.info("   ✅ \(localWordList.name): 导入 \(sourceWords.count) 个单词")
-                    }
-                }
-            } else {
-                let sourceWords: [LLDBWord] = try sourceDB.getObjects(
-                    on: LLDBWord.Properties.all,
-                    fromTable: wordsTable,
-                    where: LLDBWord.Properties.wordListId == sourceId
-                )
-                let localWords: [LLDBWord] = try targetDB.getObjects(
-                    on: LLDBWord.Properties.all,
-                    fromTable: wordsTable,
-                    where: LLDBWord.Properties.wordListId == localId
-                )
-                
-                var localWordMap: [String: LLDBWord] = [:]
-                for word in localWords {
-                    localWordMap[word.word.lowercased()] = word
-                }
-                
-                for sourceWord in sourceWords {
-                    let key = sourceWord.word.lowercased()
-                    guard let localWord = localWordMap[key],
-                          let localRowId = localWord.id else {
-                        continue
-                    }
-                    
-                    let sourceUS = sourceWord.usPhonetic?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let sourceUK = sourceWord.ukPhonetic?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let localUS = localWord.usPhonetic?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let localUK = localWord.ukPhonetic?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    let shouldUpdateUS = !(sourceUS ?? "").isEmpty && sourceUS != localUS
-                    let shouldUpdateUK = !(sourceUK ?? "").isEmpty && sourceUK != localUK
-                    
-                    guard shouldUpdateUS || shouldUpdateUK else {
-                        continue
-                    }
-                    
-                    localWord.usPhonetic = shouldUpdateUS ? sourceUS : localWord.usPhonetic
-                    localWord.ukPhonetic = shouldUpdateUK ? sourceUK : localWord.ukPhonetic
-                    
-                    try targetDB.update(
-                        table: wordsTable,
-                        on: LLDBWord.Properties.usPhonetic,
-                        LLDBWord.Properties.ukPhonetic,
-                        with: localWord,
-                        where: LLDBWord.Properties.id == localRowId
-                    )
-                    syncedExistingRows += 1
-                }
-            }
-        }
-        
-        if totalNewWords > 0 {
-            LLLogger.info("   ✅ 共为 \(updatedWordListCount) 个词库导入了 \(totalNewWords) 个单词")
-        } else {
-            LLLogger.info("   ⏭️ 没有需要导入的单词")
-        }
-        
-        if syncedExistingRows > 0 {
-            LLLogger.info("   🔄 同步更新了 \(syncedExistingRows) 条已有单词音标")
-        } else {
-            LLLogger.info("   ⏭️ 没有需要同步的已有单词音标")
-        }
-    }
-    
-    // MARK: - 版本管理
-    
-    /// 获取已保存的数据库版本号
-    private func getSavedVersion() -> Int {
-        return UserDefaults.standard.integer(forKey: versionKey)
-    }
-    
-    /// 保存当前数据库版本号
-    private func saveCurrentVersion() {
-        UserDefaults.standard.set(currentDBVersion, forKey: versionKey)
-        UserDefaults.standard.synchronize()
-        LLLogger.info("💾 已保存数据库版本号：\(currentDBVersion)")
-    }
-    
-    // MARK: - 工具方法
-    
-    /// 强制重新初始化数据库（用于测试）
-    func forceReinitialize() {
-        LLLogger.warn("\n⚠️ 强制重新初始化数据库...")
-        
-        let fileManager = FileManager.default
-        
-        // 删除本地数据库
-        if fileManager.fileExists(atPath: localDBPath) {
-            try? fileManager.removeItem(atPath: localDBPath)
-            LLLogger.info("   🗑️ 已删除本地数据库")
-        }
-        
-        // 清除版本号
-        UserDefaults.standard.removeObject(forKey: versionKey)
-        UserDefaults.standard.synchronize()
-        LLLogger.info("   🗑️ 已清除版本号")
-        
-        // 重新初始化
-        initializeDatabase()
-    }
-    
+
+    private func getSavedVersion() -> String { (try? LLContentMigrator.version(at: localURL)) ?? "未完成升级" }
+
     /// 获取数据库统计信息
     func getDatabaseStats() {
         do {

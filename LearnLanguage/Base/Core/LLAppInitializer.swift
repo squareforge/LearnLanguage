@@ -9,6 +9,7 @@
 import Foundation
 import AppKit
 import UserNotifications
+import WCDBSwift
 
 final class LLAppInitializer {
     
@@ -19,9 +20,19 @@ final class LLAppInitializer {
     // MARK: - 公开方法
     
     /// 执行应用启动时的所有初始化操作
-    func performStartupInitialization() {
+    func performStartupInitialization() -> Bool {
         // 0. 初始化日志系统（最优先）
         LLLogger.setup()
+        do {
+            let root = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            try LLFileReplacementTransaction.recoverIfNeeded(in: root, managedPaths: LLBackupArchive.managedPaths)
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "数据恢复尚未完成"
+            alert.informativeText = error.localizedDescription
+            alert.runModal()
+            return false
+        }
         
         LLLogger.info("\n" + String(repeating: "=", count: 60))
         LLLogger.info("🚀 开始应用初始化...")
@@ -31,7 +42,13 @@ final class LLAppInitializer {
         initializeMMKV()
         
         // 2. 初始化数据库（首次安装或版本更新）
-        initializeDatabase()
+        guard initializeDatabase() else {
+            let alert = NSAlert()
+            alert.messageText = "学习数据暂时无法打开"
+            alert.informativeText = "词库准备失败，原有进度已保留。请检查磁盘空间并重新启动应用。"
+            alert.runModal()
+            return false
+        }
         
         // 3. 初始化键盘快捷键
         initializeKeyboardShortcuts()
@@ -52,6 +69,7 @@ final class LLAppInitializer {
         LLLogger.info(String(repeating: "=", count: 60))
         LLLogger.info("✅ 应用初始化完成")
         LLLogger.info(String(repeating: "=", count: 60) + "\n")
+        return true
     }
     
     // MARK: - 私有初始化方法
@@ -64,17 +82,18 @@ final class LLAppInitializer {
     }
     
     /// 初始化数据库
-    private func initializeDatabase() {
+    private func initializeDatabase() -> Bool {
         LLLogger.info("\n🗄️ 初始化数据库...")
         
         // 1. 先初始化数据库文件（复制、版本检查等）
-        LLDatabaseInitializer.shared.initializeDatabase()
+        guard LLDatabaseInitializer.shared.initializeDatabase() else { return false }
         
         // 2. 然后打开数据库连接
-        LLDatabaseManager.shared.openDatabase()
+        guard LLDatabaseManager.shared.openDatabase() else { return false }
         
         // 3. 最后打印数据库统计信息
         LLDatabaseInitializer.shared.getDatabaseStats()
+        return true
     }
     
     /// 初始化键盘快捷键
@@ -132,13 +151,23 @@ final class LLAppInitializer {
     /// 执行重置（清除所有数据并重新初始化数据库）
     func performReset() {
         LLLogger.warn("\n⚠️ 开始重置所有数据...")
+        LLPracticePanelController.shared.hide()
+        LLPronunciationManager.shared.stop()
         
         LLDatabaseManager.shared.closeDatabase()
-        LLDatabaseInitializer.shared.forceReinitialize()
+        guard LLDatabaseInitializer.shared.forceReinitialize() else {
+            LLDatabaseManager.shared.openDatabase()
+            showNotification(title: "重置失败", message: "原有数据已保留，请重试")
+            return
+        }
         clearLearningRecords()
         clearSettings()
         LLDatabaseManager.shared.openDatabase()
         setRandomDefaultWordList()
+        LLDailyLearningManager.shared.invalidate()
+        LLPracticePanelController.shared.resetAfterDataChange()
+        LLWordEntry.invalidateExampleCache()
+        notifyLearningDataChanged()
         
         LLLogger.info("✅ 重置完成")
         showNotification(title: "重新初始化完成", message: "所有数据已重置")
@@ -196,6 +225,12 @@ final class LLAppInitializer {
         do {
             let db = LLDatabaseManager.shared
             var lines: [String] = []
+            let databaseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("LearnLanguage.db")
+            try LLSQLiteConnection.validateDatabase(at: databaseURL)
+            let connection = try LLSQLiteConnection(url: databaseURL, readOnly: true)
+            let integrity = try connection.query("PRAGMA integrity_check")
+            guard integrity.count == 1, integrity.first?.values.first == "ok" else { throw BackupError.invalidFile }
+            lines.append("SQLite 完整性检查：通过")
             
             // 检查分类数量
             let categories = try db.getAllCategories()
@@ -263,8 +298,22 @@ final class LLAppInitializer {
         alert.addButton(withTitle: "取消")
         
         if alert.runModal() == .alertFirstButtonReturn {
+            LLPracticePanelController.shared.hide()
+            LLPronunciationManager.shared.stop()
             // 强制重新初始化数据库（增量更新）
-            LLDatabaseInitializer.shared.initializeDatabase()
+            let database = LLDatabaseManager.shared.database
+            var success = false
+            database?.close(onClosed: {
+                success = LLDatabaseInitializer.shared.initializeDatabase(forceUpdate: true)
+            })
+            guard success else {
+                showNotification(title: "修复未完成", message: "原有数据已保留，请检查磁盘空间后重试")
+                return
+            }
+            LLDailyLearningManager.shared.invalidate()
+            LLPracticePanelController.shared.resetAfterDataChange()
+            LLWordEntry.invalidateExampleCache()
+            notifyLearningDataChanged()
             
             // 检查修复结果
             checkDatabaseIntegrity()
@@ -273,6 +322,12 @@ final class LLAppInitializer {
         }
     }
     
+    private func notifyLearningDataChanged() {
+        for name in [Notification.Name.learnLanguageCurrentListChanged, .learnLanguageRefreshStatus, .learnLanguageReloadWordLists, .learningPracticeProgressChanged, .floatingPanelSettingsChanged] {
+            NotificationCenter.default.post(name: name, object: nil)
+        }
+    }
+
     /// 导出数据库统计信息
     func exportDatabaseStats() -> String {
         var stats = "LearnLanguage 数据库统计\n"

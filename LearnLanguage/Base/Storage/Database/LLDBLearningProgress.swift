@@ -45,6 +45,12 @@ final class LLDBLearningProgress: TableCodable {
     var updatedAt: TimeInterval? = nil      // 更新时间
     
     // WCDB 必需的属性
+    var isAutoIncrement: Bool { id == nil }
+    var lastInsertedRowID: Int64 {
+        get { Int64(id ?? 0) }
+        set { id = Int(exactly: newValue) }
+    }
+
     enum CodingKeys: String, CodingTableKey {
         typealias Root = LLDBLearningProgress
         static let objectRelationalMapping = TableBinding(CodingKeys.self)

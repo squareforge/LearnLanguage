@@ -1,248 +1,126 @@
-//
-//  LLBackupManager.swift
-//  LearnLanguage
-//
-//  数据备份与恢复管理器
-//  使用 AES-256-GCM 加密，导出格式为 .llbak，只有本软件可以解析
-//
-
 import Foundation
 import CryptoKit
 import MMKV
-
-// MARK: - 错误类型
-
-enum BackupError: Error {
-    case invalidFile
-    case unsupportedVersion
-    case decryptionFailed
-}
-
-// MARK: - LLBackupManager
+import WCDBSwift
 
 final class LLBackupManager {
-
     static let shared = LLBackupManager()
+    static let fileExtension = "llbak"
+    private let queue = DispatchQueue(label: "com.learnlanguage.backup", qos: .userInitiated)
     private init() {}
 
-    static let fileExtension = "llbak"
-
-    // 文件魔数 "LLBK"
-    private static let magic: [UInt8] = [0x4C, 0x4C, 0x42, 0x4B]
-    private static let formatVersion: UInt8 = 1
-
+    // Retained solely for compatibility with existing .llbak files, not a user-specific secret.
     private var symmetricKey: SymmetricKey {
         let bundleId = Bundle.main.bundleIdentifier ?? "com.ruijia.LearnLanguage"
-        let salt = "LearnLanguage.BackupKey.v1.@ruijia#2026"
-        let material = (bundleId + salt).data(using: .utf8)!
-        let hash = SHA256.hash(data: material)
-        return SymmetricKey(data: hash)
+        let material = Data((bundleId + "LearnLanguage.BackupKey.v1.@ruijia#2026").utf8)
+        return SymmetricKey(data: SHA256.hash(data: material))
+    }
+    private var documentsURL: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }
+
+    private func report(_ value: Double, to progress: ((Double) -> Void)?) {
+        DispatchQueue.main.async { progress?(value) }
     }
 
-    private var documentsURL: URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    }
-
-    private let filesToBackup = [
-        "LearnLanguage.db",
-        "LearnLanguage.db-shm",
-        "LearnLanguage.db-wal",
-        "mmkv/mmkv.default",
-        "mmkv/mmkv.default.crc"
-    ]
-
-    // MARK: - 导出备份
-
-    private func reportProgress(_ value: Double, progress: ((Double) -> Void)?) {
-        guard let progress else { return }
-        DispatchQueue.main.async {
-            progress(value)
-        }
-    }
-
-    func exportBackup(to destinationURL: URL,
-                      progress: ((Double) -> Void)? = nil,
-                      completion: @escaping (String?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+    func exportBackup(to destinationURL: URL, progress: ((Double) -> Void)? = nil, completion: @escaping (String?) -> Void) {
+        queue.async {
             do {
-                self.reportProgress(0.05, progress: progress)
-                let packed = try self.packFiles { p in self.reportProgress(0.05 + p * 0.55, progress: progress) }
-                self.reportProgress(0.6, progress: progress)
-                let encrypted = try self.encrypt(packed)
-                self.reportProgress(0.8, progress: progress)
-                let output = self.buildFileData(encrypted)
-                try output.write(to: destinationURL)
-                self.reportProgress(1.0, progress: progress)
-                LLLogger.info("✅ 备份成功：\(destinationURL.lastPathComponent)，大小：\(output.count / 1024) KB")
+                let staging = try self.makeStagingDirectory()
+                defer { try? FileManager.default.removeItem(at: staging) }
+                self.report(0.05, to: progress)
+                let snapshot = staging.appendingPathComponent(LLBackupArchive.databasePath)
+                try LLSQLiteConnection.snapshot(from: self.documentsURL.appendingPathComponent(LLBackupArchive.databasePath), to: snapshot)
+                try LLSQLiteConnection.validateDatabase(at: snapshot)
+                let settings = staging.appendingPathComponent("mmkv", isDirectory: true)
+                try FileManager.default.createDirectory(at: settings, withIntermediateDirectories: true)
+                let backedUp = LLMMKVManager.shared.withExclusiveStorageAccess {
+                    MMKV.backup(mmapID: "mmkv.default", rootPath: nil, dstDir: settings.path)
+                }
+                guard backedUp else { throw BackupError.storageUnavailable }
+                self.report(0.5, to: progress)
+                var files: [String: Data] = [:]
+                for path in LLBackupArchive.requiredPaths {
+                    files[path] = try Data(contentsOf: staging.appendingPathComponent(path))
+                }
+                let packed = try LLBackupArchive.encode(files)
+                guard let encrypted = try AES.GCM.seal(packed, using: self.symmetricKey).combined else { throw BackupError.decryptionFailed }
+                self.report(0.85, to: progress)
+                try LLBackupArchive.envelope(encrypted).write(to: destinationURL, options: .atomic)
+                self.report(1, to: progress)
                 DispatchQueue.main.async { completion(nil) }
             } catch {
-                LLLogger.error("❌ 备份失败：\(error)")
+                LLLogger.error("备份失败：\(error)")
                 DispatchQueue.main.async { completion("备份失败：\(error.localizedDescription)") }
             }
         }
     }
 
-    // MARK: - 恢复备份
-
-    func restoreBackup(from sourceURL: URL,
-                       progress: ((Double) -> Void)? = nil,
-                       completion: @escaping (String?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+    func restoreBackup(from sourceURL: URL, progress: ((Double) -> Void)? = nil, completion: @escaping (String?) -> Void) {
+        queue.async {
             do {
-                let fileData = try Data(contentsOf: sourceURL)
-                self.reportProgress(0.1, progress: progress)
-                let encrypted = try self.parseFileData(fileData)
-                self.reportProgress(0.2, progress: progress)
-                let packed = try self.decrypt(encrypted)
-                self.reportProgress(0.4, progress: progress)
-                DispatchQueue.main.sync {
-                    LLDatabaseManager.shared.closeDatabase()
-                    MMKV.default()?.clearAll()
+                let envelope = try LLBackupArchive.parseEnvelope(Data(contentsOf: sourceURL, options: .mappedIfSafe))
+                let packed: Data
+                do { packed = try AES.GCM.open(AES.GCM.SealedBox(combined: envelope.encrypted), using: self.symmetricKey) }
+                catch { throw BackupError.decryptionFailed }
+                let files = try LLBackupArchive.decode(packed, version: envelope.version)
+                self.report(0.25, to: progress)
+                let staging = try self.makeStagingDirectory()
+                defer { try? FileManager.default.removeItem(at: staging) }
+                for (path, data) in files where path != "LearnLanguage.db-shm" {
+                    let target = staging.appendingPathComponent(path)
+                    try FileManager.default.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
+                    try data.write(to: target)
                 }
-                self.reportProgress(0.5, progress: progress)
-                try self.unpackFiles(from: packed) { p in self.reportProgress(0.5 + p * 0.4, progress: progress) }
-                self.reportProgress(0.9, progress: progress)
-                DispatchQueue.main.sync {
+                let normalized = staging.appendingPathComponent("normalized.db")
+                // Normalize legacy WAL backups into a standalone, validated database.
+                try LLSQLiteConnection.snapshot(from: staging.appendingPathComponent(LLBackupArchive.databasePath), to: normalized)
+                try LLSQLiteConnection.validateDatabase(at: normalized)
+                try LLDatabaseInitializer.shared.prepareDatabase(at: normalized)
+                let stagedDatabase = LLDatabaseManager(path: normalized.path)
+                guard stagedDatabase.openDatabase() else { throw BackupError.invalidFile }
+                stagedDatabase.closeDatabase()
+                let ready = staging.appendingPathComponent("ready.db")
+                try LLSQLiteConnection.snapshot(from: normalized, to: ready)
+                try LLSQLiteConnection.validateDatabase(at: ready)
+                let settings = staging.appendingPathComponent("mmkv", isDirectory: true)
+                guard MMKV.isFileValid(for: "mmkv.default", rootPath: settings.path) else { throw BackupError.invalidFile }
+                self.report(0.65, to: progress)
+                var replacements = Dictionary(uniqueKeysWithValues: LLBackupArchive.requiredPaths.map { ($0, staging.appendingPathComponent($0)) })
+                replacements[LLBackupArchive.databasePath] = ready
+                // Existing learning operations run on main. WCDB blocks any other handles while files change.
+                try DispatchQueue.main.sync {
+                    LLPracticePanelController.shared.hide()
+                    LLPronunciationManager.shared.stop()
+                    try LLMMKVManager.shared.withExclusiveStorageAccess {
+                        MMKV.default()?.close()
+                        defer { _ = MMKV.default() }
+                        guard let database = LLDatabaseManager.shared.database else { throw BackupError.storageUnavailable }
+                        try database.close(onClosed: {
+                            try LLFileReplacementTransaction.install(replacements, in: self.documentsURL, managedPaths: LLBackupArchive.managedPaths) {
+                                try LLSQLiteConnection.validateDatabase(at: self.documentsURL.appendingPathComponent(LLBackupArchive.databasePath))
+                            }
+                        })
+                    }
                     LLDatabaseManager.shared.reopenDatabase()
+                    LLDailyLearningManager.shared.invalidate()
+                    LLPracticePanelController.shared.resetAfterDataChange()
+                    LLWordEntry.invalidateExampleCache()
+                    NotificationCenter.default.post(name: .learnLanguageCurrentListChanged, object: nil)
+                    NotificationCenter.default.post(name: .floatingPanelSettingsChanged, object: nil)
+                    NotificationCenter.default.post(name: .learnLanguageRefreshStatus, object: nil)
+                    NotificationCenter.default.post(name: .learnLanguageReloadWordLists, object: nil)
                 }
-                self.reportProgress(1.0, progress: progress)
-                LLLogger.info("✅ 恢复成功")
+                self.report(1, to: progress)
                 DispatchQueue.main.async { completion(nil) }
-            } catch BackupError.invalidFile {
-                DispatchQueue.main.async { completion("文件格式不正确，请选择由本软件导出的 .llbak 备份文件") }
-            } catch BackupError.decryptionFailed {
-                DispatchQueue.main.async { completion("文件解密失败，备份文件可能已损坏") }
-            } catch BackupError.unsupportedVersion {
-                DispatchQueue.main.async { completion("备份文件版本不支持，请使用最新版本的软件") }
             } catch {
-                LLLogger.error("❌ 恢复失败：\(error)")
+                LLLogger.error("恢复失败：\(error)")
                 DispatchQueue.main.async { completion("恢复失败：\(error.localizedDescription)") }
             }
         }
     }
 
-    // MARK: - 打包 / 解包
-
-    // 格式：[文件数(4B大端)] + N×[路径长(2B大端)+路径(UTF-8)+数据长(8B大端)+数据]
-    private func packFiles(progress: ((Double) -> Void)? = nil) throws -> Data {
-        let fm = FileManager.default
-        var items: [(path: String, data: Data)] = []
-        for rel in filesToBackup {
-            let url = documentsURL.appendingPathComponent(rel)
-            guard fm.fileExists(atPath: url.path), let data = try? Data(contentsOf: url) else { continue }
-            items.append((rel, data))
-            LLLogger.info("📦 打包：\(rel) (\(data.count / 1024) KB)")
-        }
-        var result = Data()
-        var count = UInt32(items.count).bigEndian
-        withUnsafeBytes(of: &count) { result.append(contentsOf: $0) }
-        for (i, item) in items.enumerated() {
-            let pathBytes = item.path.data(using: .utf8)!
-            var pathLen = UInt16(pathBytes.count).bigEndian
-            withUnsafeBytes(of: &pathLen) { result.append(contentsOf: $0) }
-            result.append(pathBytes)
-            var dataLen = UInt64(item.data.count).bigEndian
-            withUnsafeBytes(of: &dataLen) { result.append(contentsOf: $0) }
-            result.append(item.data)
-            progress?(Double(i + 1) / Double(items.count))
-        }
-        return result
-    }
-
-    private func unpackFiles(from data: Data, progress: ((Double) -> Void)? = nil) throws {
-        let fm = FileManager.default
-        var offset = 0
-
-        func read(_ n: Int) throws -> Data {
-            guard offset + n <= data.count else { throw BackupError.invalidFile }
-            let s = data.subdata(in: offset..<offset + n)
-            offset += n
-            return s
-        }
-
-        let countBytes = try read(4)
-        let fileCount = Int(UInt32(bigEndian: countBytes.withUnsafeBytes { $0.load(as: UInt32.self) }))
-
-        for i in 0..<fileCount {
-            let pathLenBytes = try read(2)
-            let pathLen = Int(UInt16(bigEndian: pathLenBytes.withUnsafeBytes { $0.load(as: UInt16.self) }))
-            let pathData = try read(pathLen)
-            guard let relativePath = String(data: pathData, encoding: .utf8) else { throw BackupError.invalidFile }
-            let dataLenBytes = try read(8)
-            let dataLen = Int(UInt64(bigEndian: dataLenBytes.withUnsafeBytes { $0.load(as: UInt64.self) }))
-            let fileData = try read(dataLen)
-
-            let destURL = documentsURL.appendingPathComponent(relativePath)
-            try fm.createDirectory(at: destURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            if fm.fileExists(atPath: destURL.path) { try fm.removeItem(at: destURL) }
-            try fileData.write(to: destURL)
-            LLLogger.info("📂 恢复：\(relativePath) (\(dataLen / 1024) KB)")
-            progress?(Double(i + 1) / Double(fileCount))
-        }
-    }
-
-    // MARK: - 加密 / 解密
-
-    private func encrypt(_ data: Data) throws -> Data {
-        do {
-            let box = try AES.GCM.seal(data, using: symmetricKey)
-            guard let combined = box.combined else { throw BackupError.decryptionFailed }
-            return combined
-        } catch {
-            throw BackupError.decryptionFailed
-        }
-    }
-
-    private func decrypt(_ data: Data) throws -> Data {
-        do {
-            let box = try AES.GCM.SealedBox(combined: data)
-            return try AES.GCM.open(box, using: symmetricKey)
-        } catch {
-            throw BackupError.decryptionFailed
-        }
-    }
-
-    // MARK: - 文件头构建 / 解析
-
-    // 文件头格式：[魔数(4B)] + [版本(1B)] + [加密数据长度(8B大端)] + [加密数据]
-    private func buildFileData(_ encrypted: Data) -> Data {
-        var result = Data()
-        result.append(contentsOf: LLBackupManager.magic)
-        result.append(LLBackupManager.formatVersion)
-        var len = UInt64(encrypted.count).bigEndian
-        withUnsafeBytes(of: &len) { result.append(contentsOf: $0) }
-        result.append(encrypted)
-        return result
-    }
-
-    private func parseFileData(_ data: Data) throws -> Data {
-        var offset = 0
-
-        func read(_ n: Int) throws -> Data {
-            guard offset + n <= data.count else { throw BackupError.invalidFile }
-            let s = data.subdata(in: offset..<offset + n)
-            offset += n
-            return s
-        }
-
-        // 校验魔数
-        let magicBytes = try read(4)
-        let expectedMagic = Data(LLBackupManager.magic)
-        guard magicBytes == expectedMagic else { throw BackupError.invalidFile }
-
-        // 校验版本
-        let versionByte = try read(1)
-        let version = versionByte[versionByte.startIndex]
-        guard version == LLBackupManager.formatVersion else { throw BackupError.unsupportedVersion }
-
-        // 读取加密数据长度
-        let lenBytes = try read(8)
-        let encLen = Int(UInt64(bigEndian: lenBytes.withUnsafeBytes { $0.load(as: UInt64.self) }))
-
-        // 读取加密数据
-        let encData = try read(encLen)
-        return encData
+    private func makeStagingDirectory() throws -> URL {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("LLBackup-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        return url
     }
 }

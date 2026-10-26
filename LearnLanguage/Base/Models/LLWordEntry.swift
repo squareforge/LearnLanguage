@@ -45,6 +45,7 @@ struct LLWordExample: Codable, Identifiable, Equatable {
 }
 
 extension LLWordEntry {
+    static func invalidateExampleCache() { LLWordExampleCache.shared.clear() }
     func enrichedWithExamplesIfNeeded(limit: Int = 3) -> LLWordEntry {
         guard examples.isEmpty else { return self }
 
@@ -79,6 +80,8 @@ private final class LLWordExampleCache {
     private var cache: [String: [LLWordExample]] = [:]
 
     private init() {}
+
+    func clear() { cache.removeAll() }
 
     func examples(for wordText: String, difficultyLevel: Int, limit: Int) -> [LLWordExample] {
         let key = wordText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()

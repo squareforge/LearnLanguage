@@ -18,6 +18,12 @@ final class LLDBLearningHistory: TableCodable {
     var sessionType: String? = nil          // 学习类型：learn=新学, review=复习
     var learnedAt: TimeInterval? = nil      // 本次学习时间戳
     
+    var isAutoIncrement: Bool { id == nil }
+    var lastInsertedRowID: Int64 {
+        get { Int64(id ?? 0) }
+        set { id = Int(exactly: newValue) }
+    }
+
     enum CodingKeys: String, CodingTableKey {
         typealias Root = LLDBLearningHistory
         static let objectRelationalMapping = TableBinding(CodingKeys.self)

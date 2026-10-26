@@ -15,33 +15,33 @@ final class LLTranslationTaskBridge {
 
     static let shared = LLTranslationTaskBridge()
 
-    private var hostingWindow: NSWindow?
-    private var pendingCompletion: ((Result<String, Error>) -> Void)?
+    private struct Request {
+        let window: NSWindow
+        let completion: (Result<String, Error>) -> Void
+    }
+    private var requests: [UUID: Request] = [:]
 
     private init() {}
 
     // MARK: - Public
 
+    @discardableResult
     func performTranslation(
         _ text: String,
         source: Locale.Language,
         target: Locale.Language,
         completion: @escaping (Result<String, Error>) -> Void
-    ) {
+    ) -> UUID {
+        let id = UUID()
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-
-            self.pendingCompletion = completion
 
             let bridgeView = LLTranslationBridgeView(
                 text: text,
                 source: source,
                 target: target
             ) { [weak self] result in
-                self?.pendingCompletion?(result)
-                self?.pendingCompletion = nil
-                self?.hostingWindow?.orderOut(nil)
-                self?.hostingWindow = nil
+                self?.finish(id, result: result)
             }
 
             // 1x1 隐藏窗口，仅用于承载 SwiftUI translationTask
@@ -60,9 +60,22 @@ final class LLTranslationTaskBridge {
             window.alphaValue = 0
             window.level = .screenSaver
             window.contentView = NSHostingView(rootView: bridgeView)
+            window.isReleasedWhenClosed = false
+            self.requests[id] = Request(window: window, completion: completion)
             window.orderFront(nil)
-            self.hostingWindow = window
         }
+        return id
+    }
+
+    func cancel(_ id: UUID) {
+        DispatchQueue.main.async { self.finish(id, result: .failure(CancellationError())) }
+    }
+
+    private func finish(_ id: UUID, result: Result<String, Error>) {
+        guard let request = requests.removeValue(forKey: id) else { return }
+        request.window.contentView = nil
+        request.window.close()
+        request.completion(result)
     }
 }
 
@@ -87,8 +100,6 @@ private struct LLTranslationBridgeView: View {
                     DispatchQueue.main.async {
                         completion(.success(response.targetText))
                     }
-                } catch is CancellationError {
-                    // 忽略取消
                 } catch {
                     DispatchQueue.main.async {
                         completion(.failure(error))

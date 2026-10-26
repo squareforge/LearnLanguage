@@ -13,71 +13,92 @@ final class LLMMKVManager {
     
     static let shared = LLMMKVManager()
     
-    private let mmkv: MMKV?
+    private var mmkv: MMKV? { MMKV.default() }
+    private let storageLock = NSRecursiveLock()
+
+    func withExclusiveStorageAccess<T>(_ operation: () throws -> T) rethrows -> T {
+        storageLock.lock()
+        defer { storageLock.unlock() }
+        return try operation()
+    }
     
     private init() {
         // 初始化 MMKV
         MMKV.initialize(rootDir: nil)
-        mmkv = MMKV.default()
+        _ = MMKV.default()
         
         LLLogger.info("✅ MMKV 初始化成功")
     }
     
     // MARK: - 通用方法
     
-    func set<T>(_ value: T, forKey key: String) {
+    @discardableResult
+    func set<T>(_ value: T, forKey key: String) -> Bool {
+        storageLock.lock()
+        defer { storageLock.unlock() }
         switch value {
         case let v as Bool:
-            mmkv?.set(v, forKey: key)
+            return mmkv?.set(v, forKey: key) ?? false
         case let v as Int:
-            mmkv?.set(Int32(v), forKey: key)
+            guard let number = Int32(exactly: v) else { return false }
+            return mmkv?.set(number, forKey: key) ?? false
         case let v as Int64:
-            mmkv?.set(v, forKey: key)
+            return mmkv?.set(v, forKey: key) ?? false
         case let v as Double:
-            mmkv?.set(v, forKey: key)
+            return mmkv?.set(v, forKey: key) ?? false
         case let v as String:
-            mmkv?.set(v, forKey: key)
+            return mmkv?.set(v, forKey: key) ?? false
         case let v as Data:
-            mmkv?.set(v, forKey: key)
+            return mmkv?.set(v, forKey: key) ?? false
         default:
             LLLogger.warn("⚠️ MMKV 不支持的类型：\(type(of: value))")
+            return false
         }
     }
     
     func bool(forKey key: String, defaultValue: Bool = false) -> Bool {
-        return mmkv?.bool(forKey: key) ?? defaultValue
+        storageLock.lock(); defer { storageLock.unlock() }
+        return mmkv?.bool(forKey: key, defaultValue: defaultValue) ?? defaultValue
     }
     
     func int(forKey key: String, defaultValue: Int = 0) -> Int {
-        return Int(mmkv?.int32(forKey: key) ?? Int32(defaultValue))
+        storageLock.lock(); defer { storageLock.unlock() }
+        return Int(mmkv?.int32(forKey: key, defaultValue: Int32(clamping: defaultValue)) ?? Int32(clamping: defaultValue))
     }
     
     func int64(forKey key: String, defaultValue: Int64 = 0) -> Int64 {
-        return mmkv?.int64(forKey: key) ?? defaultValue
+        storageLock.lock(); defer { storageLock.unlock() }
+        return mmkv?.int64(forKey: key, defaultValue: defaultValue) ?? defaultValue
     }
     
     func double(forKey key: String, defaultValue: Double = 0.0) -> Double {
-        return mmkv?.double(forKey: key) ?? defaultValue
+        storageLock.lock(); defer { storageLock.unlock() }
+        return mmkv?.double(forKey: key, defaultValue: defaultValue) ?? defaultValue
     }
     
     func string(forKey key: String, defaultValue: String = "") -> String {
+        storageLock.lock(); defer { storageLock.unlock() }
         return mmkv?.string(forKey: key) ?? defaultValue
     }
     
     func data(forKey key: String) -> Data? {
+        storageLock.lock(); defer { storageLock.unlock() }
         return mmkv?.data(forKey: key)
     }
     
     func remove(forKey key: String) {
+        storageLock.lock(); defer { storageLock.unlock() }
         mmkv?.removeValue(forKey: key)
     }
     
     func clearAll() {
+        storageLock.lock(); defer { storageLock.unlock() }
         mmkv?.clearAll()
         LLLogger.info("🗑️ MMKV 所有数据已清空")
     }
     
     func allKeys() -> [String] {
+        storageLock.lock(); defer { storageLock.unlock() }
         return mmkv?.allKeys() as? [String] ?? []
     }
 }
@@ -325,6 +346,7 @@ extension LLMMKVManager {
     
     /// 打印所有配置（用于调试）
     func printAllConfigs() {
+        storageLock.lock(); defer { storageLock.unlock() }
         LLLogger.debug("\n" + String(repeating: "=", count: 60))
         LLLogger.debug("📋 MMKV 所有配置：")
         LLLogger.debug(String(repeating: "=", count: 60))
@@ -341,6 +363,7 @@ extension LLMMKVManager {
     
     /// 导出配置为字典（用于备份）
     func exportConfigs() -> [String: Any] {
+        storageLock.lock(); defer { storageLock.unlock() }
         var configs: [String: Any] = [:]
         
         for key in allKeys() {

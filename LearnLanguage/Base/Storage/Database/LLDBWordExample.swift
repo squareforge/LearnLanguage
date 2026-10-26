@@ -20,6 +20,12 @@ final class LLDBWordExample: TableCodable {
     var source: String? = nil
     var createdAt: TimeInterval = 0
 
+    var isAutoIncrement: Bool { id == nil }
+    var lastInsertedRowID: Int64 {
+        get { Int64(id ?? 0) }
+        set { id = Int(exactly: newValue) }
+    }
+
     enum CodingKeys: String, CodingTableKey {
         typealias Root = LLDBWordExample
         static let objectRelationalMapping = TableBinding(CodingKeys.self)

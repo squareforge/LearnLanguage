@@ -195,6 +195,8 @@ final class LLProgressTabViewController: NSViewController {
             self?.resetReviewPagination()
             self?.loadReviewRecords(listId: LLSettingsStore.shared.currentListId)
         }
+        reviewContentView.onNextPage = { [weak self] in self?.loadNextReviewPage() }
+        reviewContentView.onPreviousPage = { [weak self] in self?.loadPreviousReviewPage() }
         reviewContentView.onMarkAsKnown = { [weak self] wordId, listId in
             self?.markAsKnown(wordId: wordId, listId: listId)
         }
@@ -485,55 +487,44 @@ final class LLProgressTabViewController: NSViewController {
     
     private var reviewPageSize = 20
     private var reviewCurrentPage = 0
+    private var reviewListID: String?
     
     private func loadReviewRecords(listId: String?) {
-        LLLogger.info("📊 开始加载复习记录，页码: \(reviewCurrentPage)")
-        
+        if reviewListID != listId {
+            reviewCurrentPage = 0
+            reviewListID = listId
+        }
         do {
-            let records: [LLDBLearningProgress]
-            let timeFilter = reviewContentView?.currentTimeFilter ?? .all
-            
-            LLLogger.info("📋 时间筛选: \(timeFilter.rawValue)")
-            
-            // 先获取所有符合条件的记录（不限制词库）
-            let allRecords: [LLDBLearningProgress]
-            switch timeFilter {
-            case .all:
-                allRecords = try LLDatabaseManager.shared.getAllReviewRecords(wordListId: listId)
-            case .today:
-                allRecords = try LLDatabaseManager.shared.getTodayReviewRecords(wordListId: listId)
-            case .week:
-                allRecords = try LLDatabaseManager.shared.getWeekReviewRecords(wordListId: listId)
-            case .month:
-                allRecords = try LLDatabaseManager.shared.getMonthReviewRecords(wordListId: listId)
+            let now = Date()
+            let calendar = Calendar.current
+            let start: Date?
+            switch reviewContentView?.currentTimeFilter ?? .all {
+            case .all: start = nil
+            case .today: start = calendar.startOfDay(for: now)
+            case .week: start = calendar.date(byAdding: .day, value: -7, to: now)
+            case .month: start = calendar.date(byAdding: .month, value: -1, to: now)
             }
-            
-            LLLogger.info("📊 查询到 \(allRecords.count) 条复习记录")
-            
-            // 分页处理
-            let startIndex = reviewCurrentPage * reviewPageSize
-            let endIndex = min(startIndex + reviewPageSize, allRecords.count)
-            
-            if startIndex < allRecords.count {
-                records = Array(allRecords[startIndex..<endIndex])
-                LLLogger.info("📄 第 \(reviewCurrentPage + 1) 页，显示 \(records.count) 条记录（总共 \(allRecords.count) 条）")
-            } else {
-                records = []
-                LLLogger.info("⚠️ 页码超出范围")
+            let page = try LLDatabaseManager.shared.getReviewRecords(
+                startDate: start, endDate: start == nil ? nil : now,
+                wordListId: listId, limit: reviewPageSize + 1,
+                offset: reviewCurrentPage * reviewPageSize
+            )
+            if page.isEmpty && reviewCurrentPage > 0 {
+                reviewCurrentPage -= 1
+                loadReviewRecords(listId: listId)
+                return
             }
-            
-            // 打印前几条记录的详情
-            for (index, record) in records.prefix(3).enumerated() {
-                LLLogger.info("  [\(index)] wordId: \(record.wordId ?? "nil"), learnCount: \(record.learnCount ?? 0), status: \(record.status ?? 0)")
-            }
-            
-            reviewContentView?.records = records
+            let records = Array(page.prefix(reviewPageSize))
+            let words = try LLDatabaseManager.shared.getWords(ids: records.compactMap { Int($0.wordId ?? "") })
+            reviewContentView?.update(records: records, words: words)
+            reviewContentView?.updatePagination(page: reviewCurrentPage, hasNext: page.count > reviewPageSize)
         } catch {
             LLLogger.error("❌ 加载复习记录失败：\(error)")
-            reviewContentView?.records = []
+            reviewContentView?.update(records: [], words: [])
+            reviewContentView?.updatePagination(page: reviewCurrentPage, hasNext: false, error: "加载失败，请切换筛选后重试")
         }
     }
-    
+
     // 重置分页
     private func resetReviewPagination() {
         reviewCurrentPage = 0

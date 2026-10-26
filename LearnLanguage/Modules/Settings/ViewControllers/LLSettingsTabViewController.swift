@@ -412,8 +412,7 @@ final class LLSettingsTabViewController: NSViewController {
             (label: NSLocalizedString("Pronunciation Provider", comment: ""), control: pronunciationProviderPopup),
             (label: NSLocalizedString("Pronunciation Accent", comment: ""), control: pronunciationAccentPopup)
         ])
-        // 临时隐藏语速设置（保留代码，后续可恢复）
-        // card.addFormItem(label: NSLocalizedString("Speech Rate", comment: ""), control: pronunciationRatePopup)
+        card.addFormItem(label: NSLocalizedString("Speech Rate", comment: ""), control: pronunciationRatePopup)
         card.addFormItem(label: NSLocalizedString("Playback Interval", comment: ""), control: statusBarPlaybackIntervalPopup)
         card.addFormItem(label: NSLocalizedString("Playback Volume", comment: ""), control: volumeStack)
         
@@ -823,7 +822,8 @@ final class LLSettingsTabViewController: NSViewController {
         }
         
         // 学习目标
-        s.newWordsPerDay = Int(newWordsField.stringValue) ?? 20
+        s.newWordsPerDay = min(max(Int(newWordsField.stringValue) ?? 20, LLAppSettings.dailyWordRange.lowerBound), LLAppSettings.dailyWordRange.upperBound)
+        newWordsField.stringValue = String(s.newWordsPerDay)
         
         // 状态栏设置
         s.statusBarShowPhonetic = statusBarPhoneticCheck.state == .on

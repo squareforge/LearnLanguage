@@ -42,6 +42,7 @@ final class LLStatusBarManager {
     
     /// 当前自动朗读序号，用来忽略旧回调
     private var pronunciationPlaybackToken = 0
+    private var automaticPronunciationSuspensions: Set<UUID> = []
     
     /// 是否处于打字练习模式
     var isTypingPracticeMode = false {
@@ -64,6 +65,9 @@ final class LLStatusBarManager {
     }
     
     private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onPracticeProgressChanged), name: .learningPracticeProgressChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onTimeContextChanged), name: .NSCalendarDayChanged, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onTimeContextChanged), name: NSWorkspace.didWakeNotification, object: nil)
         // 监听设置改变（重新加载状态栏）
         NotificationCenter.default.addObserver(
             self,
@@ -80,21 +84,34 @@ final class LLStatusBarManager {
             object: nil
         )
     }
+
+    @objc private func onPracticeProgressChanged() {
+        if LLPracticePanelController.shared.courseSession != nil { refreshStatusBar() }
+    }
     
     @objc private func onSettingsChanged() {
         // 当状态栏设置改变时，重新加载状态栏
         // 注意：浮窗设置变化（.floatingPanelSettingsChanged）不会触发此方法
         reloadStatusBar()
+        LLStatusBarTypingPractice.shared.syncWithStatusBarCurrentWord()
+    }
+
+    @objc private func onTimeContextChanged() {
+        refreshStatusBar()
+        LLStatusBarTypingPractice.shared.syncWithStatusBarCurrentWord()
+        NotificationCenter.default.post(name: .learningPracticeProgressChanged, object: nil)
     }
     
     @objc private func onCurrentWordListChanged() {
         // 当前词库切换时，刷新状态栏显示新词库的单词
         refreshStatusBar()
+        LLStatusBarTypingPractice.shared.syncWithStatusBarCurrentWord()
     }
     
     deinit {
         stopPlaybackTimer()
         NotificationCenter.default.removeObserver(self)
+        NSWorkspace.shared.notificationCenter.removeObserver(self)
     }
     
     // MARK: - Public Methods
@@ -137,6 +154,22 @@ final class LLStatusBarManager {
         LLLogger.debug("🔄 刷新状态栏...")
         
         let settings = LLSettingsStore.shared.settings
+
+        // Selecting a course changes the learning source, including while its panel is hidden.
+        LLPracticePanelController.shared.restoreSelectedCourseIfNeeded()
+        if let course = LLPracticePanelController.shared.courseSession {
+            currentEntry = nil
+            currentListId = nil
+            contentView?.updateContent(
+                word: settings.statusBarShowContent ? course.item?.text ?? "课程完成 ✓" : "",
+                phonetic: course.item?.phonetic ?? "",
+                meaning: course.item?.meaning ?? course.source.title,
+                vocabularyFeedbackEnabled: false
+            )
+            contentView?.toolTip = "\(course.source.title) · \(course.source.positionText)"
+            return
+        }
+        contentView?.toolTip = nil
         
         // 如果设置了不显示内容
         if !settings.statusBarShowContent {
@@ -159,7 +192,8 @@ final class LLStatusBarManager {
         // 从每日学习管理器获取下一个词（复习优先）
         guard let next = LLDailyLearningManager.shared.nextWord() else {
             LLLogger.warn("⚠️ 今日学习任务已完成或词库为空")
-            contentView?.updateContent(word: "今日完成 🎉", phonetic: "", meaning: "")
+            let error = LLDailyLearningManager.shared.lastError
+            contentView?.updateContent(word: error == nil ? "今日完成 🎉" : "学习任务加载失败", phonetic: "", meaning: error ?? "")
             currentEntry = nil
             currentListId = listId
             return
@@ -197,13 +231,20 @@ final class LLStatusBarManager {
     
     /// 记录反馈
     func recordFeedback(_ feedback: LLWordFeedback) {
+        if LLPracticePanelController.shared.courseSession != nil {
+            LLPracticePanelController.shared.show()
+            return
+        }
         guard let entry = currentEntry, currentListId != nil else {
             LLLogger.warn("⚠️ 没有当前单词，无法记录反馈")
             return
         }
         
         // 通过每日学习管理器记录反馈（更新数据库 + 更新内存队列）
-        LLDailyLearningManager.shared.recordFeedback(feedback, for: entry)
+        guard LLDailyLearningManager.shared.recordFeedback(feedback, for: entry) else {
+            contentView?.updateContent(word: entry.text, phonetic: entry.phonetic ?? "", meaning: LLDailyLearningManager.shared.lastError ?? "进度未保存，请重试")
+            return
+        }
         
         // 发送通知
         NotificationCenter.default.post(
@@ -227,11 +268,19 @@ final class LLStatusBarManager {
     
     /// 切换到下一个单词
     func moveToNextWord() {
+        if LLPracticePanelController.shared.courseSession != nil {
+            LLPracticePanelController.shared.skipCourseItem()
+            return
+        }
         refreshStatusBar()
     }
     
     /// 播放当前单词发音
     func playCurrentWordPronunciation() {
+        if LLPracticePanelController.shared.courseSession != nil {
+            LLPracticePanelController.shared.replayCoursePronunciation()
+            return
+        }
         guard let entry = currentEntry else { return }
         LLPronunciationManager.shared.speakEnglishManually(word: entry.text)
     }
@@ -279,7 +328,23 @@ final class LLStatusBarManager {
         LLLogger.info("⏱ 播放定时器已停止")
     }
     
+    /// Focused practice owns audio and queue timing until its panel is hidden.
+    func suspendAutomaticPronunciation() -> UUID {
+        let token = UUID()
+        automaticPronunciationSuspensions.insert(token)
+        pronunciationPlaybackToken += 1
+        isStatusBarPronunciationPlaying = false
+        shouldAdvanceAfterCurrentPronunciation = false
+        LLPronunciationManager.shared.stop()
+        return token
+    }
+
+    func resumeAutomaticPronunciation(token: UUID) {
+        automaticPronunciationSuspensions.remove(token)
+    }
+
     private func handlePlaybackTimerFired() {
+        guard automaticPronunciationSuspensions.isEmpty, LLPracticePanelController.shared.courseSession == nil else { return }
         if isStatusBarPronunciationPlaying {
             shouldAdvanceAfterCurrentPronunciation = true
             LLLogger.debug("⏱ 定时器触发，但当前仍在朗读，等待朗读结束后切换")
@@ -296,6 +361,7 @@ final class LLStatusBarManager {
     }
     
     private func playStatusBarPronunciation(for entry: LLWordEntry) {
+        guard automaticPronunciationSuspensions.isEmpty, LLPracticePanelController.shared.courseSession == nil else { return }
         pronunciationPlaybackToken += 1
         let token = pronunciationPlaybackToken
         isStatusBarPronunciationPlaying = true

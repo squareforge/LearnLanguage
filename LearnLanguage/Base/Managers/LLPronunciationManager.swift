@@ -147,7 +147,7 @@ protocol LLPronunciationProviderProtocol {
     /// - Parameters:
     ///   - word: 要发音的单词
     ///   - accent: 口音类型（美式/英式）
-    ///   - rate: 语速 (0.0-1.0)
+    ///   - rate: 语速倍率（1.0 为标准速度）
     ///   - completion: 完成回调
     func speak(word: String, accent: LLPronunciationAccent, rate: Float, completion: ((Bool, Error?) -> Void)?)
     
@@ -164,6 +164,7 @@ final class LLLocalPronunciationProvider: NSObject, LLPronunciationProviderProto
     
     private let synthesizer = AVSpeechSynthesizer()
     private var completion: ((Bool, Error?) -> Void)?
+    private var currentUtterance: AVSpeechUtterance?
     
     override init() {
         super.init()
@@ -171,10 +172,7 @@ final class LLLocalPronunciationProvider: NSObject, LLPronunciationProviderProto
     }
     
     func speak(word: String, accent: LLPronunciationAccent, rate: Float, completion: ((Bool, Error?) -> Void)?) {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-        
+        stop()
         self.completion = completion
         
         let utterance = AVSpeechUtterance(string: word)
@@ -183,9 +181,7 @@ final class LLLocalPronunciationProvider: NSObject, LLPronunciationProviderProto
         let languageCode = accent == .us ? "en-US" : "en-GB"
         utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
         
-        // 临时固定本地发音语速为 0.5（保留原设置参数代码，后续可恢复）
-        // utterance.rate = rate
-        utterance.rate = 0.5
+        utterance.rate = min(max(AVSpeechUtteranceDefaultSpeechRate * rate, AVSpeechUtteranceMinimumSpeechRate), AVSpeechUtteranceMaximumSpeechRate)
         
         // 设置音量和音调
         let appAudioVolume = LLSettingsStore.shared.settings.appAudioVolume.llClampedAudioVolume
@@ -193,15 +189,18 @@ final class LLLocalPronunciationProvider: NSObject, LLPronunciationProviderProto
         utterance.pitchMultiplier = 1.0
         
         // 开始发音
+        currentUtterance = utterance
         synthesizer.speak(utterance)
         
         LLLogger.debug("🔊 本地发音：\(word) [\(accent.displayName)]")
     }
     
     func stop() {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        let callback = completion
+        completion = nil
+        currentUtterance = nil
+        synthesizer.stopSpeaking(at: .immediate)
+        callback?(false, nil)
     }
     
     var isSpeaking: Bool {
@@ -214,13 +213,19 @@ final class LLLocalPronunciationProvider: NSObject, LLPronunciationProviderProto
 extension LLLocalPronunciationProvider: AVSpeechSynthesizerDelegate {
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        completion?(true, nil)
-        completion = nil
+        finish(utterance, success: true)
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        completion?(false, nil)
+        finish(utterance, success: false)
+    }
+
+    private func finish(_ utterance: AVSpeechUtterance, success: Bool) {
+        guard utterance === currentUtterance else { return }
+        let callback = completion
         completion = nil
+        currentUtterance = nil
+        callback?(success, nil)
     }
 }
 
@@ -530,20 +535,34 @@ final class LLPronunciationManager {
         }
         LLLogger.debug("🔊 中文释义朗读：\(text)")
         
-        LLSpeechService.shared.onDidFinish = {
-            completion?(true, nil)
+        let didStart = LLSpeechService.shared.speak(text, language: "zh-CN") { success in
+            completion?(success, nil)
         }
-        
-        let didStart = LLSpeechService.shared.speak(text, language: "zh-CN")
         if !didStart {
             completion?(false, nil)
         }
     }
     
+    /// Whole phrases and sentences use system speech instead of word-audio endpoints.
+    /// Manual replay remains available when automatic pronunciation is disabled.
+    func speakSentence(_ sentence: String, rateMultiplier: Float = 1, completion: ((Bool, Error?) -> Void)? = nil) {
+        let text = sentence.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { completion?(false, nil); return }
+        beginPlayback()
+        let settings = LLSettingsStore.shared.settings
+        let language = settings.pronunciationAccent == .uk ? "en-GB" : "en-US"
+        let rate = min(max(AVSpeechUtteranceDefaultSpeechRate * settings.pronunciationRate * rateMultiplier, 0.1), 1)
+        if !LLSpeechService.shared.speak(text, language: language, rate: rate, completion: { success in
+            completion?(success, nil)
+        }) {
+            completion?(false, nil)
+        }
+    }
+
     /// 停止当前发音
     func stop() {
         playbackGeneration += 1
-        currentProvider?.stop()
+        providers.values.forEach { $0.stop() }
         LLSpeechService.shared.stop()
     }
     
@@ -599,11 +618,9 @@ final class LLPronunciationManager {
             return
         }
 
-        LLSpeechService.shared.onDidFinish = {
-            completion?(true, nil)
+        let didStart = LLSpeechService.shared.speak(text, language: "en-US", rate: Self.englishExampleSpeechRate) { success in
+            completion?(success, nil)
         }
-
-        let didStart = LLSpeechService.shared.speak(text, language: "en-US", rate: Self.englishExampleSpeechRate)
         if !didStart {
             completion?(false, nil)
         }
@@ -616,11 +633,9 @@ final class LLPronunciationManager {
             return
         }
 
-        LLSpeechService.shared.onDidFinish = {
-            completion?(true, nil)
+        let didStart = LLSpeechService.shared.speak(text, language: "zh-CN", rate: Self.chineseExampleSpeechRate) { success in
+            completion?(success, nil)
         }
-
-        let didStart = LLSpeechService.shared.speak(text, language: "zh-CN", rate: Self.chineseExampleSpeechRate)
         if !didStart {
             completion?(false, nil)
         }

@@ -1,114 +1,60 @@
-# 划水记词（LearnLanguage）
+# 划水记词 · LearnLanguage
 
-一款面向 macOS 的桌面端背词与划词翻译工具。它把词库管理、学习进度、状态栏快捷查询、OCR 翻译、打字练习和本地数据备份整合在一起，适合在日常阅读、写作和学习中轻量使用。
+一款 macOS 英语学习工具。在可调透明度的悬浮面板里练单词、短语和句子，也可以通过菜单栏复习，或在阅读时复制查词、翻译。
 
-> 项目当前主要面向中文用户，应用显示语言以简体中文为主。
+## 功能
 
-## 预览
+- **单词练习**：按词库学习，结合每日目标和复习队列记录进度。
+- **星荣课程**：内置 55 课、8,865 个递进练习项，从单词、短语逐步练到句子。
+- **悬浮面板**：两种练习共用一个面板，支持拖动、缩放、15%–100% 不透明度，以及朗读、听写和答案显隐。
+- **菜单栏**：显示当前学习内容，支持重播；选择课程后，菜单栏也会跟随切换。
+- **阅读工具**：支持连续两次复制触发翻译，以及剪贴板图片 OCR 识别与翻译。
+- **本地数据**：管理词库、查看学习记录，导出和恢复学习数据。
 
-<p align="center">
-  <img src="5e51ae95f558046e21b55cc021e7c2bb.png" width="49%" alt="学习进度" />
-  <img src="617d612f1986db240e21bac173aae768.png" width="49%" alt="偏好设置" />
-</p>
+## 怎么练习
 
-<p align="center">
-  <img src="28bf271550283dc3e36c7f7c0056c13a.png" width="49%" alt="数据管理" />
-  <img src="0a1c0a4d1bc3826db4537a226cb6fff8.png" width="30%" alt="状态栏查询" />
-</p>
+在主界面的「学习」中选择「词库练习」或「星荣句式」，点击对应条目的开始按钮，即可进入悬浮面板。「继续学习」会打开上次选择的内容。
 
-## 功能特性
+星荣课程按词输入，空格确认当前词。整条内容输入完成后，按一次空格显示中文释义，再按一次空格保存并进入下一项。回车也可以确认。
 
-- 词库管理：内置词库数据，支持按词库组织和学习单词。
-- 学习进度：统计已学、今日学习、复习记录和连续学习天数。
-- 状态栏工具：从 macOS 菜单栏快速查询单词、进入主界面或打开打字模式。
-- 划词/剪贴板翻译：监听复制内容并进行快捷翻译。
-- OCR 翻译：支持对剪贴板截图进行 OCR 识别与翻译。
-- 发音支持：支持本地 TTS 和有道发音源，可切换美式/英式口音。
-- 打字练习：以浮窗形式进行单词打字训练，配合键盘音效提升练习反馈。
-- 学习设置：支持每日目标、触发间隔、翻译方向、结果字号等配置。
-- 数据管理：支持本地备份、恢复、数据库完整性检查与维护。
-- 多语言学习预留：代码层面预留英语、日语、韩语学习语言扩展。
+| 操作 | 按键 |
+| --- | --- |
+| 确认当前词 / 查看释义 / 继续 | Space 或 Enter |
+| 重播当前内容 | ⌘R |
+| 显示或隐藏英文答案 | ⌘/ |
+| 跳过当前项 | ⌥Enter |
+| 隐藏面板 | Esc |
 
-## 技术栈
+点击面板右上角的设置按钮，可以调整不透明度、自动朗读、音效和练习语速。全局快捷键可在应用设置中配置。
 
-- Swift / AppKit
-- CocoaPods
-- SnapKit：界面布局
-- WCDB.swift / SQLiteRepairKit：数据库与修复能力
-- MMKV：轻量键值存储
-- HotKey：全局快捷键
-- Alamofire / Moya：网络请求
-- lottie-ios：动画
-- DGCharts：学习数据可视化
+隐藏再打开会保留当前输入；重启后，课程从已保存的进度继续。跳过的课程条目仍算未完成。切到课程后，隐藏面板也不会恢复旧词库的朗读；返回单词模式时，在学习页选择词库练习即可。
 
-## 环境要求
+练习面板使用 macOS 系统语音朗读，支持美式和英式口音，不使用原课程录音。
 
-- macOS 12.0+
-- Xcode 15 或更高版本（建议）
-- CocoaPods
+## 本地运行
 
-## 快速开始
+需要 macOS 13.5+、Xcode 16+ 和 CocoaPods。系统翻译功能需要 macOS 15+，首次使用可能需要下载语言包。
 
-1. 克隆项目：
-
-```bash
-git clone <your-repo-url>
-cd LearnLanguage
-```
-
-2. 安装依赖：
+在项目目录执行：
 
 ```bash
 pod install
-```
-
-3. 打开工作区：
-
-```bash
 open LearnLanguage.xcworkspace
 ```
 
-4. 在 Xcode 中选择 `LearnLanguage` Scheme，点击运行。
+在 Xcode 中选择 `LearnLanguage` Scheme，运行项目。请使用 `.xcworkspace` 打开工程。
 
-> 注意：项目使用 CocoaPods 管理依赖，请打开 `LearnLanguage.xcworkspace`，不要直接打开 `LearnLanguage.xcodeproj`。
+## 开发
 
-## 项目结构
+项目使用 Swift / AppKit，布局使用 SnapKit，数据存储使用 WCDB 和 MMKV，依赖由 CocoaPods 管理。
 
-```text
-LearnLanguage/
-├── LearnLanguage/                 # 应用源码
-│   ├── Base/                      # 基础设施、模型、存储、工具类
-│   ├── Common/                    # 通用扩展
-│   ├── Modules/                   # 功能模块
-│   │   ├── Data/                  # 数据管理
-│   │   ├── GrammarNotes/          # 语法笔记资源
-│   │   ├── Main/                  # 主界面
-│   │   ├── Progress/              # 学习进度
-│   │   ├── Settings/              # 偏好设置
-│   │   ├── StatusBar/             # 菜单栏与弹窗
-│   │   ├── Translation/           # 翻译、OCR、剪贴板监听
-│   │   ├── TypingPractice/        # 打字练习
-│   │   └── WordList/              # 词库与单词列表
-│   └── Resources/                 # 字体、音效、词库、图片、本地化资源
-├── LearnLanguage.xcworkspace      # Xcode 工作区
-├── LearnLanguage.xcodeproj        # Xcode 项目
-├── Podfile                        # CocoaPods 依赖配置
-└── README.md
-```
+- [开发与验证](Docs/Development.md)：源码结构、测试命令、课程导入和词库资源维护。
+- [Review 修复记录](Docs/ReviewFixes-2026-10-26.md)：已处理的问题及验证范围。
 
-## 数据与隐私
+## 数据与来源
 
-应用数据默认保存在本机，学习记录、设置和词库数据可通过“数据管理”进行本地备份和恢复。备份文件使用应用自定义的 `.llbak` 格式，仅本软件可读取。
+学习记录、课程进度和设置保存在本机，可在「工具与数据」中导出或恢复 `.llbak` 备份。备份使用应用固定密钥加密，不提供个人密码保护。
 
-## 开源说明
+星荣课程来自 [Earthworm](https://github.com/cuixueshe/earthworm)。仓库保留了[课程来源与固定版本](LearnLanguage/Modules/Learning/Resources/Xingrong-SOURCE.md)及上游 [GNU AGPL v3.0 许可原文](LearnLanguage/Modules/Learning/Resources/Earthworm-LICENSE.txt)。
 
-如果你准备正式开源，建议在发布前检查以下内容：
-
-- 是否需要移除或精简 `Pods/` 目录，通常开源项目只提交 `Podfile` 和 `Podfile.lock`。
-- 是否包含第三方词库、音效、字体、图片等资源，并确认它们的授权允许再分发。
-- 是否包含接口密钥、个人路径、测试数据或其他敏感信息。
-- 补充合适的开源协议，例如 MIT、Apache-2.0 或 GPL。
-
-## 许可证
-
-当前尚未指定许可证。正式开源前请在仓库中添加 `LICENSE` 文件。
+本项目尚未指定整体许可证；第三方代码与资源遵循各自的许可，课程来源说明中列有分发要求。

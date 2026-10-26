@@ -81,6 +81,11 @@ final class LLTranslationManager {
         }
     }
 
+    func cancel(_ id: UUID?) {
+        guard let id, #available(macOS 15.0, *) else { return }
+        LLTranslationTaskBridge.shared.cancel(id)
+    }
+
     // MARK: - Public
 
     /// 翻译文字
@@ -88,20 +93,21 @@ final class LLTranslationManager {
     ///   - text: 原文
     ///   - direction: 翻译方向，默认英文 -> 中文
     ///   - completion: 主线程回调
+    @discardableResult
     func translate(
         _ text: String,
         direction: Direction = .enToZh,
         completion: @escaping (Result<TranslationResult, Error>) -> Void
-    ) {
+    ) -> UUID? {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             completion(.failure(TranslationError.emptyInput))
-            return
+            return nil
         }
 
         guard #available(macOS 15.0, *) else {
             completion(.failure(TranslationError.unsupportedSystem))
-            return
+            return nil
         }
 
         // 英文原文时才获取音标（离线，基于系统词典）
@@ -110,7 +116,7 @@ final class LLTranslationManager {
         let source = Locale.Language(identifier: direction.sourceIdentifier)
         let target = Locale.Language(identifier: direction.targetIdentifier)
 
-        LLTranslationTaskBridge.shared.performTranslation(trimmed, source: source, target: target) { result in
+        return LLTranslationTaskBridge.shared.performTranslation(trimmed, source: source, target: target) { result in
             switch result {
             case .success(let translated):
                 let r = TranslationResult(originalText: trimmed, translatedText: translated, phonetics: phonetics)

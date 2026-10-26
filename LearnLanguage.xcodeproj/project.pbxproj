@@ -113,10 +113,6 @@
 		84E1E39E2F4D53A300D1B7B6 /* LLTypingStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E3992F4D53A300D1B7B6 /* LLTypingStatsView.swift */; };
 		84E1E39F2F4D53A300D1B7B6 /* LLTypingSoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E3982F4D53A300D1B7B6 /* LLTypingSoundManager.swift */; };
 		84E1E3A02F4D53A300D1B7B6 /* LLStatusBarTypingPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E39B2F4D53A300D1B7B6 /* LLStatusBarTypingPractice.swift */; };
-		84E1E3A32F4D53A300D1B7B6 /* LLTypingDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E3972F4D53A300D1B7B6 /* LLTypingDisplayView.swift */; };
-		84E1E3A42F4D53A300D1B7B6 /* LLTypingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E3912F4D53A300D1B7B6 /* LLTypingEngine.swift */; };
-		84E1E3A52F4D53A300D1B7B6 /* LLTypingPracticeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E39C2F4D53A300D1B7B6 /* LLTypingPracticeManager.swift */; };
-		84E1E3A62F4D53A300D1B7B6 /* LLTypingPracticeFloatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1E3932F4D53A300D1B7B6 /* LLTypingPracticeFloatingViewController.swift */; };
 		84EE8F392F88EFC10082A167 /* LLMoreFeaturesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE8F332F88EFC10082A167 /* LLMoreFeaturesHomeViewController.swift */; };
 		84EE8F3A2F88EFC10082A167 /* LLSimilarWordsHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE8F362F88EFC10082A167 /* LLSimilarWordsHomeViewController.swift */; };
 		84EE8F3B2F88EFC10082A167 /* LLGrammarNotesHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE8F302F88EFC10082A167 /* LLGrammarNotesHomeViewController.swift */; };
@@ -314,6 +310,21 @@
 		A8D1A74E2F66AE4000C4BDF2 /* LLStatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D1A74D2F66AE4000C4BDF2 /* LLStatContentView.swift */; };
 		A8D1A74F2F66AE4000C4BDF2 /* LLReviewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D1A74C2F66AE4000C4BDF2 /* LLReviewContentView.swift */; };
 		C5993F841617E33BB9BC1598 /* Pods_LearnLanguage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7EFF5BF30D8EB34FDFCBE2E /* Pods_LearnLanguage.framework */; };
+		1EC60C1507F925C31BB99C70 /* LLPracticeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE30C745C33C05776B99F601 /* LLPracticeSession.swift */; };
+		E3FF676549601F855E54C43A /* LLPracticePanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA405A949FC6D3EA8120F1F /* LLPracticePanelController.swift */; };
+		DA678899C6C1314C3BF23162 /* LLPracticeSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65657661B56588A78E5DEA7 /* LLPracticeSources.swift */; };
+		29834A3D9786F926CA608F58 /* LLLearningItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A310ACC9DFB4DD0733395 /* LLLearningItem.swift */; };
+		FE0C26C32C7FC92B47B184D8 /* Earthworm-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 00AB9632534B859C40BB94FE /* Earthworm-LICENSE.txt */; };
+		FC7FAB29E62597DC9E509ADB /* Xingrong-SOURCE.md in Resources */ = {isa = PBXBuildFile; fileRef = 689ADC6CCBD4A85F25103272 /* Xingrong-SOURCE.md */; };
+		4E380678A73CD9AD715EEDDC /* xingrong_courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D2B08D7A14CA7015D7633D4 /* xingrong_courses.json */; };
+		737A48DF9F4DE73BB3BCE3F9 /* LLLearningHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C90A3283AFD9F7243BE6E2 /* LLLearningHomeViewController.swift */; };
+		67B1DD265DECFF880C6D904C /* LLPracticeFloatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E9450FFC98DCD4F9E5D243 /* LLPracticeFloatingViewController.swift */; };
+		4CAC993167A1716ED31A3C7F /* LLPracticeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F736D5A1FDBF6CD1F8C23B1A /* LLPracticeTextView.swift */; };
+		145993C39C5F9CEDB357FCC8 /* LLBackupArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D14F5FEBC08929826BF5615 /* LLBackupArchive.swift */; };
+		79B0863EC35994645532A8D8 /* LLFileReplacementTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55EAF98222DE464F21B156A /* LLFileReplacementTransaction.swift */; };
+		BEE72F588AE04C7C0DCF757E /* LLSQLiteConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8707596E8FE9AE076FCAE /* LLSQLiteConnection.swift */; };
+		E66E3C772163179C0C40A8DF /* LLContentMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B883D17B38D8CFCBC6AE725F /* LLContentMigrator.swift */; };
+		6AC05A841EFBF081B774C8DB /* dictionary-manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 49A6264DAF143108D4713363 /* dictionary-manifest.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -423,13 +434,9 @@
 		84E1E32E2F3D6C6100D1B7B6 /* LLStatusBarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLStatusBarContentView.swift; sourceTree = "<group>"; };
 		84E1E3302F3D760200D1B7B6 /* LLScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLScrollingTextView.swift; sourceTree = "<group>"; };
 		84E1E3322F3D85F900D1B7B6 /* LLWordPhoneticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLWordPhoneticView.swift; sourceTree = "<group>"; };
-		84E1E3912F4D53A300D1B7B6 /* LLTypingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingEngine.swift; sourceTree = "<group>"; };
-		84E1E3932F4D53A300D1B7B6 /* LLTypingPracticeFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingPracticeFloatingViewController.swift; sourceTree = "<group>"; };
-		84E1E3972F4D53A300D1B7B6 /* LLTypingDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingDisplayView.swift; sourceTree = "<group>"; };
 		84E1E3982F4D53A300D1B7B6 /* LLTypingSoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingSoundManager.swift; sourceTree = "<group>"; };
 		84E1E3992F4D53A300D1B7B6 /* LLTypingStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingStatsView.swift; sourceTree = "<group>"; };
 		84E1E39B2F4D53A300D1B7B6 /* LLStatusBarTypingPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLStatusBarTypingPractice.swift; sourceTree = "<group>"; };
-		84E1E39C2F4D53A300D1B7B6 /* LLTypingPracticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLTypingPracticeManager.swift; sourceTree = "<group>"; };
 		84EE8F302F88EFC10082A167 /* LLGrammarNotesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLGrammarNotesHomeViewController.swift; sourceTree = "<group>"; };
 		84EE8F332F88EFC10082A167 /* LLMoreFeaturesHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMoreFeaturesHomeViewController.swift; sourceTree = "<group>"; };
 		84EE8F362F88EFC10082A167 /* LLSimilarWordsHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLSimilarWordsHomeViewController.swift; sourceTree = "<group>"; };
@@ -628,6 +635,21 @@
 		A8D1A74C2F66AE4000C4BDF2 /* LLReviewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLReviewContentView.swift; sourceTree = "<group>"; };
 		A8D1A74D2F66AE4000C4BDF2 /* LLStatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLStatContentView.swift; sourceTree = "<group>"; };
 		D7EFF5BF30D8EB34FDFCBE2E /* Pods_LearnLanguage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LearnLanguage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE30C745C33C05776B99F601 /* LLPracticeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLPracticeSession.swift"; sourceTree = "<group>"; };
+		BEA405A949FC6D3EA8120F1F /* LLPracticePanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLPracticePanelController.swift"; sourceTree = "<group>"; };
+		C65657661B56588A78E5DEA7 /* LLPracticeSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLPracticeSources.swift"; sourceTree = "<group>"; };
+		A31A310ACC9DFB4DD0733395 /* LLLearningItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLLearningItem.swift"; sourceTree = "<group>"; };
+		00AB9632534B859C40BB94FE /* Earthworm-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Earthworm-LICENSE.txt"; sourceTree = "<group>"; };
+		689ADC6CCBD4A85F25103272 /* Xingrong-SOURCE.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Xingrong-SOURCE.md"; sourceTree = "<group>"; };
+		3D2B08D7A14CA7015D7633D4 /* xingrong_courses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "xingrong_courses.json"; sourceTree = "<group>"; };
+		C3C90A3283AFD9F7243BE6E2 /* LLLearningHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLLearningHomeViewController.swift"; sourceTree = "<group>"; };
+		07E9450FFC98DCD4F9E5D243 /* LLPracticeFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLPracticeFloatingViewController.swift"; sourceTree = "<group>"; };
+		F736D5A1FDBF6CD1F8C23B1A /* LLPracticeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LLPracticeTextView.swift"; sourceTree = "<group>"; };
+		5D14F5FEBC08929826BF5615 /* LLBackupArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/LLBackupArchive.swift; sourceTree = SOURCE_ROOT; };
+		B55EAF98222DE464F21B156A /* LLFileReplacementTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/LLFileReplacementTransaction.swift; sourceTree = SOURCE_ROOT; };
+		C4F8707596E8FE9AE076FCAE /* LLSQLiteConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/Database/LLSQLiteConnection.swift; sourceTree = SOURCE_ROOT; };
+		B883D17B38D8CFCBC6AE725F /* LLContentMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/Database/LLContentMigrator.swift; sourceTree = SOURCE_ROOT; };
+		49A6264DAF143108D4713363 /* dictionary-manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LearnLanguage/Resources/InitialDicts/dictionary-manifest.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -768,6 +790,10 @@
 		849226A32F3C878F00447E0C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				B883D17B38D8CFCBC6AE725F /* LLContentMigrator.swift */,
+				C4F8707596E8FE9AE076FCAE /* LLSQLiteConnection.swift */,
+				B55EAF98222DE464F21B156A /* LLFileReplacementTransaction.swift */,
+				5D14F5FEBC08929826BF5615 /* LLBackupArchive.swift */,
 				8492269E2F3C878F00447E0C /* Database */,
 				849226A02F3C878F00447E0C /* LLMMKVManager.swift */,
 				A88C882C2F3CBD4D005ACFA6 /* LLMMKVKeys.swift */,
@@ -973,6 +999,7 @@
 		849226D62F3C878F00447E0C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D13FA7B09D2C83BEDF55EA90 /* Learning */,
 				849226AC2F3C878F00447E0C /* Data */,
 				84EE8F322F88EFC10082A167 /* GrammarNotes */,
 				84F36D782F8A52AB00142F1D /* Guide */,
@@ -993,6 +1020,7 @@
 		849226D82F3C878F00447E0C /* InitialDicts */ = {
 			isa = PBXGroup;
 			children = (
+				49A6264DAF143108D4713363 /* dictionary-manifest.json */,
 				849226D72F3C878F00447E0C /* LearnLanguage.db */,
 			);
 			path = InitialDicts;
@@ -1054,26 +1082,9 @@
 			path = Translation;
 			sourceTree = "<group>";
 		};
-		84E1E3922F4D53A300D1B7B6 /* Engine */ = {
-			isa = PBXGroup;
-			children = (
-				84E1E3912F4D53A300D1B7B6 /* LLTypingEngine.swift */,
-			);
-			path = Engine;
-			sourceTree = "<group>";
-		};
-		84E1E3962F4D53A300D1B7B6 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				84E1E3932F4D53A300D1B7B6 /* LLTypingPracticeFloatingViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		84E1E39A2F4D53A300D1B7B6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				84E1E3972F4D53A300D1B7B6 /* LLTypingDisplayView.swift */,
 				84E1E3982F4D53A300D1B7B6 /* LLTypingSoundManager.swift */,
 				84E1E3992F4D53A300D1B7B6 /* LLTypingStatsView.swift */,
 			);
@@ -1083,11 +1094,8 @@
 		84E1E39D2F4D53A300D1B7B6 /* TypingPractice */ = {
 			isa = PBXGroup;
 			children = (
-				84E1E3922F4D53A300D1B7B6 /* Engine */,
-				84E1E3962F4D53A300D1B7B6 /* ViewControllers */,
 				84E1E39A2F4D53A300D1B7B6 /* Views */,
 				84E1E39B2F4D53A300D1B7B6 /* LLStatusBarTypingPractice.swift */,
-				84E1E39C2F4D53A300D1B7B6 /* LLTypingPracticeManager.swift */,
 			);
 			path = TypingPractice;
 			sourceTree = "<group>";
@@ -1551,6 +1559,71 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		D13FA7B09D2C83BEDF55EA90 /* Learning */ = {
+			isa = PBXGroup;
+			children = (
+				D1EFB99645F741B03B69CFEB /* Engine */,
+				7B16BE13E5244255D0BF4909 /* Managers */,
+				D78FC0CEEC6B997C4E4A373F /* Models */,
+				96022CE9437361C8A7DA2DCD /* Resources */,
+				4858B495D50935AA46ED12BD /* ViewControllers */,
+				0411B2AD5F05DEFB89E3F8FF /* Views */,
+			);
+			path = Learning;
+			sourceTree = "<group>";
+		};
+		D1EFB99645F741B03B69CFEB /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				DE30C745C33C05776B99F601 /* LLPracticeSession.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		7B16BE13E5244255D0BF4909 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				BEA405A949FC6D3EA8120F1F /* LLPracticePanelController.swift */,
+				C65657661B56588A78E5DEA7 /* LLPracticeSources.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D78FC0CEEC6B997C4E4A373F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A31A310ACC9DFB4DD0733395 /* LLLearningItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		96022CE9437361C8A7DA2DCD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				00AB9632534B859C40BB94FE /* Earthworm-LICENSE.txt */,
+				689ADC6CCBD4A85F25103272 /* Xingrong-SOURCE.md */,
+				3D2B08D7A14CA7015D7633D4 /* xingrong_courses.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4858B495D50935AA46ED12BD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C3C90A3283AFD9F7243BE6E2 /* LLLearningHomeViewController.swift */,
+				07E9450FFC98DCD4F9E5D243 /* LLPracticeFloatingViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0411B2AD5F05DEFB89E3F8FF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F736D5A1FDBF6CD1F8C23B1A /* LLPracticeTextView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1559,6 +1632,7 @@
 			buildConfigurationList = A80BC33B2F378E8B00A40D9B /* Build configuration list for PBXNativeTarget "LearnLanguage" */;
 			buildPhases = (
 				86D916237C47BEF4206691DF /* [CP] Check Pods Manifest.lock */,
+				D56EE55DC14024A170F411F2 /* Validate Dictionary Resource */,
 				A80BC3292F378E8900A40D9B /* Sources */,
 				A80BC32A2F378E8900A40D9B /* Frameworks */,
 				A80BC32B2F378E8900A40D9B /* Resources */,
@@ -1620,6 +1694,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC05A841EFBF081B774C8DB /* dictionary-manifest.json in Resources */,
+				FE0C26C32C7FC92B47B184D8 /* Earthworm-LICENSE.txt in Resources */,
+				FC7FAB29E62597DC9E509ADB /* Xingrong-SOURCE.md in Resources */,
+				4E380678A73CD9AD715EEDDC /* xingrong_courses.json in Resources */,
 				849227082F3C878F00447E0C /* Assets.xcassets in Resources */,
 				8492270C2F8F000100447E0C /* PrivacyInfo.xcprivacy in Resources */,
 				840D1E6E2F67B6A6002C330E /* Localizable.strings in Resources */,
@@ -1882,6 +1960,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D56EE55DC14024A170F411F2 /* Validate Dictionary Resource */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputPaths = (
+				"$(SRCROOT)/Tools/validate_resources.py",
+				"$(SRCROOT)/LearnLanguage/Resources/InitialDicts/dictionary-manifest.json",
+				"$(SRCROOT)/LearnLanguage/Resources/InitialDicts/LearnLanguage.db",
+			);
+			name = "Validate Dictionary Resource";
+			outputPaths = ();
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/python3 \"$SRCROOT/Tools/validate_resources.py\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1889,6 +1984,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66E3C772163179C0C40A8DF /* LLContentMigrator.swift in Sources */,
+				BEE72F588AE04C7C0DCF757E /* LLSQLiteConnection.swift in Sources */,
+				79B0863EC35994645532A8D8 /* LLFileReplacementTransaction.swift in Sources */,
+				145993C39C5F9CEDB357FCC8 /* LLBackupArchive.swift in Sources */,
+				1EC60C1507F925C31BB99C70 /* LLPracticeSession.swift in Sources */,
+				E3FF676549601F855E54C43A /* LLPracticePanelController.swift in Sources */,
+				DA678899C6C1314C3BF23162 /* LLPracticeSources.swift in Sources */,
+				29834A3D9786F926CA608F58 /* LLLearningItem.swift in Sources */,
+				737A48DF9F4DE73BB3BCE3F9 /* LLLearningHomeViewController.swift in Sources */,
+				67B1DD265DECFF880C6D904C /* LLPracticeFloatingViewController.swift in Sources */,
+				4CAC993167A1716ED31A3C7F /* LLPracticeTextView.swift in Sources */,
 				849226DD2F3C878F00447E0C /* LLTrendCardView.swift in Sources */,
 				A88C882B2F3CB589005ACFA6 /* LLSettingsCardView.swift in Sources */,
 				A88C88292F3CAF61005ACFA6 /* NotificationName+Extensions.swift in Sources */,
@@ -1934,10 +2040,6 @@
 				84C0D9DB2F6BDFA800F96737 /* LLTodayRecordContentView.swift in Sources */,
 				84E1E3A02F4D53A300D1B7B6 /* LLStatusBarTypingPractice.swift in Sources */,
 				84A446CA2F6A818300F0E5E7 /* LLBackupManager.swift in Sources */,
-				84E1E3A32F4D53A300D1B7B6 /* LLTypingDisplayView.swift in Sources */,
-				84E1E3A42F4D53A300D1B7B6 /* LLTypingEngine.swift in Sources */,
-				84E1E3A52F4D53A300D1B7B6 /* LLTypingPracticeManager.swift in Sources */,
-				84E1E3A62F4D53A300D1B7B6 /* LLTypingPracticeFloatingViewController.swift in Sources */,
 				849226EF2F3C878F00447E0C /* LLWordListDetailViewController.swift in Sources */,
 				849226F02F3C878F00447E0C /* LLCurrentListCardView.swift in Sources */,
 				A85192832F51E908006CEA04 /* LLDBLearningProgress.swift in Sources */,

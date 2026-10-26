@@ -62,12 +62,30 @@ final class LLReviewContentView: NSView {
         }
     }
     
-    var records: [LLDBLearningProgress] = [] {
-        didSet {
-            tableView?.reloadData()
-        }
+    private var records: [LLDBLearningProgress] = []
+    private var wordsByID: [Int: LLDBWord] = [:]
+    var onNextPage: (() -> Void)?
+    var onPreviousPage: (() -> Void)?
+    private let pageLabel = NSTextField(labelWithString: "第 1 页")
+    private lazy var previousPageButton = NSButton(title: "上一页", target: self, action: #selector(previousPage))
+    private lazy var nextPageButton = NSButton(title: "下一页", target: self, action: #selector(nextPage))
+
+    func update(records: [LLDBLearningProgress], words: [LLDBWord]) {
+        self.records = records
+        wordsByID = Dictionary(words.compactMap { word in word.id.map { ($0, word) } }, uniquingKeysWith: { first, _ in first })
+        tableView?.reloadData()
+        scrollView.contentView.scroll(to: .zero)
     }
-    
+
+    func updatePagination(page: Int, hasNext: Bool, error: String? = nil) {
+        pageLabel.stringValue = error ?? (records.isEmpty ? "暂无记录" : "第 \(page + 1) 页")
+        previousPageButton.isEnabled = page > 0
+        nextPageButton.isEnabled = hasNext
+    }
+
+    @objc private func previousPage() { onPreviousPage?() }
+    @objc private func nextPage() { onNextPage?() }
+
     var onTimeFilterChanged: ((String) -> Void)?
     var onMarkAsKnown: ((String, String) -> Void)?
     var onReviewWord: ((String) -> Void)?
@@ -115,6 +133,19 @@ final class LLReviewContentView: NSView {
             make.width.equalTo(100)
         }
         
+        let pagination = NSStackView(views: [previousPageButton, pageLabel, nextPageButton])
+        pagination.orientation = .horizontal
+        pagination.spacing = 10
+        pageLabel.font = .systemFont(ofSize: 12)
+        pageLabel.textColor = LLAppearanceManager.shared.colors.secondaryText
+        previousPageButton.isEnabled = false
+        nextPageButton.isEnabled = false
+        toolbar.addSubview(pagination)
+        pagination.snp.makeConstraints { make in
+            make.trailing.centerY.equalToSuperview()
+            make.leading.greaterThanOrEqualTo(popup.snp.trailing).offset(12)
+        }
+
         addSubview(tableContainer)
         tableContainer.snp.makeConstraints { make in
             make.top.equalTo(toolbar.snp.bottom).offset(12)
@@ -307,33 +338,21 @@ extension LLReviewContentView: NSTableViewDelegate {
         }
     }
     
+    private func word(wordId: String, listId: String) -> LLDBWord? {
+        guard let id = Int(wordId), let word = wordsByID[id], String(word.wordListId) == listId else { return nil }
+        return word
+    }
+
     private func getWordText(wordId: String, listId: String) -> String {
-        guard let list = LLWordListStorage.shared.list(byId: listId),
-              let entry = list.entries.first(where: { $0.id == wordId }) else {
-            return NSLocalizedString("Unknown Word", comment: "Unknown word placeholder")
-        }
-        return entry.text
+        word(wordId: wordId, listId: listId)?.word ?? NSLocalizedString("Unknown Word", comment: "Unknown word placeholder")
     }
-    
+
     private func getPhonetic(wordId: String, listId: String) -> String {
-        guard let list = LLWordListStorage.shared.list(byId: listId),
-              let entry = list.entries.first(where: { $0.id == wordId }) else {
-            return ""
-        }
-        
-        // 使用现有的 phonetic 字段
-        guard let phonetic = entry.phonetic, !phonetic.isEmpty else {
-            return ""
-        }
-        
-        return phonetic
+        let word = word(wordId: wordId, listId: listId)
+        return word?.ukPhonetic ?? word?.usPhonetic ?? ""
     }
-    
+
     private func getWordMeaning(wordId: String, listId: String) -> String {
-        guard let list = LLWordListStorage.shared.list(byId: listId),
-              let entry = list.entries.first(where: { $0.id == wordId }) else {
-            return ""
-        }
-        return entry.meaning
+        word(wordId: wordId, listId: listId)?.translation ?? ""
     }
 }

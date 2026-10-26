@@ -115,8 +115,11 @@ final class LLSearchWordView: NSView {
 
     // MARK: - State
 
+    private var translationID: UUID?
+    private var translationGeneration = 0
     private var lastSearchedText = ""
     private var lastTranslatedText = ""
+    private var lastSearchSucceeded = false
     private var lastPhonetics: String?
     private var lastDirection: LLTranslationManager.Direction?
     
@@ -147,7 +150,21 @@ final class LLSearchWordView: NSView {
 
     // MARK: - Setup
 
+    deinit { NotificationCenter.default.removeObserver(self) }
+
+    @objc private func languageSettingsChanged() {
+        guard let previous = lastDirection else { return }
+        let current = currentTranslationDirection
+        guard previous.sourceIdentifier != current.sourceIdentifier || previous.targetIdentifier != current.targetIdentifier else { return }
+        cancelSearch()
+        lastSearchedText = ""
+        lastSearchSucceeded = false
+        lastDirection = nil
+        hideResult()
+    }
+
     private func setupUI() {
+        NotificationCenter.default.addObserver(self, selector: #selector(languageSettingsChanged), name: .learnLanguageRefreshStatus, object: nil)
         // 输入框容器
         addSubview(inputContainer)
         inputContainer.addSubview(searchIcon)
@@ -254,7 +271,15 @@ final class LLSearchWordView: NSView {
 
     // MARK: - Actions
 
+    private func cancelSearch() {
+        translationGeneration += 1
+        LLTranslationManager.shared.cancel(translationID)
+        translationID = nil
+        showLoading(false)
+    }
+
     @objc private func clearSearch() {
+        cancelSearch()
         searchField.stringValue = ""
         lastSearchedText = ""
         clearButton.isHidden = true
@@ -270,6 +295,7 @@ final class LLSearchWordView: NSView {
     }
     
     @objc private func addToVocabularyNotebook() {
+        guard lastSearchSucceeded else { return }
         if LLGuideManager.shared.shouldShowTip(.translateAddToVocabulary) {
             LLInlineGuideTipView.show(
                 in: self,
@@ -299,24 +325,28 @@ final class LLSearchWordView: NSView {
     private func performSearch() {
         let text = searchField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
-        guard text != lastSearchedText else { return }
+        guard text != lastSearchedText || translationID == nil else { return }
+        cancelSearch()
+        let generation = translationGeneration
 
         lastSearchedText = text
+        lastSearchSucceeded = false
         showLoading(true)
         hideResult()
 
         let direction = currentTranslationDirection
         lastDirection = direction
 
-        LLTranslationManager.shared.translate(text, direction: direction) { [weak self] result in
-            guard let self else { return }
+        translationID = LLTranslationManager.shared.translate(text, direction: direction) { [weak self] result in
+            guard let self, self.translationGeneration == generation else { return }
+            self.translationID = nil
             self.showLoading(false)
 
             switch result {
             case .success(let r):
                 self.showResult(translated: r.translatedText, phonetics: r.phonetics)
             case .failure(let error):
-                self.showResult(translated: error.localizedDescription, phonetics: nil)
+                self.showResult(translated: error.localizedDescription, phonetics: nil, successful: false)
             }
         }
     }
@@ -333,7 +363,8 @@ final class LLSearchWordView: NSView {
         }
     }
 
-    private func showResult(translated: String, phonetics: String?) {
+    private func showResult(translated: String, phonetics: String?, successful: Bool = true) {
+        lastSearchSucceeded = successful
         lastTranslatedText = translated
         lastPhonetics = phonetics
         resultLabel.stringValue = translated
@@ -346,7 +377,7 @@ final class LLSearchWordView: NSView {
             phoneticLabel.isHidden = true
         }
 
-        let canAdd = !lastSearchedText.isEmpty && !translated.isEmpty && !translated.hasPrefix("翻译失败")
+        let canAdd = successful && !lastSearchedText.isEmpty && !translated.isEmpty && !translated.hasPrefix("翻译失败")
         let exists = LLWordListStorage.shared.containsWordInVocabularyNotebook(lastSearchedText, language: LLSettingsStore.shared.currentLanguage)
         addVocabularyButton.title = exists ? "已添加" : "添加生词"
         addVocabularyButton.contentTintColor = exists ? .secondaryLabelColor : .systemOrange
@@ -418,6 +449,7 @@ final class LLSearchWordView: NSView {
     }
 
     private func hideResult() {
+        lastSearchSucceeded = false
         resultContainer.isHidden = true
         divider.isHidden = true
         speakButton.isHidden = true
@@ -446,6 +478,7 @@ final class LLSearchWordView: NSView {
 
     /// 菜单关闭时清理状态
     func reset() {
+        cancelSearch()
         searchField.stringValue = ""
         lastSearchedText = ""
         clearButton.isHidden = true
@@ -463,7 +496,9 @@ extension LLSearchWordView: NSTextFieldDelegate {
         clearButton.isHidden = text.isEmpty
         // 输入变化时重置 lastSearchedText，允许重新搜索
         if text != lastSearchedText {
+            cancelSearch()
             lastSearchedText = ""
+            hideResult()
         }
         // 文本清空时隐藏结果区域并恢复初始高度
         if text.isEmpty {

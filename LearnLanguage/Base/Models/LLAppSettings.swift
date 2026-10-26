@@ -333,6 +333,29 @@ extension LLShortcutConfig {
 
 /// 应用设置（本地存储）
 struct LLAppSettings: Codable {
+    static let dailyWordRange = 1...1000
+
+    /// Validate persisted values as well as values coming from settings controls.
+    func validated() -> LLAppSettings {
+        var value = self
+        value.newWordsPerDay = min(max(value.newWordsPerDay, Self.dailyWordRange.lowerBound), Self.dailyWordRange.upperBound)
+        value.reviewCountPerDay = min(max(value.reviewCountPerDay, 0), 10000)
+        value.statusBarMaxLength = min(max(value.statusBarMaxLength, 1), 200)
+        value.statusBarContentWidth = min(max(value.statusBarContentWidth, 135), 300)
+        value.floatingPanelAlpha = value.floatingPanelAlpha.isFinite ? min(max(value.floatingPanelAlpha, 0.15), 1) : 0.55
+        value.floatingPanelWidth = value.floatingPanelWidth.isFinite ? min(max(value.floatingPanelWidth, 360), 900) : 480
+        value.floatingPanelHeight = value.floatingPanelHeight.isFinite ? min(max(value.floatingPanelHeight, 240), 600) : 280
+        value.floatingPanelFontSize = value.floatingPanelFontSize.isFinite ? min(max(value.floatingPanelFontSize, 12), 72) : 24
+        value.pronunciationRate = value.pronunciationRate.isFinite ? min(max(value.pronunciationRate, 0.25), 2) : 1
+        value.appAudioVolume = value.appAudioVolume.isFinite ? min(max(value.appAudioVolume, 0), 1) : 1
+        value.pronunciationLanguageInterval = value.pronunciationLanguageInterval.isFinite ? min(max(value.pronunciationLanguageInterval, 0), 5) : 0.5
+        value.statusBarPlaybackInterval = min(max(value.statusBarPlaybackInterval, 0), 3600)
+        value.autoShowAnswerAfterErrors = max(0, value.autoShowAnswerAfterErrors)
+        value.translateDoubleCopyInterval = value.translateDoubleCopyInterval.isFinite ? min(max(value.translateDoubleCopyInterval, 0.1), 3) : 0.5
+        value.translateFontSize = value.translateFontSize.isFinite ? min(max(value.translateFontSize, 10), 40) : 14
+        return value
+    }
+
     var displayLanguage: LLDisplayLanguage  // 应用显示语言
     var lastSelectedSidebarModule: SidebarModule
     var currentLanguage: LLLearningLanguage
@@ -392,7 +415,7 @@ struct LLAppSettings: Codable {
 
     static let `default` = LLAppSettings(
         displayLanguage: .simplifiedChinese,
-        lastSelectedSidebarModule: .wordList,
+        lastSelectedSidebarModule: .learning,
         currentLanguage: .english,
         currentListId: nil,
         statusBarShowPhonetic: false,
@@ -406,8 +429,8 @@ struct LLAppSettings: Codable {
         statusBarAutoScroll: true,
         statusBarPlaybackInterval: 0,
         floatingPanelAlpha: 0.55,
-        floatingPanelWidth: 400,
-        floatingPanelHeight: 200,
+        floatingPanelWidth: 480,
+        floatingPanelHeight: 280,
         floatingPanelFontName: "Bangers-Regular",
         floatingPanelFontSize: 24,
         pronunciationEnabled: true,

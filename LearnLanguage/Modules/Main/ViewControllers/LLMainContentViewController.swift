@@ -19,6 +19,7 @@ final class LLMainContentViewController: NSViewController {
     private var currentViewController: NSViewController?
     
     // 各个模块的视图控制器（复用）
+    private lazy var learningVC = LLLearningHomeViewController()
     private lazy var wordListVC = LLWordListTabViewController()
     private lazy var learningRecordVC = LLProgressTabViewController()
     private lazy var settingsVC = LLSettingsTabViewController()
@@ -58,6 +59,8 @@ final class LLMainContentViewController: NSViewController {
         let nextVC: NSViewController
         
         switch module {
+        case .learning:
+            nextVC = learningVC
         case .wordList:
             nextVC = wordListVC
         case .learningRecord:

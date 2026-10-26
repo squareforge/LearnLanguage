@@ -27,7 +27,10 @@ class LLAppDelegate: NSObject, NSApplicationDelegate {
         // 默认以状态栏模式运行（不显示 Dock 图标）
         NSApp.setActivationPolicy(.accessory)
         // 1. 执行应用初始化（包括 MMKV、数据库、键盘快捷键等）
-        LLAppInitializer.shared.performStartupInitialization()
+        guard LLAppInitializer.shared.performStartupInitialization() else {
+            NSApp.terminate(nil)
+            return
+        }
         
         // 2. 初始化状态栏
         setupStatusBar()
@@ -118,6 +121,11 @@ class LLAppDelegate: NSObject, NSApplicationDelegate {
             mainWindow.orderFrontRegardless()
             NSApp.activate(ignoringOtherApps: true)
         }
+    }
+
+    @objc func showLearningHome() {
+        showMainWindow()
+        (mainWindow?.contentViewController as? LLMainViewController)?.openLearningHome()
     }
 
     func createFloatingPanel() {

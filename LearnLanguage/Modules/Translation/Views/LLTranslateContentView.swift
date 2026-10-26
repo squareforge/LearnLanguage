@@ -188,6 +188,7 @@ final class LLTranslateContentView: NSView {
         phoneticLabel.isHidden = true
         speakButton.isHidden = true
         copyButton.isHidden = true
+        addVocabularyButton.isHidden = true
         updateScrollViewHeight()
     }
 
@@ -210,6 +211,14 @@ final class LLTranslateContentView: NSView {
         setVocabularyButtonAdded(false)
         updateScrollViewHeight()
         layoutSubtreeIfNeeded()
+    }
+
+    func showError(text: String, fontSize: CGFloat) {
+        showLoading()
+        resultLabel.stringValue = text
+        resultLabel.font = .systemFont(ofSize: fontSize)
+        resultLabel.textColor = .systemOrange
+        updateScrollViewHeight()
     }
 
     /// 更新 pin 按钮状态

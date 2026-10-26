@@ -21,31 +21,17 @@ final class LLTranslateWindowManager {
     // MARK: - Public
 
     func showWindow(viewModel: LLTranslateViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
-            // pin 状态下窗口已存在，直接刷新内容
-            if let existing = self.currentWindow, viewModel.isPinned {
-                existing.makeKeyAndOrderFront(nil)
-                self.contentView?.showLoading()
-                viewModel.triggerTranslation()
-                return
-            }
-
-            // 关闭旧窗口
-            self.closeWindow()
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                self.createWindow(viewModel: viewModel)
-            }
+        if let existing = currentWindow, viewModel.isPinned {
+            existing.makeKeyAndOrderFront(nil)
+            contentView?.showLoading()
+            viewModel.triggerTranslation()
+            return
         }
+        closeWindow()
+        createWindow(viewModel: viewModel)
     }
 
-    func dismissWindow() {
-        DispatchQueue.main.async { [weak self] in
-            self?.closeWindow()
-        }
-    }
+    func dismissWindow() { closeWindow() }
 
     // MARK: - Private
 
@@ -84,8 +70,10 @@ final class LLTranslateWindowManager {
             guard let cv, let vm = viewModel else { return }
             if completed {
                 cv.showResult(text: text, phonetic: phonetic, fontSize: vm.fontSize)
-            } else {
+            } else if text == LLTranslateViewModel.placeholder {
                 cv.showLoading()
+            } else {
+                cv.showError(text: text, fontSize: vm.fontSize)
             }
         }
         viewModel.onPinChanged = { [weak cv] isPinned in

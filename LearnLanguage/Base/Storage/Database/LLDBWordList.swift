@@ -28,6 +28,12 @@ final class LLDBWordList: TableCodable {
     var updatedAt: TimeInterval = 0         // 更新时间
     
     // WCDB 必需的属性
+    var isAutoIncrement: Bool { id == nil }
+    var lastInsertedRowID: Int64 {
+        get { Int64(id ?? 0) }
+        set { id = Int(exactly: newValue) }
+    }
+
     enum CodingKeys: String, CodingTableKey {
         typealias Root = LLDBWordList
         static let objectRelationalMapping = TableBinding(CodingKeys.self)

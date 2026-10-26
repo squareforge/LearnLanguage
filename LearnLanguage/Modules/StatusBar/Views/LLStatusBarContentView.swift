@@ -46,6 +46,7 @@ final class LLStatusBarContentView: NSControl {
     var wordText: String = "LearnLanguage"
     var phoneticText: String = ""
     var meaningText: String = ""
+    private var vocabularyFeedbackEnabled = true
     
     // MARK: - UI Components
     
@@ -215,6 +216,7 @@ final class LLStatusBarContentView: NSControl {
     }
     
     private func showFeedbackView() {
+        guard vocabularyFeedbackEnabled else { return }
         // 显示反馈按钮，隐藏滚动视图
         feedbackView.isHidden = false
         scrollingMeaningView.isHidden = true
@@ -277,6 +279,7 @@ final class LLStatusBarContentView: NSControl {
     }
     
     private func handleFeedback(_ feedback: LLWordFeedback) {
+        guard vocabularyFeedbackEnabled else { return }
         // 通知 LLStatusBarManager 记录反馈
         LLStatusBarManager.shared.recordFeedback(feedback)
     }
@@ -314,7 +317,13 @@ final class LLStatusBarContentView: NSControl {
     
     // MARK: - Public Methods
     
-    func updateContent(word: String, phonetic: String, meaning: String, reviewCount: Int = 0) {
+    func updateContent(word: String, phonetic: String, meaning: String, reviewCount: Int = 0, vocabularyFeedbackEnabled: Bool = true) {
+        self.vocabularyFeedbackEnabled = vocabularyFeedbackEnabled
+        learnIndicatorView.isHidden = !vocabularyFeedbackEnabled
+        if !vocabularyFeedbackEnabled {
+            feedbackView.isHidden = true
+            feedbackView.alphaValue = 0
+        }
         self.wordText = word
         self.phoneticText = phonetic
         self.meaningText = meaning

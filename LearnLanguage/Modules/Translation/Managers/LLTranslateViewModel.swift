@@ -51,6 +51,10 @@ final class LLTranslateViewModel {
 
     private let clipboardMonitor = LLClipboardMonitor()
     private var mouseEventMonitor: Any?
+    private var translationID: UUID?
+    private var submittedDirection: LLTranslationManager.Direction?
+    private var translationGeneration = 0
+    private var contentGeneration = 0
     private var copyCount = 0
     private var lastCopyTime = Date()
     private var pinnedWindowPosition: NSPoint?
@@ -108,10 +112,10 @@ final class LLTranslateViewModel {
         if now.timeIntervalSince(lastCopyTime) <= interval {
             copyCount += 1
             if copyCount == 2 {
+                contentGeneration += 1
                 sourceString = text
                 targetString = LLTranslateViewModel.placeholder
                 showWindowAtMouse()
-                triggerTranslation()
                 copyCount = 0
             }
         } else {
@@ -122,30 +126,36 @@ final class LLTranslateViewModel {
 
     @available(macOS 13.0, *)
     private func handleClipboardImage(_ image: NSImage) {
+        contentGeneration += 1
+        let generation = contentGeneration
         LLOCRService.recognizeText(from: image) { [weak self] text in
-            guard let self,
+            guard let self, self.contentGeneration == generation,
                   let text,
                   !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
             self.sourceString = text
             self.targetString = LLTranslateViewModel.placeholder
             self.showWindowAtMouse()
-            self.triggerTranslation()
         }
     }
 
     // MARK: - Translation
 
     func triggerTranslation() {
-        guard #available(macOS 15.0, *) else { return }
-
+        translationGeneration += 1
+        let generation = translationGeneration
+        LLTranslationManager.shared.cancel(translationID)
+        let submittedText = sourceString
         isTranslationCompleted = false
+        targetString = Self.placeholder
         wordPhonetics = nil
         onTranslationUpdated?(targetString, nil, false)
 
         let direction = currentTranslationDirection
+        submittedDirection = direction
 
-        LLTranslationManager.shared.translate(sourceString, direction: direction) { [weak self] result in
-            guard let self else { return }
+        translationID = LLTranslationManager.shared.translate(submittedText, direction: direction) { [weak self] result in
+            guard let self, self.translationGeneration == generation, self.sourceString == submittedText else { return }
+            self.translationID = nil
             switch result {
             case .success(let r):
                 self.targetString = r.translatedText
@@ -171,12 +181,10 @@ final class LLTranslateViewModel {
         }
         
         let lang = currentTranslationDirection.speechLanguageCode
-        LLSpeechService.shared.onDidFinish = { [weak self] in
+        if LLSpeechService.shared.speak(sourceString, language: lang, completion: { [weak self] _ in
             self?.isSpeaking = false
             self?.onSpeakChanged?(false)
-        }
-        
-        if LLSpeechService.shared.speak(sourceString, language: lang) {
+        }) {
             isSpeaking = true
             onSpeakChanged?(true)
         }
@@ -211,12 +219,15 @@ final class LLTranslateViewModel {
     // MARK: - Window Management
 
     func showWindowAtMouse() {
-        DispatchQueue.main.async {
-            LLTranslateWindowManager.shared.showWindow(viewModel: self)
-        }
+        LLTranslateWindowManager.shared.showWindow(viewModel: self)
     }
 
     func dismissWindow() {
+        translationGeneration += 1
+        contentGeneration += 1
+        LLTranslationManager.shared.cancel(translationID)
+        translationID = nil
+        stopSpeaking()
         LLTranslateWindowManager.shared.dismissWindow()
         isPinned = false
         pinnedWindowPosition = nil
@@ -274,5 +285,16 @@ final class LLTranslateViewModel {
     @objc private func onSettingsChanged() {
         clipboardMonitor.stopMonitoring()
         setupClipboardMonitoring()
+        let current = currentTranslationDirection
+        if let previous = submittedDirection,
+           previous.sourceIdentifier != current.sourceIdentifier || previous.targetIdentifier != current.targetIdentifier {
+            contentGeneration += 1
+            stopSpeaking()
+            translationGeneration += 1
+            LLTranslationManager.shared.cancel(translationID)
+            translationID = nil
+            isTranslationCompleted = false
+            if LLTranslateWindowManager.shared.currentWindow != nil { triggerTranslation() }
+        }
     }
 }

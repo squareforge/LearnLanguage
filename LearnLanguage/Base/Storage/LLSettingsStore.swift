@@ -10,7 +10,6 @@ import MMKV
 final class LLSettingsStore {
     static let shared = LLSettingsStore()
     private let key = "LearnLanguage.LLAppSettings"
-    private let mmkv: MMKV
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
@@ -18,18 +17,18 @@ final class LLSettingsStore {
         // 初始化 MMKV
         MMKV.initialize(rootDir: nil)
         // 使用默认实例
-        mmkv = MMKV.default()!
+        _ = MMKV.default()
     }
 
     var settings: LLAppSettings {
         get {
-            guard let data = mmkv.data(forKey: key),
+            guard let data = LLMMKVManager.shared.data(forKey: key),
                   let s = try? decoder.decode(LLAppSettings.self, from: data) else { return .default }
-            return s
+            return s.validated()
         }
         set {
-            guard let data = try? encoder.encode(newValue) else { return }
-            mmkv.set(data, forKey: key)
+            guard let data = try? encoder.encode(newValue.validated()) else { return }
+            LLMMKVManager.shared.set(data, forKey: key)
         }
     }
 

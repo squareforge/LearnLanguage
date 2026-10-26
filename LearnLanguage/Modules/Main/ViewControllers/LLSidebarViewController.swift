@@ -15,6 +15,7 @@ protocol SidebarViewControllerDelegate: AnyObject {
 }
 
 enum SidebarModule: String, Codable {
+    case learning
     case wordList           // 词库管理
     case learningRecord     // 学习记录
     case settings          // 设置
@@ -22,15 +23,17 @@ enum SidebarModule: String, Codable {
     
     var title: String {
         switch self {
-        case .wordList: return NSLocalizedString("Word List", comment: "Word list module")
+        case .learning: return "学习"
+        case .wordList: return "词库管理"
         case .learningRecord: return NSLocalizedString("Progress", comment: "Learning progress module")
         case .settings: return NSLocalizedString("Settings", comment: "Settings module")
-        case .dataManagement: return NSLocalizedString("Data", comment: "Data management module")
+        case .dataManagement: return "工具与数据"
         }
     }
     
     var icon: NSImage? {
         switch self {
+        case .learning: return NSImage(systemSymbolName: "play.rectangle.fill", accessibilityDescription: nil)
         case .wordList: return NSImage(systemSymbolName: "books.vertical.fill", accessibilityDescription: nil)
         case .learningRecord: return NSImage(systemSymbolName: "chart.bar.xaxis", accessibilityDescription: nil)
         case .settings: return NSImage(systemSymbolName: "slider.horizontal.3", accessibilityDescription: nil)
@@ -153,7 +156,7 @@ final class LLSidebarViewController: NSViewController {
     
     weak var delegate: SidebarViewControllerDelegate?
     private var selectedModule: SidebarModule = LLSettingsStore.shared.settings.lastSelectedSidebarModule
-    private let modules: [SidebarModule] = [.wordList, .learningRecord, .dataManagement, .settings]
+    private let modules: [SidebarModule] = [.learning, .wordList, .learningRecord, .dataManagement, .settings]
     
     // 数据源
     private var currentWordList: WordList?
@@ -438,6 +441,11 @@ final class LLSidebarViewController: NSViewController {
     
     // MARK: - Actions
     
+    func selectModule(_ module: SidebarModule) {
+        guard let index = modules.firstIndex(of: module) else { return }
+        didSelectNavigation(at: index)
+    }
+
     private func didSelectNavigation(at index: Int) {
         let module = modules[index]
         saveSelectedModule(module)
