@@ -27,6 +27,13 @@ final class LLCourseRepository {
         allProgress()[courseID] ?? LLCourseProgress()
     }
 
+    func course(after courseID: String) throws -> LLSentenceCourse? {
+        let courses = try courses()
+        guard let index = courses.firstIndex(where: { $0.id == courseID }),
+              courses.indices.contains(index + 1) else { return nil }
+        return courses[index + 1]
+    }
+
     func save(_ progress: LLCourseProgress, for courseID: String) throws {
         var all = allProgress()
         all[courseID] = progress
@@ -95,6 +102,7 @@ final class LLCoursePracticeSource: LLPracticeSource {
     var id: String { "course:\(course.id)" }
     var title: String { "星荣句式 · \(course.title)" }
     var positionText: String { "\(min(index + 1, course.words.count)) / \(course.words.count)" }
+    var nextCourse: LLSentenceCourse? { try? repository.course(after: course.id) }
 
     init(course: LLSentenceCourse, repository: LLCourseRepository = .shared) {
         self.course = course

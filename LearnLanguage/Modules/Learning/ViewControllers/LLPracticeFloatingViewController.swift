@@ -24,6 +24,7 @@ private final class LLPracticeInputView: NSView {
 final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegate {
     var onHide: (() -> Void)?
     var onChooseSource: (() -> Void)?
+    var onNextCourse: ((LLSentenceCourse) -> Void)?
     private var session: LLPracticeSession?
     private let sourceLabel = NSTextField(labelWithString: "")
     private let positionLabel = NSTextField(labelWithString: "")
@@ -36,6 +37,8 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
     private let hintButton = NSButton()
     private let optionsButton = NSButton()
     private let continueButton = NSButton()
+    private let nextCourseButton = NSButton(title: "下一课", target: nil, action: nil)
+    private let completionActions = NSStackView()
     private var optionsPopover: NSPopover?
     private var speechGeneration = 0
     private var soundsEnabled: Bool { LLMMKVManager.shared.bool(forKey: "learning.practice_sounds", defaultValue: false) }
@@ -82,6 +85,10 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         exampleLabel.stringValue = session.item?.example ?? ""
         continueButton.isHidden = !session.isFinished
         continueButton.title = session.source is LLCoursePracticeSource ? "继续未完成项 / 再练一遍" : "再学一组"
+        completionActions.isHidden = !session.isFinished
+        let nextCourse = (session.source as? LLCoursePracticeSource)?.nextCourse
+        nextCourseButton.isHidden = !session.isFinished || session.errorMessage != nil || nextCourse == nil
+        nextCourseButton.toolTip = nextCourse.map { "开始\($0.title)" }
         hintButton.isEnabled = !session.isFinished
         replayButton.isEnabled = !session.isFinished
         if let error = session.errorMessage {
@@ -93,11 +100,7 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         } else if session.isFinished {
             statusLabel.stringValue = "进度已保存 · Esc 隐藏"
         } else if session.isItemComplete {
-            if session.reviewsMeaningBeforeAdvancing {
-                statusLabel.stringValue = session.isMeaningRevealed ? "再按 Space 或 Enter 保存并继续" : "完成！按 Space 或 Enter 查看中文释义"
-            } else {
-                statusLabel.stringValue = "完成！按 Space 或 Enter 继续"
-            }
+            statusLabel.stringValue = "完成！按 Space 或 Enter 保存并继续"
         } else if session.lastInputWasError {
             statusLabel.stringValue = "这个词再试一次 · ⌘/ 显示答案"
         } else {
@@ -148,7 +151,13 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         continueButton.target = self
         continueButton.action = #selector(replaySession)
         continueButton.bezelStyle = .rounded
-        let content = NSStackView(views: [exampleLabel, textView, phoneticLabel, meaningLabel, continueButton])
+        nextCourseButton.target = self
+        nextCourseButton.action = #selector(startNextCourse)
+        nextCourseButton.bezelStyle = .rounded
+        completionActions.spacing = 8
+        completionActions.addArrangedSubview(continueButton)
+        completionActions.addArrangedSubview(nextCourseButton)
+        let content = NSStackView(views: [exampleLabel, textView, phoneticLabel, meaningLabel, completionActions])
         content.orientation = .vertical
         content.alignment = .centerX
         content.spacing = 8
@@ -213,7 +222,8 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
             switch session.input(char) {
             case .correct: if soundsEnabled { LLTypingSoundManager.shared.playKeySound() }
             case .incorrect: if soundsEnabled { LLTypingSoundManager.shared.playWrongSound() }
-            case .itemCompleted: if soundsEnabled { LLTypingSoundManager.shared.playCompleteSound() }
+            case .itemCompleted:
+                if session.reviewsMeaningBeforeAdvancing || soundsEnabled { LLTypingSoundManager.shared.playCompleteSound() }
             case .ignored: break
             }
         }
@@ -234,6 +244,11 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
     @objc private func toggleHint() { session?.toggleHint(); refresh(); focusInput() }
     @objc private func replayAudio() { speakCurrent(); focusInput() }
     @objc private func replaySession() { session?.replay(); changedItem(); focusInput() }
+    @objc private func startNextCourse() {
+        guard let session, session.isFinished, session.errorMessage == nil,
+              let nextCourse = (session.source as? LLCoursePracticeSource)?.nextCourse else { return }
+        onNextCourse?(nextCourse)
+    }
 
     private func speakCurrent() {
         guard let item = session?.item, view.window?.isVisible == true else { return }
@@ -261,7 +276,7 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         alphaLabel.tag = 702
         let speech = NSButton(checkboxWithTitle: "自动朗读英文", target: self, action: #selector(changeAutomaticSpeech(_:)))
         speech.state = automaticSpeech ? .on : .off
-        let sound = NSButton(checkboxWithTitle: "练习音效", target: self, action: #selector(changeSounds(_:)))
+        let sound = NSButton(checkboxWithTitle: session?.reviewsMeaningBeforeAdvancing == true ? "按键与错误音效" : "练习音效", target: self, action: #selector(changeSounds(_:)))
         sound.state = soundsEnabled ? .on : .off
         let rate = NSPopUpButton()
         rate.addItems(withTitles: ["慢速 0.7×", "正常 1.0×", "快速 1.2×"])

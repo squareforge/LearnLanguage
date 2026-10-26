@@ -206,6 +206,10 @@ final class LLPracticePanelController: NSObject, NSWindowDelegate {
 
         let controller = LLPracticeFloatingViewController()
         controller.onHide = { [weak self] in self?.hide() }
+        controller.onNextCourse = { [weak self] course in
+            guard self?.session?.isFinished == true else { return }
+            self?.start(source: LLCoursePracticeSource(course: course))
+        }
         controller.onChooseSource = { [weak self] in
             self?.hide()
             (NSApp.delegate as? LLAppDelegate)?.showLearningHome()

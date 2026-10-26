@@ -31,6 +31,7 @@ struct PracticeUITests {
         LLSettingsStore.shared.currentListId = "vocabulary"
         LLSettingsStore.shared.settings.statusBarPlaybackInterval = 1
         LLSettingsStore.shared.settings.typingPracticeShowMeaning = true
+        LLMMKVManager.shared.set(false, forKey: "learning.practice_sounds")
         LLStatusBarManager.shared.setupStatusBar()
         LLPronunciationManager.shared.spoken.removeAll()
         let controller = LLPracticePanelController.shared
@@ -53,6 +54,8 @@ struct PracticeUITests {
         check(LLStatusBarContentView.displayedWord == "I", "The menu bar switches from vocabulary to the course item")
         check(!LLStatusBarContentView.allowsFeedback, "Course mode removes vocabulary-only feedback controls")
         let surface = panel.initialFirstResponder!
+        let nextCourseButton = descendants(surface).compactMap { $0 as? NSButton }.first { $0.title == "下一课" }!
+        check(nextCourseButton.isHidden, "Next lesson is hidden while practicing")
         let meaning = descendants(surface).compactMap { $0 as? NSTextField }.first { $0.stringValue == "我" }!
         check(meaning.isHidden, "Course meanings start hidden even when vocabulary meanings are enabled")
         let display = descendants(surface).compactMap { $0 as? LLPracticeTextView }.first!
@@ -62,11 +65,16 @@ struct PracticeUITests {
         let replayPoint = replayButton.convert(NSPoint(x: replayButton.bounds.midX, y: replayButton.bounds.midY), to: surface.superview)
         check(surface.hitTest(replayPoint) !== surface, "Practice controls remain clickable beside the typing surface")
         check(LLStatusBarManager.shared.getCurrentWord() == nil, "Course mode clears the old vocabulary action target")
+        let beforeCompletion = LLTypingSoundManager.shared.completionCount
+        send("x", to: panel)
+        check(meaning.isHidden && LLTypingSoundManager.shared.completionCount == beforeCompletion, "Incorrect input cannot reveal the meaning or play success")
         send("i", keyCode: 34, to: panel)
         check(controller.session?.isItemComplete == true, "A key event delivered through NSWindow reaches the course session")
         let beforeReview = LLPronunciationManager.shared.spoken.count
-        send(" ", keyCode: 49, to: panel)
-        check(!meaning.isHidden && controller.session?.item?.text == "I", "First Space displays the Chinese meaning without advancing")
+        check(!meaning.isHidden && controller.session?.item?.text == "I", "Correct completion immediately displays the Chinese meaning without advancing")
+        check(LLTypingSoundManager.shared.completionCount == beforeCompletion + 1, "Course completion plays success even when key and error sounds are disabled")
+        send("i", isRepeat: true, to: panel)
+        check(LLTypingSoundManager.shared.completionCount == beforeCompletion + 1, "Extra input after completion cannot repeat success audio")
         check(LLCourseRepository.shared.progress(for: course.id).completedCount(total: 2) == 0 && LLPronunciationManager.shared.spoken.count == beforeReview, "Meaning review neither saves progress nor starts next-item speech")
         send(" ", keyCode: 49, isRepeat: true, to: panel)
         check(controller.session?.item?.text == "I", "Holding Space cannot skip past meaning review")
@@ -74,8 +82,9 @@ struct PracticeUITests {
         controller.show()
         pump()
         check(!meaning.isHidden && controller.session?.isMeaningRevealed == true, "Hiding and reopening preserves the meaning review stage")
+        check(LLTypingSoundManager.shared.completionCount == beforeCompletion + 1, "Reopening does not repeat success audio")
         send(" ", keyCode: 49, to: panel)
-        check(controller.session?.item?.text == "like the food" && meaning.isHidden, "Second Space saves the item and hides the next meaning")
+        check(controller.session?.item?.text == "like the food" && meaning.isHidden, "One Space saves the item and hides the next meaning")
         check(LLStatusBarContentView.displayedWord == "like the food", "The menu bar advances with the course")
         send("l", to: panel)
         controller.hide()
@@ -96,10 +105,13 @@ struct PracticeUITests {
         check(meaning.isHidden && controller.session?.wordIndex == 1, "Space between words advances the token without revealing the meaning")
         for character in "the" { send(String(character), to: panel) }
         send(" ", keyCode: 49, to: panel)
-        for character in "food" { send(String(character), to: panel) }
         LLSettingsStore.shared.settings.typingPracticeShowMeaning = false
-        send(" ", keyCode: 49, to: panel)
+        let beforeSentenceCompletion = LLTypingSoundManager.shared.completionCount
+        for character in "foo" { send(String(character), to: panel) }
+        check(meaning.isHidden && LLTypingSoundManager.shared.completionCount == beforeSentenceCompletion, "An unfinished final word cannot reveal the meaning or play success")
+        send("d", to: panel)
         check(!meaning.isHidden && meaning.stringValue == "喜欢食物" && controller.session?.isFinished == false, "A complete sentence reveals its meaning even when vocabulary meanings are disabled")
+        check(LLTypingSoundManager.shared.completionCount == beforeSentenceCompletion + 1, "The final letter plays exactly one sentence success sound")
         send("\r", keyCode: 36, to: panel)
         check(controller.session?.isFinished == true, "Space and Return complete a sentence through actual window key events")
         check(LLCourseRepository.shared.progress(for: course.id).completedCount(total: 2) == 2, "Window input persists exactly the course's completed exercises")
@@ -145,6 +157,7 @@ struct PracticeUITests {
         let list = LLWordListStorage.shared.lists[0]
         controller.start(source: LLVocabularyPracticeSource(list: list))
         pump()
+        check(nextCourseButton.isHidden, "Vocabulary practice never offers a next lesson")
         check(controller.courseSession == nil && LLStatusBarContentView.displayedWord == "unrelated-vocabulary", "Switching back to words restores vocabulary mode")
         controller.hide()
         LLPronunciationManager.shared.stop()
@@ -166,6 +179,36 @@ struct PracticeUITests {
         let restoredToken = controller.session!.currentToken
         for character in restoredToken { send(String(character), to: restoredPanel) }
         check(controller.session?.isWordComplete == true, "Opening a restored course connects its session to the keyboard input controller")
+
+        // Finish the penultimate bundled lesson, then continue into a saved final lesson.
+        let courses = try LLCourseRepository.shared.courses()
+        let penultimate = courses[courses.count - 2]
+        let last = courses.last!
+        for course in [penultimate, last] {
+            try LLCourseRepository.shared.save(LLCourseProgress(nextIndex: course.words.count - 1,
+                completedIndices: Set(0..<(course.words.count - 1))), for: course.id)
+        }
+        controller.start(source: LLCoursePracticeSource(course: penultimate))
+        pump()
+        let restoredNextCourseButton = descendants(restoredPanel.initialFirstResponder!).compactMap { $0 as? NSButton }.first { $0.title == "下一课" }!
+        check(restoredNextCourseButton.isHidden, "A lesson with a successor still hides next until its final answer is confirmed")
+        func finishVisibleItem() {
+            for token in controller.session!.tokens {
+                for character in token { send(String(character), to: restoredPanel) }
+                send(" ", keyCode: 49, to: restoredPanel)
+            }
+        }
+        finishVisibleItem()
+        check(controller.session?.isFinished == true && !restoredNextCourseButton.isHidden, "Finishing a bundled lesson reveals the next-lesson button")
+        check(LLCourseRepository.shared.progress(for: penultimate.id).completedCount(total: penultimate.words.count) == penultimate.words.count, "Current lesson progress is saved before offering the next lesson")
+        restoredNextCourseButton.performClick(nil)
+        pump()
+        check(controller.courseSession?.source.id == "course:\(last.id)" && controller.session?.item?.text == last.words.last?.en, "Next lesson follows repository order and resumes its saved progress")
+        check(restoredPanel.isKeyWindow && !controller.session!.isFinished && restoredNextCourseButton.isHidden, "Next lesson reuses the focused practice panel and hides the button")
+        check(LLStatusBarContentView.displayedWord == last.words.last?.en && LLPronunciationManager.shared.spoken.last == last.words.last?.en, "Next lesson updates menu content and pronunciation")
+        check(LLMMKVManager.shared.string(forKey: "learning.last_source") == "course:\(last.id)", "Next lesson becomes the remembered learning source")
+        finishVisibleItem()
+        check(controller.session?.isFinished == true && restoredNextCourseButton.isHidden, "Finishing the final lesson does not offer a next lesson")
         controller.hide()
         main.close()
         print("Passed \(assertions) native practice UI checks.")

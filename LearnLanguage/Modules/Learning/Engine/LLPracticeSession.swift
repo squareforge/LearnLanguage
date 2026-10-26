@@ -18,8 +18,8 @@ final class LLPracticeSession {
     private(set) var usedHint = false
     private(set) var lastInputWasError = false
     private(set) var isAdvancing = false
-    private(set) var isMeaningRevealed = false
     var reviewsMeaningBeforeAdvancing: Bool { source is LLCoursePracticeSource }
+    var isMeaningRevealed: Bool { reviewsMeaningBeforeAdvancing && isItemComplete }
 
     init(source: LLPracticeSource, showHint: Bool) {
         self.source = source
@@ -62,20 +62,15 @@ final class LLPracticeSession {
 
     func backspace() {
         guard item != nil else { return }
-        isMeaningRevealed = false
         typedCount = max(0, typedCount - 1)
         lastInputWasError = false
     }
 
-    /// Courses review the meaning on the first final confirmation, then save on the next.
+    /// Space/Return commits a completed token or saves the completed learning item.
     @discardableResult
     func confirm() -> Bool {
         guard isWordComplete else { return false }
         if isItemComplete {
-            if reviewsMeaningBeforeAdvancing && !isMeaningRevealed {
-                isMeaningRevealed = true
-                return true
-            }
             return finishCurrentItem(skipped: false)
         } else {
             wordIndex += 1
@@ -135,6 +130,5 @@ final class LLPracticeSession {
         usedHint = false
         lastInputWasError = false
         persistenceError = nil
-        isMeaningRevealed = false
     }
 }

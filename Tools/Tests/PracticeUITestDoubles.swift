@@ -75,10 +75,11 @@ final class LLPronunciationManager {
 }
 final class LLTypingSoundManager {
     static let shared = LLTypingSoundManager()
+    var completionCount = 0
     func playLetterSound(for character: Character) {}
     func playKeySound() {}
     func playWrongSound() {}
-    func playCompleteSound() {}
+    func playCompleteSound() { completionCount += 1 }
 }
 final class LLAppearanceManager {
     static let shared = LLAppearanceManager()
