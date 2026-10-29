@@ -7,20 +7,49 @@ extension Notification.Name {
 final class LLCourseRepository {
     static let shared = LLCourseRepository()
     private let progressKey = "learning.course_progress.v1"
-    private var cachedCourses: [LLSentenceCourse]?
+    private var cachedCollections: [LLCourseCollection]?
+    private let resourceDirectory: URL?
+
+    init(resourceDirectory: URL? = nil) { self.resourceDirectory = resourceDirectory }
 
     func courses() throws -> [LLSentenceCourse] {
-        if let cachedCourses { return cachedCourses }
-        guard let url = Bundle.main.url(forResource: "xingrong_courses", withExtension: "json") else {
-            throw NSError(domain: "LLCourse", code: 1, userInfo: [NSLocalizedDescriptionKey: "未找到星荣课程，请重新安装应用。"])
+        try collections().flatMap(\.courses)
+    }
+
+    func collections() throws -> [LLCourseCollection] {
+        if let cachedCollections { return cachedCollections }
+        func resource(_ name: String) throws -> Data {
+            let url = resourceDirectory?.appendingPathComponent(name + ".json")
+                ?? Bundle.main.url(forResource: name, withExtension: "json")
+            guard let url else {
+                throw NSError(domain: "LLCourse", code: 1, userInfo: [NSLocalizedDescriptionKey: "未找到课程资源 \(name)，请重新安装应用。"])
+            }
+            return try Data(contentsOf: url)
         }
-        let courses = try JSONDecoder().decode([LLSentenceCourse].self, from: Data(contentsOf: url))
-        guard !courses.isEmpty, Set(courses.map(\.id)).count == courses.count,
-              courses.allSatisfy({ !$0.words.isEmpty && $0.words.allSatisfy({ !$0.en.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) }) else {
+        let decoder = JSONDecoder()
+        let xingrong = try decoder.decode([LLSentenceCourse].self, from: resource("xingrong_courses"))
+        var collections = [LLCourseCollection(id: "xingrong", title: "星荣句式", courses: xingrong)]
+        for book in 1...4 {
+            collections.append(try decoder.decode(LLCourseCollection.self, from: resource("new_concept_book_\(book)")))
+        }
+        let allCourses = collections.flatMap(\.courses)
+        guard collections.allSatisfy({ !$0.courses.isEmpty }),
+              Set(collections.map(\.id)).count == collections.count,
+              Set(allCourses.map(\.id)).count == allCourses.count,
+              allCourses.allSatisfy({ !$0.words.isEmpty && $0.words.allSatisfy({ !$0.en.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) }) else {
             throw NSError(domain: "LLCourse", code: 2, userInfo: [NSLocalizedDescriptionKey: "课程内容不完整，请重新安装应用。"])
         }
-        cachedCourses = courses
-        return courses
+        collections = collections.map { collection in
+            let courses = collection.courses.map { course -> LLSentenceCourse in
+                var course = course
+                course.collectionID = collection.id
+                course.collectionTitle = collection.title
+                return course
+            }
+            return LLCourseCollection(id: collection.id, title: collection.title, courses: courses)
+        }
+        cachedCollections = collections
+        return collections
     }
 
     func progress(for courseID: String) -> LLCourseProgress {
@@ -28,10 +57,10 @@ final class LLCourseRepository {
     }
 
     func course(after courseID: String) throws -> LLSentenceCourse? {
-        let courses = try courses()
-        guard let index = courses.firstIndex(where: { $0.id == courseID }),
-              courses.indices.contains(index + 1) else { return nil }
-        return courses[index + 1]
+        guard let collection = try collections().first(where: { $0.courses.contains(where: { $0.id == courseID }) }),
+              let index = collection.courses.firstIndex(where: { $0.id == courseID }),
+              collection.courses.indices.contains(index + 1) else { return nil }
+        return collection.courses[index + 1]
     }
 
     func save(_ progress: LLCourseProgress, for courseID: String) throws {
@@ -100,7 +129,7 @@ final class LLCoursePracticeSource: LLPracticeSource {
     private let repository: LLCourseRepository
     private var index: Int
     var id: String { "course:\(course.id)" }
-    var title: String { "星荣句式 · \(course.title)" }
+    var title: String { "\(course.sourceTitle) · \(course.title)" }
     var positionText: String { "\(min(index + 1, course.words.count)) / \(course.words.count)" }
     var nextCourse: LLSentenceCourse? { try? repository.course(after: course.id) }
 

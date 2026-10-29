@@ -1,0 +1,3216 @@
+[
+  {
+    "book": 1,
+    "lessons": [
+      {
+        "file": "001-002－Excuse Me.lrc",
+        "sha256": "97dc5f3b2a84a395b58c99144382c3dada351727c41e8043a88487bfe90f8940",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 1",
+          "Excuse me!",
+          "Listen to the tape then answer this question.",
+          "Whose handbag is it?"
+        ],
+        "sentences": 7
+      },
+      {
+        "file": "003-004－Sorry, Sir..lrc",
+        "sha256": "4728e26689eba1b5fb42c33760e532426301e54343704ae69c30068cb2d04a32",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 3",
+          "Sorry sir.",
+          "Listen to the tape then answer this question.",
+          "Does the man get his umbrella back?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "005-006－Nice to Meet You..lrc",
+        "sha256": "acc095593151e0dc22992c0aa11c5edff7461720653da07f933969817604f4b5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 5",
+          "Nice to meet you.",
+          "Listen to the tape then answer this question.",
+          "Is Chang-woo Chinese?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "007-008－Are You a Teacher.lrc",
+        "sha256": "8eba9f537aa728dd91f3009d834a0e7fe173c443e891e1d103d11506498ea88d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 7",
+          "Are you a teacher?",
+          "Listen to the tape then answer this question.",
+          "What is Rober's job?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "009-010－How Are You Today.lrc",
+        "sha256": "7c67ac2ced30b58d178e35ab9366d74c27950a6fe204ad8a170e812e24e421b8",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 9",
+          "How are you today?",
+          "Listen to the tape then answer this question.",
+          "How is Emma?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "011-012－Is This Your Shirt.lrc",
+        "sha256": "a659fa3edfdc018b694257b444e8c4d4eea7cd176623e19dfdb329b85d75c483",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 11",
+          "Is this your shirt?",
+          "Listen to the tape then answer this question.",
+          "Whose shirt is white?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "013-014－A New Dress.lrc",
+        "sha256": "1d6b85dafe5188497bc51e8b297a73eed780d0962da29055d97eb0bfa1ce3893",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 13",
+          "A new dress",
+          "Listen to the tape then answer this question.",
+          "What colour is Anna's hat?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "015-016－Your Passports, Please..lrc",
+        "sha256": "d4e5e176839c5572e40f2ddaf9167612919b75d93f31beba17b27e7d859866d9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 15",
+          "Your passports please.",
+          "Listen to the tape then answer this question.",
+          "Is there a problem with the Customs officer?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "017-018－How do you do.lrc",
+        "sha256": "86ffbcf8a6fb77c3666b23121694e64a496eedfc06c9f07f36025c1829f314b8",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 17",
+          "How do you do?",
+          "Listen to the tape then answer this question.",
+          "What are Michael Baker and Jeremy Short's jobs?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "019-020－Tired and Thirsty.lrc",
+        "sha256": "91f21fed6f96bd50e6774055f6a7073a122f16cf962e99d497dbfc6b1e826830",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 19",
+          "Tired and thirsty",
+          "Listen to the tape then answer this question.",
+          "Why do the children thank their mother?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "021-022－Which Book.lrc",
+        "sha256": "be7df4919e990b88c75da397efb904e53d8034375e2edc0e380eb3c5637c5b84",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 21",
+          "Which book?",
+          "Listen to the tape then answer this question.",
+          "Which book does the man want?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "023-024－Which Glasses.lrc",
+        "sha256": "8b8d390229a31ef559f7e354b44a5e107b3a78fe195f56aef4dbed25f018e990",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 23",
+          "Which glasses?",
+          "Listen to the tape then answer this question.",
+          "Which glasses does the man want?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "025-026－Mrs. Smith's Kitchen.lrc",
+        "sha256": "c7cd220ae79b76645f65cd4a860b374df4c8ab3f74c2c531cc5c8c34881a38b0",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 25",
+          "Mrs. Smith's Kitchen",
+          "Listen to the tape then answer this question.",
+          "What colour is the electric cooker?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "027-028－Mrs. Smith's Living Room.lrc",
+        "sha256": "361c430cc929a2c0335efdc43ee9584218bfade15afd080cf46b5b6e4386d332",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 27",
+          "Mrs. Smith's living room",
+          "Listen to the tape then answer this question.",
+          "Where are the books?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "029-030－Come In, Amy..lrc",
+        "sha256": "21dd2d5eecdd662ec86a4023dd02c1c6e1f5411e0ef5a13460dfbbe3d05de85a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 29",
+          "Come in, Amy.",
+          "Listen to the tape then answer this question.",
+          "How must Amy clean the floor?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "031-032－Where's Sally.lrc",
+        "sha256": "61e5f92030f336968514f67f968f09f7c1f5357604f6faf023c333373a315dce",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 31",
+          "Where's Sally?",
+          "Listen to the tape then answer this question.",
+          "Is the cat climbing the tree?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "033-034－A Fine Day.lrc",
+        "sha256": "465d2149ce08e9c4112634cdd3b2c152f8ca7f7bd12c1a5e4b917fa4c2b64ff9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 33",
+          "A fine day",
+          "Listen to the tape then answer this question.",
+          "Where is the Jones family?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "035-036－Our Village.lrc",
+        "sha256": "5834e16809a127156de4f0d4154f633e307d076654cd4f06f26600b388e8127b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 35",
+          "Our village",
+          "Listen to the tape then answer this question.",
+          "Are the children coming out of the park or going into it?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "037-038－Making a Bookcase.lrc",
+        "sha256": "cb0c7587d4315a02aa152182c4863b58c61477c53b3c315d517552d888513825",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 37",
+          "Making a bookcase",
+          "Listen to the tape then answer this question.",
+          "What is Susan's favourite colour?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "039-040－Don't Drop It.lrc",
+        "sha256": "5d4c00b4ad2fcf919c44cbbd1e59a6bcd87c054d35858166f2f6802a05b9a7d2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 39",
+          "Don't drop it!",
+          "Listen to the tape then answer this question.",
+          "Where does Sam put the vase in the end?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "041-042－Penny's Bag.lrc",
+        "sha256": "1d466c7ddbff01b9b16959d5d10ca9924f2cf70d3ed29d304485af4d828e34d3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 41",
+          "Penny's bag",
+          "Listen to the tape then answer this question.",
+          "Who is the tin of tobacco for?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "043-044－Hurry Up.lrc",
+        "sha256": "f3b86d8b69e08fd122e66d9ee29f45c78cceee57a73ca1f659105e3f7f623f40",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 43",
+          "Hurry up!",
+          "Listen to the tape then answer this question.",
+          "How do you know Sam doesn't make the tea very often?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "045-046－The Boss's Letter.lrc",
+        "sha256": "dde67ba1027b7adff3685a8b158b8b5e8db3c43db54c0bb03237a467f07de2da",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 45",
+          "The boss's letter",
+          "Listen to the tape then answer this question.",
+          "Why can't Pamela type the letter?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "047-048－A Cup of Coffee.lrc",
+        "sha256": "3e101ec5345a4f8da743a501d846eb925cf881536fa33f962c61ed5dc31a531f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 47",
+          "A cup of coffee",
+          "Listen to the tape then answer this question.",
+          "How does Ann like her coffee?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "049-050－At the Butcher's.lrc",
+        "sha256": "d9dbade4a703e569d282fe981868b04102399802abcd55cf5194193ee8dcd7b6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 49",
+          "At the butcher's",
+          "Listen to the tape then answer this question.",
+          "What does Mr. Bird like?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "051-052－A Pleasant Climate.lrc",
+        "sha256": "fe7d89f1db1466dbc11ee77cd16aca97ff0f498bbcf4bea9797bd42da315c78c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 51",
+          "A pleasant climate",
+          "Listen to the tape then answer this question.",
+          "Does it ever snow in Greece?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "053-054－An Interesting Climate.lrc",
+        "sha256": "2e3a52c5fc1b8d9a59a5f60e307e31d65e3856de1e6e6cd774f2feabf3a4e747",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 53",
+          "An interesting climate",
+          "Listen to the tape then answer this question.",
+          "What is the favourite subject of conversation in England?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "055-056－The Sawyer Family.lrc",
+        "sha256": "37300f5e3f37ec747c2a29d3662f288ce81dd16c3765efca63e37dfb302b3066",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 55",
+          "The Sawyer family",
+          "Listen to the tape then answer this question.",
+          "When do the children do their homework?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "057-058－An Unusual Day.lrc",
+        "sha256": "0d2dc9c33e0a1148c46cacc1bceae2c42cc8b0f36c675cac0c5f5bf82703703b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 57",
+          "An unusual day",
+          "Listen to the tape then answer this question.",
+          "What is Mr. Sawyer doing tonight?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "059-060－Is That All.lrc",
+        "sha256": "98cb3da04570eb76df5f5aff1ca3df9ead2d596cd569a716d4507aa6ff0b0394",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 59",
+          "Is that all?",
+          "Listen to the tape then answer this question.",
+          "Does the lady buy any chalk?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "061-062－A Bad Cold.lrc",
+        "sha256": "3fc6395464bf8a657103043f83b0c1483f1695a4ba00c510685642d09a162a95",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 61",
+          "A bad cold",
+          "Listen to the tape then answer this question.",
+          "What is good news for Jimmy?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "063-064－Thank You, Doctor..lrc",
+        "sha256": "c69ac5e5419963ed6665b13dfe78e975390b186d95cb58f553177e1c93bb58a0",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 63",
+          "Thank you, doctor.",
+          "Listen to the tape then answer this question.",
+          "Who else is in bed today? Why?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "065-066－Not a Baby.lrc",
+        "sha256": "b60efcea481b6d7855efc21fc497c687f10a77238927b3519f28b4316a0dcc43",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 65",
+          "Not a baby",
+          "Listen to the tape then answer this question.",
+          "Does Jill take the key to the front door?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "067-068－The Weekend.lrc",
+        "sha256": "be5af135f07e4dda1212e8a1147506ebb0bec621909d6990fc836cc6ef57cce7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 67",
+          "The weekend",
+          "Listen to the tape then answer this question.",
+          "What are the Johnsons going to do at the weekend?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "069-070－The Car Race.lrc",
+        "sha256": "877f01e5c2f2f96afbede5d0bead6b2fd828c24c564f3d79e35cf87a7d70f075",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 69",
+          "The car race",
+          "Listen to the tape then answer this question.",
+          "Which car was the winner in 1995?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "071-072－He's Awful.lrc",
+        "sha256": "55b3b8115926e16496ab2bda3d06a2e04e817198f48e828a4734fd0e4cdcbdd7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 71",
+          "He's awful!",
+          "Listen to the tape then answer this question.",
+          "How did Pauline answer the telephone at nine o'clock?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "073-074－The Way to King Street.lrc",
+        "sha256": "e95f4a1135858a29f41bdac89a682d1e9732b8e3d4e5e916a72c1e0739ce6fa3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 73",
+          "The way to King Street",
+          "Listen to the tape then answer this question.",
+          "Why did the man need a phrasebook?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "075-076－Uncomfortable Shoes.lrc",
+        "sha256": "4067242445fe297fe807a89800c9b00cf56b11c869729e209d98e33c6302a167",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 75",
+          "Uncomfortable shoes",
+          "Listen to the tape then answer this question.",
+          "What's wrong with the fashionable shoes?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "077-078－Terrible Toothache.lrc",
+        "sha256": "8f0897afa6d4ef404b710ae027d26c6d798c7cce987ac85beeb6d924b51aa645",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 77",
+          "Terrible toothache",
+          "Listen to the tape then answer this question.",
+          "What time of day is it, do you think? How do you know?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "079-080－Carol's Shopping List.lrc",
+        "sha256": "c0b40853ce9445e92b1f56b71db125dbf9048c952d59c174302881f0dae81bbd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 79",
+          "Carol's shopping list",
+          "Listen to the tape then answer this question.",
+          "What is Carol not going to buy?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "081-082－Roast Beef and Potatoes.lrc",
+        "sha256": "2d7f51ff182587c99d69af8ef98b2ec7900c7d5570b6e66976481b5e9456d7ff",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 81",
+          "Roast beef and potatoes",
+          "Listen to the tape then answer this question.",
+          "Why is Carol disappointed?"
+        ],
+        "sentences": 24
+      },
+      {
+        "file": "083-084－Going on Holiday.lrc",
+        "sha256": "1dab57f8004ae847a00607f18ace007629ac79c0211b14230f3d881102fdddd6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 83",
+          "Going on holiday",
+          "Listen to the tape then answer this question.",
+          "Where did Sam go for his holiday this year?"
+        ],
+        "sentences": 24
+      },
+      {
+        "file": "085-086－Paris in the Spring..lrc",
+        "sha256": "24066181b007382e24af28faeef342ca86431164cff81c3e340d13f2bfd0e3d1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 85",
+          "'Paris in the Spring'.",
+          "Listen to the tape then answer this question.",
+          "At what time of year did Ken visit Paris?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "087-088－A Car Crash.lrc",
+        "sha256": "7bb9ea9e4912e1fc7a8a3fd46c50ffaf08de70a2e7ba9a385be6a9d5ae97a12c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 87",
+          "A car crash",
+          "Listen to the tape then answer this question.",
+          "Can the mechanics repair Mr. Wood's car?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "089-090－For Sale.lrc",
+        "sha256": "621f16c53abbaf825a84e387e07ee2f60e47422b02bac7f68b2755723f662bfd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "￡68, 500.",
+          "Lesson 89",
+          "For sale",
+          "Listen to the tape then answer this question.",
+          "Why couldn't Nigel decide?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "091-092－Poor Ian.lrc",
+        "sha256": "fdcaf53b801c78b323597c1953345b46ed05bb2a19cc9479606ec2fe1701b5ea",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 91",
+          "Poor Ian!",
+          "Listen to the tape then answer this question.",
+          "Who wanted to sell the house?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "093-094－Our New Neighbour.lrc",
+        "sha256": "afc07b8f4c935e4a6e593df1cfda075c61af9b1453ee90f4f7a8e23d1acc0e8b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 93",
+          "Our new neighbour",
+          "Listen to the tape then answer this question.",
+          "Why is Nigel a lucky man?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "095-096－Tickets, Please..lrc",
+        "sha256": "b880f0849bf8d8cd89496cdfadc87cbccc37ca5f0f85ac2205e561605a223937",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 95",
+          "Tickets, please.",
+          "Listen to the tape then answer this question.",
+          "Why did George and Ken miss the train?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "097-098－A Small Blue Case.lrc",
+        "sha256": "e9a433771c4270240fa25bd955c8e24ac148cb850ec129e3f37ec7e07981b6d0",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 97",
+          "A small blue case",
+          "Listen to the tape then answer this question.",
+          "Does Mr. Hall get his case back?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "099-100－Ow.lrc",
+        "sha256": "fb7d56855b17e5fe0b1d9fcb50a5f717ecb568fd066b859c5263d2031f618549",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 99",
+          "Ow!",
+          "Listen to the tape then answer this question.",
+          "Must Andy go to see the doctor?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "101-102－A Card From Jimmy.lrc",
+        "sha256": "32a66bb5956918ea3618450282c023550c23b2d301a8224b4db4ac779a2c9835",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 101",
+          "A card from Jimmy",
+          "Listen to the tape then answer this question.",
+          "Does grandmother seem pleased to get a card from Jimmy? Why/Why not?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "103-104－The French Test.lrc",
+        "sha256": "2e1de544ec0a8cd78bc09e0097ae66dcc23faa8663a0634eb61285e643518d6f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 103",
+          "The French test",
+          "Listen to the tape then answer this question.",
+          "How long did the exam last?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "105-106－Full of Mistakes.lrc",
+        "sha256": "369a7d764a1bca7949e393eeb7ea5d8f3ad08667716ae7d78a9af3e56e0b1c0d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 105",
+          "Full of mistakes",
+          "Listen to the tape then answer this question.",
+          "What was Sandra's present?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "107-108－It's Too Small..lrc",
+        "sha256": "9773684616eccab0a3d046c897fecf76c903968da2d49efc9d6aa5ff24f1aacd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 107",
+          "It's too small.",
+          "Listen to the tape then answer this question.",
+          "What kind of dress does the Lady want?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "109-110－A Good Idea.lrc",
+        "sha256": "9e08bb25366331179cf409c54a26eb1cb153fc502ef8a9f43106a926e1ce54a6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 109",
+          "A good idea",
+          "Listen to the tape then answer this question.",
+          "What does Jane have with her coffee?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "111-112－The Most Expensive Model.lrc",
+        "sha256": "7bd13706597298ad97dd40988527ee4bc3fed93ecd0e7b28c04bfce6e7778e42",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 111",
+          "The most expensive model",
+          "Listen to the tape then answer this question.",
+          "Can Mr. Frith buy the television on instalments? How does it work?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "113-114－Small Change.lrc",
+        "sha256": "1fb1c0b22bcd1d3ba0f273546d43922c6c6338cf504c3b856fc4d87c1fb8eeea",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 113",
+          "Small change",
+          "Listen to the tape then answer this question.",
+          "Who has got some small change?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "115-116－Knock, Knock.lrc",
+        "sha256": "4bf404dd70c90c289455ccbd9517f43a51dafd87881bac1e17b69865df0d5468",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 115",
+          "Knock, knock!",
+          "Listen to the tape then answer this question.",
+          "What does Jim have to drink?"
+        ],
+        "sentences": 26
+      },
+      {
+        "file": "117-118－Tommy's Breakfast.lrc",
+        "sha256": "ab878f6c570fad1bf982d6f762204cb2026f55c322bda5293818b2ee60ef318e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 117",
+          "Tommy's breakfast",
+          "Listen to the tape then answer this question.",
+          "What does she mean by 'change' in the last sentence?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "119-120－A True Story.lrc",
+        "sha256": "49a952eab7e9f7b73c9aaade8767b2e5be90bf5e27a751bedd20da607f7f2135",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 119",
+          "A true story",
+          "Listen to the tape then answer this question.",
+          "Who called out to the thieves in the dark?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "121-122－The Man in a Hat.lrc",
+        "sha256": "3ae65c988960204c019320a083b56d08b4075439c97b7ff14440617dca8b5c33",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 121",
+          "The man in a hat",
+          "Listen to the tape then answer this question.",
+          "Why didn't Caroline recognize the customer straight away?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "123-124－A Trip to Australia.lrc",
+        "sha256": "16d00380ef0d323d418a1abbea3715e70b3add96c85be50c1613534525265b5d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 123",
+          "A trip to Australia",
+          "Listen to the tape then answer this question.",
+          "Who is the man with the beard?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "125-126－Tea for Two.lrc",
+        "sha256": "d2bdf4436602508f7aa8821490a2da6a2fc77163cecd35159c4e3b4e8213e98d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 125",
+          "Tea for two",
+          "Listen to the tape then answer this question.",
+          "Does Susan have tea by herself?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "127-128－A Famous Actress.lrc",
+        "sha256": "e9a2d735d8b7e2c2d7e6875c6e1f46ec2ec0adfeb5d865912b4c45f0c393ee00",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 127",
+          "A famous actress",
+          "Listen to the tape then answer this question.",
+          "Who is only twenty-nine, and why is it so unclear?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "129-130－Seventy Miles an Hour.lrc",
+        "sha256": "e6c9f7c35abfddf19e1ec82baaa027b5be3630c810ac8ea4226e8fba6ddf1616",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 129",
+          "Seventy miles an hour",
+          "Listen to the tape then answer this question.",
+          "What does Ann advise her husband to do next time?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "131-132－Don't be So Sure.lrc",
+        "sha256": "568ea61c2b78982ada08720638e8a1625e333c969899d10be2988bb7040067f3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 131",
+          "Don't be so sure!",
+          "Listen to the tape then answer this question.",
+          "What's the problem about deciding on a holiday?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "133-134－Sensational News.lrc",
+        "sha256": "7d1db44f6360a65bfcfc504a0a3dee6b7e7b1af7391d98b30d94c6cc7108180a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 133",
+          "Sensational news!",
+          "Listen to the tape then answer this question.",
+          "What reasons did Karen Marsh give for wanting to retire?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "135-136－The Latest Report.lrc",
+        "sha256": "edc1de8f1892c2961f1f5581a78b7fda1c453d43f9d1f698383bf01e0312fe31",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 135",
+          "The latest report",
+          "Listen to the tape then answer this question.",
+          "Is Karen Marsh going to retire, do you think?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "137-138－A Pleasant Dream.lrc",
+        "sha256": "57f98c43f1fd10eaa0bda3449afb57f34de7325d003793db82289335301101dd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 137",
+          "A pleasant dream",
+          "Listen to the tape then answer this question.",
+          "What would Julie like to do, if she had the money?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "139-140－Is That You, John.lrc",
+        "sha256": "9d3b9181ab0fae202fc9a8e550a6c8e895e9db7e297bdb5f460e16d1d88975da",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 139",
+          "Is that you, John?",
+          "Listen to the tape then answer this question.",
+          "Which John Smith does Graham Turner think he is talking to?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "141-142－Sally's First Train Ride.lrc",
+        "sha256": "b1787a76edc0cc76ccba9b3d249bcaaf4e3245390881a81e451e39215a15c216",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 141",
+          "Sally's first train ride",
+          "Listen to the tape then answer this question.",
+          "Why was the mother embarrassed?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "143-144－A Walk Through the Woods.lrc",
+        "sha256": "921ba7d2e7ca88cc743e7d70c360bcbd0889f421281dd38f504491b896fe2fb5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 143",
+          "A walk through the woods",
+          "Listen to the tape then answer this question.",
+          "What was so funny about the words on the sign?"
+        ],
+        "sentences": 10
+      }
+    ]
+  },
+  {
+    "book": 2,
+    "lessons": [
+      {
+        "file": "01－A Private Conversation.lrc",
+        "sha256": "c644f4dc72e8f6d14b23901b153c35eb386879182f5352a5e8c3db222da8436f",
+        "encoding": "gb18030",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the writer complain to the people behind him?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "02－Breakfast or Lunch.lrc",
+        "sha256": "8cf877f9378d58bbebb97a11c8efbd6c2d2de93f466fe746c3555b024c310c80",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why was the writer's aunt surprised?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "03－Please Send Me a Card.lrc",
+        "sha256": "385f6247d026bf06484f90b37e6df25cfc75afba642c2731a97f9c451531b174",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How many cards did the writer send?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "04－An Exciting Trip.lrc",
+        "sha256": "1b9cfd67abef66f3ee5b4eb83feeb9da84cf94c4d2fa933a8286f00f411e5121",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why is Tim finding this trip exciting?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "05－No Wrong Numbers.lrc",
+        "sha256": "4a6b96bfb55f5e1a1306a8d99025f68597cd08d4243af5dd6da16ea1d5c712a5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What does 'No wrong numbers' mean?"
+        ],
+        "sentences": 6
+      },
+      {
+        "file": "06－Percy Buttons.lrc",
+        "sha256": "f9b0b9a72669968ff2ed400a147a9bfa33ffe5d88ca24dab8940bb6fda21a191",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who is Percy Buttons?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "07－Too Late.lrc",
+        "sha256": "088ffe6635d70326d3881cb5220a902318ddf35c38c7db41756ec012fc35517f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Did the detectives save the diamonds?"
+        ],
+        "sentences": 7
+      },
+      {
+        "file": "08－The Best and the Worst.lrc",
+        "sha256": "947ad49bfab5d9d1c1c8dd6f38269dc2d8095864d543e312dcaf80637aa9e28e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why is Joe's garden",
+          "the most beautiful one in the town?"
+        ],
+        "sentences": 7
+      },
+      {
+        "file": "09－A Cold Welcome.lrc",
+        "sha256": "c1f103dfe1dba2d5f8a96e13de541bc545e97f838ecf005afb0bf53553ab210d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What does 'a cold welcome' refer to?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "10－Not for Jazz.lrc",
+        "sha256": "7c9fec32ffc035436b5488971b0b500627635857c9a4f9545f1c52a3bae72671",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What happened to the clavichord?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "11－One Good Turn Deserves Another.lrc",
+        "sha256": "ae43780f7fda87dae876e12a1fdb330f72f63bff3f500926e18046cc289eba5d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who paid for Tony's dinner?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "12－Goodbye and Good Luck.lrc",
+        "sha256": "41664b7085fc144fce3c1c19196fab88bea594df9233b8db00bd30c6a8a1e5cb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Where is Captain Alison going and how?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "13－The Greenwood Boys.lrc",
+        "sha256": "9db2ad5d326cccf4ed26cb74dba33dbf675ddf11d206d7cd81f58afdbf50ae67",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why will the police have a difficult time?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "14－Do You Speak English.lrc",
+        "sha256": "2028df825311a5d46e146ca7357318bb72bd47446ab2e4c0e25256ffe04bea83",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Did the young man speak English?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "15－Good News.lrc",
+        "sha256": "6fffbab78c33c952cbb0fc0b933bd474eb276602980589df76deb54b6a8e3d28",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the good news?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "16－A Polite Request.lrc",
+        "sha256": "1f984c31ed57a83f8f25406caccda8a89378abbea0be285d66b95f2dd3b18778",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the polite request?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "17－Always Young.lrc",
+        "sha256": "48ea687e5477c77e927142f397ac07f01a1c00c64ad4b666a0603cdb0ec0b569",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why doesn't Aunt Jennifer tell anyone how old she is?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "18－He Often does This.lrc",
+        "sha256": "afedafb4602dc30d0ab8015adc83ed81689444bf78c55d23439dab7ca4968343",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What had happened to the writer's bag?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "19－Sold Out.lrc",
+        "sha256": "53b0f9aa63c6567124940fcbb824bb7fed013850b87ab1ef8d05365f51326f2d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "When will the writer see the play?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "20－One Man in a Boat.lrc",
+        "sha256": "c178f6b6518f46abc12ed65b7fd91b11ff562e17bcb4c0ba6f5fce4940d2a794",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why is fishing the writer's favourite sport?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "21－Mad or Not.lrc",
+        "sha256": "e3fac3697b6d8a087456dd1f0b8f2ba729c75d3213dccef6fb3083054ece9a23",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why do people think the writer is mad?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "22－A Glass Envelope.lrc",
+        "sha256": "f05f1c02b2d77268be88b55a33f28d55f4a524fb0d88ea84c969821a928e3934",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did Jane receive a letter from a stranger?"
+        ],
+        "sentences": 7
+      },
+      {
+        "file": "23－A New House.lrc",
+        "sha256": "aaf4829f57d70e2f8d66040c4fe8b142dbf2b5097046d602061465a80f1d993f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why is the new house special?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "24－It Could be Worse.lrc",
+        "sha256": "6fbac4116f3ac0ea15a6c60b161ba89040c94c04dc14d2d15d1e1228514a65d4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Had the writer's money been stolen?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "25－Do the English Speak English.lrc",
+        "sha256": "8c5d67de7d84d84dfc8e6decc76139704119aebe2b9737d7f14f06b149f57162",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Do they speak English?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "26－The Best Art Critics.lrc",
+        "sha256": "4f67e310b7ec31ddd90843f0d6ce926388fc9b6d72dd5d6aa8073fc7aab14779",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who is the student's best critic?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "27－A Wet Night.lrc",
+        "sha256": "713a5bb3ff81870c3a9698b7fdea248e2ceb8ea49e8b2dee6586ce130827b7a5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What happened to the boys in the night?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "28－No Parking.lrc",
+        "sha256": "4e6280d0fdc0d48ccf84e06451980d427b64851a56a747e5df5902d1ac251660",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What is Jasper White's problem?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "29－Taxi.lrc",
+        "sha256": "e4c410141f592e5e0e7a041b70a675b29daa7ac37204c887ebfc55a5f411e1f2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Does Captain Fawcett think any trip is too dangerous?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "30－Football or Polo.lrc",
+        "sha256": "4af141b7134fcc9c193720d7a8499bcbf53622a23e963b77538525f6b49aa612",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What happened to the man in the boat?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "31－Success Story.lrc",
+        "sha256": "8c1c6a0223490b895a08ae36301e1696cf0f84cf2c5f210fc5090ed5be91e9ef",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was Frank's first job?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "32－Shopping Made Easy.lrc",
+        "sha256": "76822f42f5630f2ff3278894b66446eecbd99bebdf9599d8b65beafd3ab1a38c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who was the thief?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "33－Out of the Darkness.lrc",
+        "sha256": "a2fad0e781b224b76bebc083cb8ddaa578a41864cfe376a0d30503e2adee34a1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why was the girl in hospital?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "34－Quick Work.lrc",
+        "sha256": "d55fd7396cc7517caa95e57ab6a7044497d560fd8bd97633655c0490089080cc",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How long had the police taken to find his bicycle?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "35－Stop Thief.lrc",
+        "sha256": "81e8610223f90126303401fe28e1136ff261620c83467994bf466d5242b745fb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did Roy stop the thieves?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "36－Across the Channel.lrc",
+        "sha256": "fd043f6e530ecf14b544aa6fe75fdc2be573cdabf4fcec83e92ed90bcc0b60bb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What is Debbie going to try to do?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "37－The Olympic Games.lrc",
+        "sha256": "c2501b4b097865bb4ff8856ec950811d6456e33477546fdc87bc483a6440a9f6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "When was the last time this country",
+          "hosted the Olympic Games?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "38－Everything Except the Weather.lrc",
+        "sha256": "96d0b223ee022adb78a9d9247041d47ef94c4fc0d935e793f0557710d3b74f09",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Harrison sell his house so quickly?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "39－Am I All Right.lrc",
+        "sha256": "5d3c764af5f24816f44b4ff8c37433f35e63fa5aba60f990fc07bd022da24090",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Mr. Gilbert telephone Dr. Millington?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "40－Food and Talk.lrc",
+        "sha256": "74896a97f6af586361a4350fd3019c880135f9cf484c256dbe438196374b183b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Was Mrs. Rumbold a good companion at dinner?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "41－Do You Call That a Hat.lrc",
+        "sha256": "69ac6af870e77dedaaf9cd20f7f9e6b6cefb9f8e49181d4e71285ae040b100ca",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What kind of shopping does the writer enjoy, do you think?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "42－Not Very Musical.lrc",
+        "sha256": "eebbb0dc7e5a74501684364c97a0034f073485b1210e9c7f61e7c58551ce2a1e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What happened when the snake charmer began to play jazz?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "43－Over the South Pole.lrc",
+        "sha256": "709aa861f80276514480670d3b73e32dad83bdaa44801a0a99dd76666035bcda",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How was the plane able to clear the mountains?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "44－Through the Forest.lrc",
+        "sha256": "8d4d9ac0f9b7aeaba8be23cb00496598676fe780fb0c32ebdadd8a334cdccd46",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did Mrs. Sterling get her bag back?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "45－A Clear Conscience.lrc",
+        "sha256": "ea68ef2eb6aa4ee934dc302ba319842ba29e99df7157c38c521f1bc6b2557eae",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did Sam get his money back?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "46－Expensive and Uncomfortable.lrc",
+        "sha256": "273afcd994144328550e31f25a48694078167becab1343c0e79dd314e51d6c95",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What did the man in this story do?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "47－A Thirsty Ghost.lrc",
+        "sha256": "e79b8acc4399101c2be29b0054e007888c626f2db00f859a5732479f607c5be9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What evidence is there of a ghost?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "48－Did You Want to Tell Me Something.lrc",
+        "sha256": "6c22f8e9ffd5ab46ba6003202b52c86d5d28f4545d5f25a7ecdd3566f901f9d2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the writer become very worried?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "49－The End of a Dream.lrc",
+        "sha256": "5a5f12cbdfc8564b8e66b132acd460d949a89f16e46296ab8753a0121d596889",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did the dream end?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "50－Taken for a Ride.lrc",
+        "sha256": "b499ee8500be49f448ddd32818560a92598ba5539e5cff354f739e50ecd40aec",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the writer not get off the bus at Woodford Green?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "51－Reward for Virtue.lrc",
+        "sha256": "72685d3af91840d3e06d8af8729fd80f8150edbf9da47d8d2bb19489e303d806",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Hugh's diet not work?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "52－A Pretty Carpet.lrc",
+        "sha256": "ad35df3498cb6a3c965615498103e33342b104e43bf2268b1b35ecabf54f7ab6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What is the writer's carpet made of?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "53－Hot Snake.lrc",
+        "sha256": "d4218ce2e78291d430b8b8792bc9b944825f3e116afaa832f59b8f670a34fafb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What caused the fire?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "54－Sticky Fingers.lrc",
+        "sha256": "7fa7ff46f588fef20ed528e86310d1fa21426c67425938789788028bc59a6859",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What two interruptions did the writer have?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "55－Not a Gold Mine.lrc",
+        "sha256": "22c5778d57fc93119cfefccb7bd15393dd7d8c61622877a9c4e939d088390bfe",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What did the team find?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "56－Faster Than Sound.lrc",
+        "sha256": "007cf5e4e6e3d1b47630ccd3caa59234154f86c75ab2c7291ed0e53a44d9f90f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How fast did the winning car go?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "57－Can I Help You, Madam.lrc",
+        "sha256": "6bf90e8cce263551f5c7e12fb735eb36a7bfddbfb63eeb45552e67ca76fee7fb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Did the woman get what she wanted?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "58－A Blessing in Disguise.lrc",
+        "sha256": "b12974d328b18ca27972bae2b0e31002e7235924e56454af99ca3529988944d6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why does the vicar refuse to cut down the tree?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "59－In or Out.lrc",
+        "sha256": "58ec2759477f5f922fc309e7a4dfdc8f4dc138e19b4308a764b140909050ac9b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Rex run away?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "60－The Future.lrc",
+        "sha256": "a41f3e919a022935f09197da15a8cda9b463b5eb9e4b2a7ccb300c0827ee6d26",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Does what Madam Bellinsky said come true?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "61－Trouble with the Hubble.lrc",
+        "sha256": "8af8c2188e80b880ba9339ccc2a05d2e95b58ad7d875e4ff7ad50a18824cc39d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What is the special importance of a telescope in space?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "62－After the Fire.lrc",
+        "sha256": "790114ce6893094cf3b43079967eb3e3cbfb3389ed0ed5f5288dfaa66dfea53a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the danger to the villages after the fire?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "63－She Was Not Amused.lrc",
+        "sha256": "bead49385dcb81b88fb3d60c9c130cc8df1fa0aafef0963be6e338fdf2e318e5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Jenny want to leave the wedding reception?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "64－The Channel Tunnel.lrc",
+        "sha256": "3f41e69a37d7151d1f1c4b542eb5418a89af80183af05208c4cd4481e68025bd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why was the first tunnel not completed?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "65－Jumbo Versus the Police.lrc",
+        "sha256": "2fca43db713302d31bf77301259c67b3ea53edbd01159515ffcd3d6a658afe41",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the police have to push Jumbo off the main street?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "66－Sweet as Honey.lrc",
+        "sha256": "6c924e274605473871c3f66bbfe92a4f3e3d8edd5731df19439b15b3e3e0d1b1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was 'sweet as honey' and why?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "67－Volcanoes.lrc",
+        "sha256": "2c6023615ecb30a646491eb9109731f4b79460da53eb928fe3e3eb04080464ae",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why does Tazieff risk his life like this?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "68－Persistent.lrc",
+        "sha256": "1681410df150169977399cc75bc23a92a962708526284e7f7c32f19cfee167f7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Elizabeth tell Nigel that she was going to the dentist?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "69－But not Murder.lrc",
+        "sha256": "a2a56cab2f7f00d8d4cde6589b972829e737cc153c30498d66920555fb857434",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Do you think that the writer passed his driving test? Why?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "70－Red for Danger.lrc",
+        "sha256": "feaf370aadccf4dbb54e17d930d4b521f26e6f5da84133c90d5f52516f3bcd13",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How was the drunk removed from the ring?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "71－A Famous Clock.lrc",
+        "sha256": "e40fc24c12751a8c8fb9434adb1aef14918154804b06c3e12954fa0deb45cf7d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Has Big Ben ever gone wrong?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "72－A Car Called Bluebird.lrc",
+        "sha256": "04a59ae96a02bbc74dd444ef2f8c52959f4550d7b2b23620f48cd2d41216abe1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What mistake was made?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "73－The Record-Holder.lrc",
+        "sha256": "36dd02a636658f907f99c5eba42168b168fd70226ba9c7c25286e265c05d848b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Did the boy go where he wanted to?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "74－Out of the Limelight.lrc",
+        "sha256": "972f2c4b0d41c33a59b56e1773c9a2fb626862e49937654bb1d92ded46c8f02a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why was their disguise 'too perfect' ?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "75－SOS.lrc",
+        "sha256": "418b6decd3a64cfac2ee19797439a9da979dc16e7c9a52bf03363139abfff6b8",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How did the woman get help?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "76－April Fools' Day.lrc",
+        "sha256": "8d4fb5ae394e9ec30fe37ca7ab57635dc0099e85e32fc057b511cc3194be07d4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the joke?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "77－A Successful Operation.lrc",
+        "sha256": "e2ef9ff60b0485bbfe68126793bfe8ff04bd9f511e9d0b8e1b223560fb910130",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Did the doctors find out how the woman died?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "78－The Last One.lrc",
+        "sha256": "d2db1c09bdb82efc34defc30da4754954d45b4f51795ba07f74c402b003ad0ee",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "For how long did the writer give up smoking?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "79－By Air.lrc",
+        "sha256": "463fa33f73efad839566019358647b6d9ce22ba16f4f62cb909b111ee896741d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the plane turn back?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "80－The Crystal Palace.lrc",
+        "sha256": "09d25babeea6618cfbd0d3eb4af3f1005fb2923e2bf87cd1ae7616522572c4bc",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How many people visited the Great Exhibition of 1851?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "81－Escape.lrc",
+        "sha256": "4b6bcdd0fc8d2120ef53325974f711105e088133b1b0d1a119cb4b70fa611065",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the prisoner attack the driver?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "82－Monster or Fish.lrc",
+        "sha256": "255aad9dea7e5e329e99d71652fd39ecb2d0c9bf670bd8346eeb2bd48d3eb3ec",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the monster called?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "83－After the Elections.lrc",
+        "sha256": "53f87542b058dbcc250a9cbdfcb452eb89c113f0efd186be769924bc9437f3ca",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did Patrick keep on asking the same question?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "84－On Strike.lrc",
+        "sha256": "5ccf4bb6f48c66fcf274ee6ac7a83af2377ff6a07ba45fe3173aeae1bc91b965",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who will be driving the buses next week?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "85－Never Too Old To Learn.lrc",
+        "sha256": "e8daf1a321c52035d3b0c61a0d0186267d005073cba4dcd9a82bc12145be5b93",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "How long has Mr. Page been teaching?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "86－Out of Control.lrc",
+        "sha256": "9ec3e6e6493e79beece0b4fa3c863b9006816a60d1e0ab9899fbb11cd78d17cf",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was the danger?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "87－A Perfect Alibi.lrc",
+        "sha256": "748a46bda1bafb9a61f6bf2c0fe2a87d57b8891e3ef0e87a9793102d4be7d1e2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What was wrong with the man's story?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "88－Trapped in a Mine.lrc",
+        "sha256": "6f382669eec45fd236f30ae3f6e7ce376f8e9f3357fa7e7cfa54edcfbf49d88f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why is the rescue taking so long?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "89－A Slip of the Tongue.lrc",
+        "sha256": "4d23c07a55625130d8a07f2e060a4ae0aaa5018b6169f4aa83842365938f2423",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Who made the only funny joke that evening and why?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "90－What's for Supper.lrc",
+        "sha256": "7d14ba1a62aaa28e8592d8be0cfa18f8803a7b9eea9833daa88ae60441b837a4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What kind of fish are they?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "91－Three Men in a Basket.lrc",
+        "sha256": "6e8bd4b7bea12b0179c490730ea015086e2da121eabe53b9025cf656522e14a4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Where was the station's Commanding Officer?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "92－Asking for Trouble.lrc",
+        "sha256": "7004840b2f95082f226d8d18d8bda878d31b715d6c5c3b91e72609941752d480",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why did the policeman ask the writer to come to the police station?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "93－A Noble Gift.lrc",
+        "sha256": "d70a54f3e6f0d1e3024ec9ebfbad86d215967278f3ac8e2365e6e9cc5157b68e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Where was the Statue of Liberty made?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "94－Future Champions.lrc",
+        "sha256": "330a42fe21e07826570176c5d06c04cc2ece5c5941fba4a2265b7fb9f3a5f00c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What kind of race do the children compete in?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "95－A Fantasy.lrc",
+        "sha256": "693ccf5f3d1dbf26a52483295af9eceac9eac4393e3fef7b3bb8f6255d8fa174",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Why was the Ambassador particularly lucky?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "96－The Dead Return.lrc",
+        "sha256": "9ddba15bc454da22c8b464248ffbdbe38ca24cf6985c0d03c69ff29a5cf2f24e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "What happens to the lanterns at the end of the festival?"
+        ],
+        "sentences": 9
+      }
+    ]
+  },
+  {
+    "book": 3,
+    "lessons": [
+      {
+        "file": "01－A Puma at Large.lrc",
+        "sha256": "a0a9ac85c6acbe4b0152a8790acb05571ab7afd9fe70c1e9d9ae77293e7e0934",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 1",
+          "A puma at large",
+          "Where must the puma have come from?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "02－Thirteen Equals One.lrc",
+        "sha256": "e9ba608f48e90777e631090f1ab1d9aebeafea4f3b65bb7a2f08b2860b0db319",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 2",
+          "Thirteen equals one",
+          "Was the vicar pleased that the clock was striking? Why?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "03－An Unknown Goddess.lrc",
+        "sha256": "e01a663e818460e03ac4127bc9869d2727e0adc0987ee586f36f7621bc7e177b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 3",
+          "An unknown goddess",
+          "How did the archaeologists know that the statue was a goddess?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "04－The Double Life of Alfred Bloggs.lrc",
+        "sha256": "4cbdccbbc2ef9bf8ae6f136fe97899c07c4d8e85ea84968d3c5b1aa0857dc8a5",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 4",
+          "The double life of Alfred Bloggs",
+          "Why did Alf want a white-collar job?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "05－The Facts.lrc",
+        "sha256": "c4fbb58f1943ca882981d946cc5b34dfb67f31baa39defaefa957cec705c1b93",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 5",
+          "The facts",
+          "What was the consequence of the editor's insistence on facts and statistics?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "06－Smash-and-Grab.lrc",
+        "sha256": "6735df50fe9c5e2dd641f6cd1c51cd827a7ba67ae1ef035bf1f11b129d11020c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 6",
+          "Smash-and-grab",
+          "How did Mr. Taylor try to stop the thieves?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "07－Mutilated Ladies.lrc",
+        "sha256": "0754ca298671c34524592c23d48668775347ddfb1118ba39bb3bc61b1ff6c769",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 7",
+          "Mutilated Ladies",
+          "Why did Jane cook John's wallet?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "08－A Famous Monastery.lrc",
+        "sha256": "981799f49888b5d58434e2d928c887809c5cab4701b1e62545de208aeb34523f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 8",
+          "A famous monastery",
+          "What are the St. Bernard dogs used for?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "09－Flying Cats.lrc",
+        "sha256": "21b0fa30c393f9af5493307cf00ff76bdc86ee19e8d0dd39791db06e9e5717bf",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 9",
+          "Flying cats",
+          "How do cats try to protect themselves when falling from great heights?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "10－The Loss of the Titanic.lrc",
+        "sha256": "ae5252961d3859f97231f1c732a6f08a233daff525f2cb77fcec51c6e9c19e0d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 10",
+          "The loss of the Titanic",
+          "What'd have happened if only two of the 16 water-tight compartments had been flooded?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "11－Not Guilty.lrc",
+        "sha256": "30f2c90051c7a493c7721dea2043e3f0c0e7e9da7d95eb62eab5bbf9ff029374",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 11",
+          "Not guilty",
+          "What was the Customs Officer looking for?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "12－Life on a Desert Island.lrc",
+        "sha256": "317de50ff643aa805a4c6f9797c3938103839c5ca4f743c21faf03e97cdbeafe",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 12",
+          "Life on a desert island",
+          "What was exceptional about the two men's stay on the desert island?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "13－It's Only Me.lrc",
+        "sha256": "84a674b71e5cdc2c6afb680db8a8452b920f6da572f439b2fe5189b38268ce9a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 13",
+          "'It's only me'",
+          "What did the man expect to find under the stairs?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "14－A Noble Gangster.lrc",
+        "sha256": "2a2d8d26b4cd78610caf2363a488252d7fbd01d7b2255557237e9a621012ada2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 14",
+          "A noble gangster",
+          "How did Hawkwood make money in times of peace?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "15－Fifty Pence Worth of Trouble.lrc",
+        "sha256": "f7e0d71c7dd2721d238228461e6489f891b13ff10913b82bc815d2769e2adf2f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 15",
+          "Fifty pence worth of trouble",
+          "Did George get anything for his fifty pence? What?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "16－Mary Had a Little Lamb.lrc",
+        "sha256": "ad6e35e7146e5071a6180b68c19799938a800b3992547a57db77403263b8d1f3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 16",
+          "Mary had a little lamb",
+          "Was Dimitri right to apologize to his neighbour? Why not?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "17－The Longest Suspension Bridge in the World.lrc",
+        "sha256": "b2ba0827544fb7394d45dfb70df44dd79ad4431affc4aa8fc0145658468f8c85",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 17",
+          "The longest suspension bridge in the world",
+          "How is the bridge supported?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "18－Electric Currents in Modern Art.lrc",
+        "sha256": "8fd8f9b87b5931466c7bf1b02721141ff74f2787fa0ce758f81f7cbfed1b3e16",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 18",
+          "Electric currents in modern art",
+          "How might some of the exhibits have been dangerous?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "19－A Very Dear Cat.lrc",
+        "sha256": "7d1ddfb65eb9754c826ff6c2ffe268b6ea7805b725ef5a9abe13fdfef6e16b4a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 19",
+          "A very dear cat",
+          "Why was Rastus 'very dear' in more ways than one?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "20－Pioneer Pilots.lrc",
+        "sha256": "a91b68a486756c0613ccd028d61bbe7ee73acdc6f4f2dd7eda9e42a4d9ab9a73",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 20",
+          "Pioneer pilots",
+          "What was the name of the first plane to fly across the English Channel?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "21－Daniel Mendoza.lrc",
+        "sha256": "b33990a8c3b0a93c663bb72e093403f3e32b9ee3eaa3e8532cd5d52c5811bd96",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 21",
+          "Daniel Mendoza",
+          "How many unsuccessful attempts did Mendoza make before becoming Champion of all England?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "22－By Heart.lrc",
+        "sha256": "328a1dad3d34f5fc01b6cf63e514d8d0dc66128c7507d91aee1161897cef8e9d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 22",
+          "By heart",
+          "Which actor read the letter in the end, the aristocrat or the gaoler?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "23－One Man's Meat is Another Man's Poison.lrc",
+        "sha256": "6459aa59dcae42e830cbf35bd7ed05ee6c4ae9bd02991368d3d4843178897775",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 23",
+          "One man's meat is another man's poison",
+          "What was it about snails that made the writer collect them for his friend on that day in particular?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "24－A Skeleton in the Cupboard.lrc",
+        "sha256": "35b19b2ba5721e7c73ce2bf121f73d9bd82e136c0f1994c5447d5f4fe0b9e000",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 24",
+          "A skeleton in the cupboard",
+          "Who was Sebastian?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "25－The Cutty Sark.lrc",
+        "sha256": "6c57500c2b9483637b463c0f438f744106f49fd7930df5fbc353b701d96a08b0",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 25",
+          "The Cutty Sark",
+          "What piece of bad luck prevented the Cutty Sark from winning the race?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "26－Wanted a Large Biscuit Tin.lrc",
+        "sha256": "9dc70349c30ed3af92dec87324133febe8c2af7e688e4d5d0d72df41432a45f4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 26",
+          "Wanted: a large biscuit tin",
+          "Who won the prize for the biggest biscuit?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "27－Nothing to Sell and Nothing to Buy.lrc",
+        "sha256": "a71294ae4f19330228e02bb61e88ef0817afdf8c5961c3d2d474de3ee5168eb1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 27",
+          "Nothing to sell and nothing to buy",
+          "What is the most important thing for a tramp?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "28－Five Pounds Too Dear.lrc",
+        "sha256": "abe5fd318820df002903736ba24bcff84f8ba3845b708d4e429b62c889deaeca",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 28",
+          "Five pounds too dear",
+          "Why was even five pounds 'too dear' ?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "29－Funny or Not.lrc",
+        "sha256": "9326f31df7c47088b7326b2b36643b7d49e50c2355ed7adbb2d578f47399a2c3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 29",
+          "Funny or not?",
+          "What is the basis of 'sick' humour?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "30－The Death of a Ghost.lrc",
+        "sha256": "b7d4d1088b370f41b72fd83fb6316fdb5fd771ba7aacfe73344681d063b963ba",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 30",
+          "The death of a ghost",
+          "Why did the two brothers keep the secret?"
+        ],
+        "sentences": 25
+      },
+      {
+        "file": "31－A Lovable Eccentric.lrc",
+        "sha256": "a1f4fae25a6f30befd4341fd23279ac195c48269edb69d4f0cc83a036a868fa6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 31",
+          "A lovable eccentric",
+          "Why did the shop assistant refuse to serve Dickie?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "32－A Lost Ship.lrc",
+        "sha256": "d3f9761b063d2a7a219f0f3b3f8ab4a52131a575b3c28f950cae912774b6f36b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 32",
+          "A lost ship",
+          "Did the crew of the Elkor find what they were looking for? Why?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "33－A Day to Remember.lrc",
+        "sha256": "2d520424039fe12669b97a14157c49e17c7954f915c9fc653506a4676a350be7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 33",
+          "A day to remember",
+          "What incident began the series of traffic accidents?"
+        ],
+        "sentences": 25
+      },
+      {
+        "file": "34－A Happy Discovery.lrc",
+        "sha256": "42bef517e1efd5fd2eeeadffdf706ad10716759c99c1506d17a813c75b18825b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 34",
+          "A happy discovery",
+          "What was the 'happy discovery' ?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "35－Justice was Done.lrc",
+        "sha256": "23b784489163d32965a00c36dc42584ada2e97f01ec68bc11c11568f3edf3a72",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 35",
+          "Justice was done",
+          "The word 'justice' is given two different meanings in the text.",
+          "What is the distinction between them?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "36－A Chance in a Million.lrc",
+        "sha256": "f597cf034fb723938619fcc2c18959e64da4c9c1918ab7c4173247e268f7aae4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 36",
+          "A chance in a million",
+          "What was the chance in a million?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "37－The Westhaven Express.lrc",
+        "sha256": "f3e658db30211caa3c4741441f83292cf5acf687065539f7ae42de3ff3daec5c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 37",
+          "The Westhaven Express",
+          "What was the mistake the author made?"
+        ],
+        "sentences": 24
+      },
+      {
+        "file": "38－The First Calendar.lrc",
+        "sha256": "3948be7119f9b4415b1032fbf3863620ab2ca3140975bdaaf4003bf4f1ff2483",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 38",
+          "The first calendar",
+          "What is the importance of the dots, lines, and symbols engraved on stone, bones and ivory?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "39－Nothing to Worry About.lrc",
+        "sha256": "59e72d276d208ddd5e6ad5d23b66329b294e4d931066a91824169f45ca7f2bfb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 39",
+          "Nothing to worry about",
+          "What was the differnce between Bruce's behaviour and that of other people?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "40－Who's Who.lrc",
+        "sha256": "adb9666f66638d7a7aad56de7fcad38e57bc95e152f75e267433f3abbc3d4a97",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 40",
+          "Who's who",
+          "How did the policeman discover that the whole thing was a joke?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "41－Illusions of Pastoral Peace.lrc",
+        "sha256": "27712f748146e122fccc6c340b9a146ad3cab3310a4cc34587b91869fda1b6f7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 41",
+          "Illusions of pastoral peace",
+          "What particular anxiety spoils the country dweller's visit to the theatre?"
+        ],
+        "sentences": 27
+      },
+      {
+        "file": "42－Modern Cavemen.lrc",
+        "sha256": "3353760015934998365e816a7ad7e6f4b580de3e08fe94547144c5c50e811ceb",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 42",
+          "Modern cavemen",
+          "With what does the writer compare the Gouffre Berger?"
+        ],
+        "sentences": 29
+      },
+      {
+        "file": "43－Fully Insured.lrc",
+        "sha256": "1c3fd58e37194b92a519bf382e01b395d35490b970beb22071bc72ac06130c95",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 43",
+          "Fully insured",
+          "Who owned the pie dish and why?"
+        ],
+        "sentences": 27
+      },
+      {
+        "file": "44－Speed and Comfort.lrc",
+        "sha256": "e8f37ff3a45f4c9c2f23a6aa1e0ac58afaf2953def70cf2f88346c78985de3ee",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 44",
+          "Speed and comfort",
+          "Which type of transport does the writer prefer, do you think?"
+        ],
+        "sentences": 31
+      },
+      {
+        "file": "45－The Power of the Press.lrc",
+        "sha256": "972689287536c0ada9b6ac74b25eceae86e948d5878a03e0409197496b89da78",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 45",
+          "The power of the press",
+          "Does the writer think the parents were lucky or unlucky to gain prosperity in this way? Why?"
+        ],
+        "sentences": 24
+      },
+      {
+        "file": "46－Do It Yourself.lrc",
+        "sha256": "0f72386fa749d86247714f6adffdfae419526798c2b313c00f208bede9ae480c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "Lesson 46",
+          "Do it yourself",
+          "Did the writer repair his lawn mower in the end? Why/Why not?"
+        ],
+        "sentences": 30
+      },
+      {
+        "file": "47－Too High a Price.lrc",
+        "sha256": "dd2b06c8e45f1cc88c9a64238be06c5d1b75f53f76d6505f5c3ec2ee446b210e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 47",
+          "Too high a price?",
+          "What does the writer describe as an 'amusing old-fashioned source of noise' ?"
+        ],
+        "sentences": 25
+      },
+      {
+        "file": "48－The Silent Village.lrc",
+        "sha256": "e7077187b83b21b12f898cad29d55cbd4973f9f3ff4d16dbe921e87f14659078",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 48",
+          "The silent village",
+          "Why was the village silent?"
+        ],
+        "sentences": 34
+      },
+      {
+        "file": "49－The Ideal Servant.lrc",
+        "sha256": "082efbaae52ae0cb57d412f5f84b7a505f7cd7afb0eb6bfafd71dafff0c1d4de",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 49",
+          "The ideal servant",
+          "What was Bessie's 'little weakness' ?"
+        ],
+        "sentences": 28
+      },
+      {
+        "file": "50－New Year Resolutions.lrc",
+        "sha256": "34a8363f02808de571939fe190c7a36a5e09a4698c21c46ca8abb7623e226182",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 50",
+          "New Year resolutions",
+          "What marked the end of the writer's New Year resolutions?"
+        ],
+        "sentences": 29
+      },
+      {
+        "file": "51－Predicting the Future.lrc",
+        "sha256": "f79f6d617a998498a0478f1ebd066c50418b85264a35d9f90d74e3f2d8a70d22",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 51",
+          "Predicting the future",
+          "What was the 'future' electronic development that Leon Bagrit wasn't able to foresee?"
+        ],
+        "sentences": 22
+      },
+      {
+        "file": "52－Mud is Mud.lrc",
+        "sha256": "ee905db39f4bd5b51b14f5e13280324207b9d867fc3db4970283378b12ead6b4",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 52",
+          "Mud is mud",
+          "Why did Harry decide to give up his little game?"
+        ],
+        "sentences": 29
+      },
+      {
+        "file": "53－In the Public Interest.lrc",
+        "sha256": "7aa44f988bf3de6ea9ccfa9db20b8661aa21c53a9f65284359b9685249b17bfd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 53",
+          "In the public interest",
+          "What could not be reported in the official files?"
+        ],
+        "sentences": 25
+      },
+      {
+        "file": "54－Instinct or Cleverness.lrc",
+        "sha256": "1eb0d986ecd953288c7a4f7146b54bad38e74c6c6154074e6bcb5f8b21d2ba90",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 54",
+          "Instinct or cleverness?",
+          "Was the writer successful in protecting his peach tree? Why not?"
+        ],
+        "sentences": 29
+      },
+      {
+        "file": "55－From the Earth Greetings.lrc",
+        "sha256": "e66d0466ae3264a466fcecafaa2558ba9a64a0c24a8c3512ad449dff36f29c2b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 55",
+          "From the earth: Greetings",
+          "Which life forms are most likely to develop on a distant planet?"
+        ],
+        "sentences": 27
+      },
+      {
+        "file": "56－Our Neighbour, the River.lrc",
+        "sha256": "f87cb4c60f6dcc0b8e56bd7b78b22a4a85b6989f35c825f7d8c3e7df0f6d86f7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 56",
+          "Our neighbour, the river",
+          "Why had the neighbours left their farm?"
+        ],
+        "sentences": 23
+      },
+      {
+        "file": "57－Back in the Old Country.lrc",
+        "sha256": "d80a8ce684d68d025e58539a56fc275e0a56c66b3ff3cf317fd6a90658f4f603",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 57",
+          "Back in the old country",
+          "Did the narrater find his mother's grave?"
+        ],
+        "sentences": 32
+      },
+      {
+        "file": "58－A Spot of Bother.lrc",
+        "sha256": "197d903eaf36d2e0bd7d5dd3212eef2e6e8444000d9273f111ecaf6c33bf4d6e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 58",
+          "A spot of bother",
+          "What did the old lady find when she got home?"
+        ],
+        "sentences": 20
+      },
+      {
+        "file": "59－Collecting.lrc",
+        "sha256": "38c283ecec6961c38b3a0e31ad491f6116006d7d7055fda4bf1e236b8d475a5b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 59",
+          "Collecting",
+          "What in particular does a person gain when he or she becomes a serious collector?"
+        ],
+        "sentences": 24
+      },
+      {
+        "file": "60－Too Early and Too Late.lrc",
+        "sha256": "d619327e4a398974a42e7ba9bf3b0ae3bb54e7fbb7011a616a494c29a62181af",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 60",
+          "Too early and too late",
+          "Why did the young girl miss the train?"
+        ],
+        "sentences": 30
+      }
+    ]
+  },
+  {
+    "book": 4,
+    "lessons": [
+      {
+        "file": "01－Finding Fossil Man.lrc",
+        "sha256": "43fc6b0930fdbc89a1f07582f8c67791e1924c26ac03083b511cd03555ebd2cd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 1",
+          "Finding fossil man",
+          "Why are legends handed down by storytellers useful?"
+        ],
+        "sentences": 11
+      },
+      {
+        "file": "02－Spare That Spider.lrc",
+        "sha256": "5fac2f34d00eadc66ee891786c3f84621620b7ffa738fbefa5e1f02b7262fdd9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 2",
+          "How much of each year do spiders spend killing insects?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "03－Matterhorn Man.lrc",
+        "sha256": "efaf0ae9ddab336fc0a1f85124b30afa52f8908f0b2f457083229d3c59d257d7",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 3",
+          "Matterhorn man",
+          "What was the main objective of early mountain climbers?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "04－Seeing Hands.lrc",
+        "sha256": "c40a8587d5a3826affe708e6dad0bf08a8d53c348fb8a2fa75d0f32108c9916a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 4",
+          "Seeing hands",
+          "How did Vera disover she had this gift of second sight?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "05－Youth.lrc",
+        "sha256": "1f3d2544d959b6339b58ddbee40f8658fb9259685f84d02bcdeb2463add5405b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 5",
+          "Youth",
+          "How does the writer like to treat young people?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "06－The Sporting Spirit.lrc",
+        "sha256": "e3183001be1f0d6fe64294a4258f54ef43f6e3ad1476659031223aac4cb9fc66",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 6",
+          "The sporting spirit",
+          "How does the writer describe sport at the international level?"
+        ],
+        "sentences": 8
+      },
+      {
+        "file": "07－Bats.lrc",
+        "sha256": "d022fd3d7323cc41dc370090debc2ddd095111621ebcd3a549c27bb17f301dea",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 7",
+          "Bats",
+          "In what way does echo-location in bats play an utilitarian role?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "08－Trading Standards.lrc",
+        "sha256": "f13082a6ebf1a8c381ce31075d437cf0fd1865c79aafd89273c3bb33694f50a2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 8",
+          "Trading standards",
+          "What makes trading between rich countries difficult?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "09－Royal Espionage.lrc",
+        "sha256": "dfc14c6c50140e113478a55652d73121a6a2fef22fdbc8b7ec5241c6f1cb36c0",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 9",
+          "Royal espionage",
+          "What important thing did King Alfred learn when he penetrated the Danish camp of Guthrum?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "10－Silicon Valley.lrc",
+        "sha256": "f654627ee1c24e1b392c484e1d27b79922bad66a5727849e8879e6918edc707f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 10",
+          "Silicon valley",
+          "What does the computer industry thrive on apart from anarchy?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "11－How to Grow Old.lrc",
+        "sha256": "625ed7e4437082c714c728c0b0812c3e6b4331c584bc2ffd3107cbfe9b099944",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 11",
+          "How to grow old",
+          "What, according to the author, is the best way to overcome the fear of death as you get older?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "12－Banks and Their Customers.lrc",
+        "sha256": "3f6dfada0725edbbbb210d58b35975d7125c0c970f9af76f1cb5151d0a6d1b6e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 12",
+          "Banks and their customers",
+          "Why is there no risk to the customer when a bank prints the customer's name on his cheques?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "13－The Search for Oil.lrc",
+        "sha256": "915ef28fe9876d7dbb02572dbb6d46aa7f73cbea2b2630958218652bf93074fd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 13",
+          "The search for oil",
+          "What do oilmen want to achieve as soon as they strike oil?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "14－The Butterfly Effect.lrc",
+        "sha256": "2d3425c747f4df4b35e77195a7548bf13f314d9068672468709afc43c2f0220a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 14",
+          "The Butterfly Effect",
+          "Why do small errors make it impossible to predict the weather system with a high degree of accuracy?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "15－Secrecy in Industry.lrc",
+        "sha256": "37a3d9d500ae1bfa0eba24749caac1e076c0554eaedb2e39a3078c83983fc0c1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 15",
+          "Secrecy in industry",
+          "Why is secrecy particularly important in the chemical industries?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "16－The Modern City.lrc",
+        "sha256": "79ee9aeafe84c01a4fe715a15d60664017401611708eed5ba451edfb467c42a6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 16",
+          "The modern city",
+          "What is the author's main argument about the modern city?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "17－A Man-made Disease.lrc",
+        "sha256": "fedce7001439ac58706100057c8103e1336a5ab6171630206d183cb881ca391b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 17",
+          "A man-made disease",
+          "What factor helped to spread the disease of myxomatosis?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "18－Porpoises.lrc",
+        "sha256": "d9192d678f58c58b2b914d63b038b551f6ac8cd76aefe5237e2d833a7396b1b9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 18",
+          "Porpoises",
+          "What would you say is the main characteristic of porpoises?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "19－The Stuff of Dreams.lrc",
+        "sha256": "1fe7509e561a6de5a7e9e82c667cbd664e1b01dc24cf2928db596840fcd5e0a9",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 19",
+          "The stuff of dreams",
+          "What is going on when a person experiences rapid eye-movements during sleep?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "20－Snake Poison.lrc",
+        "sha256": "17111165af6ef18d858f2e30cd7923d4971ff77f2ee8effe9ce8376f7fe14bd1",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 20",
+          "Snake poison",
+          "What are the two different ways in which snake poison acts?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "21－William S. Hart and the Early Western Film.lrc",
+        "sha256": "3d24ac90c71a46938d268704994f65b637e9a50462f1a95258e295604d3caf46",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 21",
+          "William S.Hart and the early 'Western' film",
+          "How did William Hart's childhood prepare him for his acting role in Western films?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "22－Knowledge and Progress.lrc",
+        "sha256": "74f18fe7a1dfe3d530b4bb4e8a7ec2c1436d1b57a5b5506324820918d4d5e23f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 22",
+          "Knowledge and progress",
+          "In what two areas have people made no 'progress' at all?"
+        ],
+        "sentences": 16
+      },
+      {
+        "file": "23－Bird Flight.lrc",
+        "sha256": "3cf9a022e194565882a94370cb70fc332587db879341752953a4e16c4480ad51",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 23",
+          "Bird flight",
+          "What are the two main types of bird flight described by the author?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "24－Beauty.lrc",
+        "sha256": "76c1295a98dad094dc0579d12c7d74b0511006b7d243c939277c8f62c3823e97",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 24",
+          "Beauty",
+          "What do glimpses of beauty, either in nature or art, often suggest to the human mind?"
+        ],
+        "sentences": 10
+      },
+      {
+        "file": "25－Non-Auditory Effects of Noise.lrc",
+        "sha256": "c74d3e80765a686ee0c1684a1f1122909a85590c8ef347a2d983f0da0fc8b6cd",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 25",
+          "Non-auditory effects of noise",
+          "What conclusion does the author draw about noise and health in this piece?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "26－The Past Life of the Earth.lrc",
+        "sha256": "efe2bac4fa9f48836b643a74ad1c93a8587dfebaa381a0a14096cf6a093fbd1c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 26",
+          "The past life of the earth",
+          "What is the main condition for the preservation of the remains of any living creature?"
+        ],
+        "sentences": 14
+      },
+      {
+        "file": "27－The vasa.lrc",
+        "sha256": "b82c13b899f7d7fe23c502d06db849f3b876c67aa3dd0047b7f5e1a0d75ce7ff",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 27",
+          "The 'Vasa'",
+          "What happened to the 'Vasa' almost immediately after she was launched?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "28－Patients and Doctors.lrc",
+        "sha256": "1c48df1c0ec6ffea03ce58c108879281bb7fe91c7465a884f230fad671d3277b",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 28",
+          "Patients and doctors",
+          "What are patients looking for when they visit the doctor?"
+        ],
+        "sentences": 9
+      },
+      {
+        "file": "29－The Hovercraft.lrc",
+        "sha256": "5b478ecc98542e53a4a6de0f0325275c9a70cdda7c2ee0a21bd9cbd66462b4a3",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 29",
+          "The hovercraft",
+          "What is a hovercraft riding on when it is in motion?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "30－Exploring the Sea-Floor.lrc",
+        "sha256": "5373b1e6d9280ae45158bdfe11a3f204ee4da3d729954541f494009dfcd75ee6",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 30",
+          "Exploring the sea-floor",
+          "How did people probably imagine the sea-floor before it was investigated?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "31－The Sculptor Speaks.lrc",
+        "sha256": "2a1c69bd983d68cc4a089afed55304fa982b539f8941c8138d8fe98cd4c0c25f",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 31",
+          "The sculptor speaks",
+          "What do you have to be able to do to appreciate sculpture?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "32－Galileo Reborn.lrc",
+        "sha256": "65fd9316f1b01058c3c5cfee972e318d72a79a49f55aaa7229e83d967d040b21",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 32",
+          "Galileo reborn",
+          "What has modified our traditional view of Galileo in recent times?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "33－Education.lrc",
+        "sha256": "a52232b3b0a5c94e2e13fe3162c0bc4e62035b4ab6ba6a098cad31220625f24e",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 33",
+          "Education",
+          "Why is education democratic in bookless tribal societies?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "34－Adolescence.lrc",
+        "sha256": "6152dbec4593eb9410c1fa2828252fba6f012968111b1260c5554b26b7e5a64a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 34",
+          "Adolescence",
+          "What do adolescents respect in parents?"
+        ],
+        "sentences": 13
+      },
+      {
+        "file": "35－Space Odyssey.lrc",
+        "sha256": "a7052ea99901bbdd9a31e3a4b2340351267cc19f650e1f31b37c1000b10f3e95",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 35",
+          "Space odyssey",
+          "When will it be possible for us to think seriously about colonising Mars?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "36－The Cost of Government.lrc",
+        "sha256": "d7cd7c1d8a7abd280a4c6bc5259df191c15d47c4d843eecf36f1397cf06fe0a2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 36",
+          "The cost of government",
+          "What's the most important factor, both in government or business, for keeping running costs low?"
+        ],
+        "sentences": 17
+      },
+      {
+        "file": "37－The Process of Ageing.lrc",
+        "sha256": "6db9e43b7f141408fd81f15cb6d8b62e90174e608fdba4517729a0c9f190fbda",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 37",
+          "The process of ageing",
+          "What is one of the most unpleasant discoveries we make about ourselves as we get older?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "38－Water and the Traveller.lrc",
+        "sha256": "01b73bfacfd1cfea3e83ae3a42ebd2da70270e180b994a97e42dd5c163a7079a",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 38",
+          "Water and the traveller",
+          "What does this text describe?"
+        ],
+        "sentences": 19
+      },
+      {
+        "file": "39－What Every Writer Wants.lrc",
+        "sha256": "cef4b06ebc5156cf4e31383745840d8951b0a551c330547ccaa9b4359e1de553",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 39",
+          "What every writer wants",
+          "How do professional writers ignore what they were taught at school about writing?"
+        ],
+        "sentences": 15
+      },
+      {
+        "file": "40－Waves.lrc",
+        "sha256": "69cd2f528d1ee54a586c8eeb950f1dc5c2de30fb3e5e9de93322bb1efbe40166",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 40",
+          "Waves",
+          "What false impression does an ocean wave convey to the observer?"
+        ],
+        "sentences": 12
+      },
+      {
+        "file": "41－Training Elephants.lrc",
+        "sha256": "89cb4216e2e21969359c016e4be790b9af49ab21d04d26111561bb06271c5b9d",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 41",
+          "Training elephants",
+          "At what point does the training of a captive wild elephant begin?"
+        ],
+        "sentences": 21
+      },
+      {
+        "file": "42－Recording an Earthquake.lrc",
+        "sha256": "df89c1894cb0e6c8ff2a326d498559df17fe18d09df4d9ff8b2609dfcc40609c",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 42",
+          "Recording an earthquake",
+          "What does a pen have to do to record on paper the vibrations generated by an earthquake?"
+        ],
+        "sentences": 37
+      },
+      {
+        "file": "43－Are There Strangers in Space.lrc",
+        "sha256": "dfc528431cb99b82fda76280be0a1f478cfc8fa8efaf871cce699bbe308c98a2",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 43",
+          "Are there strangers in space?",
+          "What does the 'uniquely rational way' for us to communicate with other intelligent beings in space depend on?"
+        ],
+        "sentences": 18
+      },
+      {
+        "file": "44－Patterns of Culture.lrc",
+        "sha256": "fc86dc4685e83975f9e2447416193305e4c660b3499198627aeada431f4b9871",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 44",
+          "Patterns of culture",
+          "What influences us from the moment of birth?"
+        ],
+        "sentences": 25
+      },
+      {
+        "file": "45－Of Men and Galaxies.lrc",
+        "sha256": "9b00b13bba46cc9b43d38b1b09df3a84919fa3c1f5cb5d1f5a8870ff3d941369",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 45",
+          "Of men and galaxies",
+          "What is the most influential factor in any human society?"
+        ],
+        "sentences": 27
+      },
+      {
+        "file": "46－Hobbies.lrc",
+        "sha256": "8d4deefb9e93b1399e9f341d2dc89cf1e3e40993d8a069f407a57870c2ea9558",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 46",
+          "Hobbies",
+          "Who, according to the author, are 'Fortune's favoured children'?"
+        ],
+        "sentences": 30
+      },
+      {
+        "file": "47－The Great Escape.lrc",
+        "sha256": "5392e8c12541f7de165f6c6a021ee066fd3baf230cf23093f306d13b91beaf95",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 47",
+          "The great escape",
+          "What is one of the features of modern camping where nationality is concerned?"
+        ],
+        "sentences": 31
+      },
+      {
+        "file": "48－Planning a Share Portfolio.lrc",
+        "sha256": "75808873836b1171e12994dc5ac2de66798141fd55610b02f786723561ed2f31",
+        "encoding": "utf-8-sig",
+        "excludedIntro": [
+          "新概念英语学习软件：http://www.tysoft.net/",
+          "Lesson 48",
+          "Planning a share portfolio",
+          "How does the older investor differ in his approach to investment from the younger investor?"
+        ],
+        "sentences": 19
+      }
+    ]
+  }
+]

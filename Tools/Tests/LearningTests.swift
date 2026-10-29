@@ -25,6 +25,53 @@ struct LearningTests {
         check(Set(courses.map(\.id)).count == 55, "Course IDs must be stable and unique")
         check(courses.allSatisfy { !$0.words.isEmpty && $0.words.allSatisfy { !LLPracticeSession.tokens(in: $0.en).isEmpty } }, "Every exercise must be typeable")
 
+        let resourceDirectory = URL(fileURLWithPath: CommandLine.arguments[1]).deletingLastPathComponent()
+        let repository = LLCourseRepository(resourceDirectory: resourceDirectory)
+        let collections = try repository.collections()
+        check(collections.map(\.courses.count) == [55, 72, 96, 60, 48], "All five collections decode with the expected lesson counts")
+        let allCourses = try repository.courses()
+        check(allCourses.count == 331, "All lessons are available to source restoration")
+        for collection in collections {
+            let afterLast = try repository.course(after: collection.courses.last!.id)
+            let afterFirst = try repository.course(after: collection.courses[0].id)
+            check(afterLast == nil, "Next lesson never crosses a collection boundary")
+            check(afterFirst?.id == collection.courses[1].id, "Next lesson follows the selected collection order")
+        }
+        let imported = LLPracticeSession(source: LLCoursePracticeSource(course: collections[2].courses[0], repository: repository), showHint: true)
+        type("Last week I went to the theatre", into: imported)
+        check(imported.isItemComplete && imported.errorCount == 0 && imported.isMeaningRevealed, "New Concept punctuation is automatic and completing a sentence reveals its translation")
+        imported.backspace()
+        check(!imported.isMeaningRevealed && imported.typedCount == 6, "Backspace removes the last typed letter past automatic punctuation")
+        imported.input("e")
+        check(imported.confirm() && imported.item?.text == "I had a very good seat.", "One confirmation saves and advances a New Concept exercise")
+        let punctuationCourse = LLSentenceCourse(id: "punctuation", category: "", title: "", words: [.init(en: "'Don't re-enter,' he said.", zh: "别再进来，他说。", ipa: nil)], collectionID: "new-concept-book-2")
+        let punctuation = LLPracticeSession(source: LLCoursePracticeSource(course: punctuationCourse), showHint: true)
+        punctuation.backspace()
+        check(punctuation.typedCount == 1, "Backspace before any letter cannot expose a required opening quote")
+        type("Don't re-enter he said", into: punctuation)
+        check(punctuation.isItemComplete && punctuation.errorCount == 0, "Internal apostrophes and hyphens remain typeable while surrounding punctuation is automatic")
+        var importedItemsVerified = 0
+        for collection in collections.dropFirst() {
+            for course in collection.courses {
+                for (index, item) in course.words.enumerated() {
+                    let isolated = LLSentenceCourse(id: "typing-check-\(course.id)-\(index)", category: course.category, title: course.title, words: [item], collectionID: collection.id)
+                    let exercise = LLPracticeSession(source: LLCoursePracticeSource(course: isolated), showHint: true)
+                    for (wordIndex, token) in exercise.tokens.enumerated() {
+                        let characters = Array(token)
+                        for i in characters.indices {
+                            let char = characters[i]
+                            let internalMark = (char == "'" || char == "-") && i > 0 && i + 1 < characters.count && characters[i - 1].isLetter && characters[i + 1].isLetter
+                            if char.isLetter || char.isNumber || internalMark { exercise.input(char) }
+                        }
+                        if wordIndex + 1 < exercise.tokens.count { exercise.confirm() }
+                    }
+                    check(exercise.isItemComplete && exercise.errorCount == 0, "Every imported sentence can be completed without surrounding punctuation: \(isolated.id)")
+                    importedItemsVerified += 1
+                }
+            }
+        }
+        check(importedItemsVerified == 4319, "All four books' 4319 sentences were verified through the input engine")
+
         let course = LLSentenceCourse(id: "test-transitions", category: "test", title: "测试", words: [
             .init(en: "I", zh: "我", ipa: nil),
             .init(en: "don't like", zh: "不喜欢", ipa: nil),
@@ -123,6 +170,6 @@ struct LearningTests {
         let empty = LLPracticeSession(source: LLCoursePracticeSource(course: .init(id: "empty", category: "", title: "", words: [])), showHint: false)
         empty.input("x"); empty.confirm(); empty.skip()
         check(empty.isFinished, "Empty source is safe")
-        print("Passed \(assertions) assertions; decoded 55 courses / 8865 exercises.")
+        print("Passed \(assertions) assertions; decoded 331 lessons, including all 4319 New Concept sentences and 8865 Xingrong exercises.")
     }
 }

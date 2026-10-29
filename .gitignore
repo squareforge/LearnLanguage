@@ -54,6 +54,8 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 # 工具/缓存
+__pycache__/
+*.pyc
 iOSInjectionProject/
 .DS_Store
 .AppleDouble

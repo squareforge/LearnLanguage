@@ -325,6 +325,11 @@
 		BEE72F588AE04C7C0DCF757E /* LLSQLiteConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8707596E8FE9AE076FCAE /* LLSQLiteConnection.swift */; };
 		E66E3C772163179C0C40A8DF /* LLContentMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B883D17B38D8CFCBC6AE725F /* LLContentMigrator.swift */; };
 		6AC05A841EFBF081B774C8DB /* dictionary-manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 49A6264DAF143108D4713363 /* dictionary-manifest.json */; };
+		30B09E49E58776BDE5D7B2A1 /* new_concept_book_1.json in Resources */ = {isa = PBXBuildFile; fileRef = C524569A5F61D4A59F2C495C /* new_concept_book_1.json */; };
+		58A8729BBB1F31E1DE5DE226 /* new_concept_book_2.json in Resources */ = {isa = PBXBuildFile; fileRef = C0710849A2A7F506689E9EFB /* new_concept_book_2.json */; };
+		52F6FAC743322EAE4D921C3D /* new_concept_book_3.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E7E32221091B431C61AD864 /* new_concept_book_3.json */; };
+		442BA660445C77A2E18FF4FC /* new_concept_book_4.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A083805D43B471620AA80F8 /* new_concept_book_4.json */; };
+		DEDB7D4911C8D95552C9E245 /* NewConcept-SOURCE.md in Resources */ = {isa = PBXBuildFile; fileRef = F98B523EBDFB48E90C3DBCFC /* NewConcept-SOURCE.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -650,6 +655,11 @@
 		C4F8707596E8FE9AE076FCAE /* LLSQLiteConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/Database/LLSQLiteConnection.swift; sourceTree = SOURCE_ROOT; };
 		B883D17B38D8CFCBC6AE725F /* LLContentMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnLanguage/Base/Storage/Database/LLContentMigrator.swift; sourceTree = SOURCE_ROOT; };
 		49A6264DAF143108D4713363 /* dictionary-manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LearnLanguage/Resources/InitialDicts/dictionary-manifest.json; sourceTree = SOURCE_ROOT; };
+		C524569A5F61D4A59F2C495C /* new_concept_book_1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new_concept_book_1.json"; sourceTree = "<group>"; };
+		C0710849A2A7F506689E9EFB /* new_concept_book_2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new_concept_book_2.json"; sourceTree = "<group>"; };
+		7E7E32221091B431C61AD864 /* new_concept_book_3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new_concept_book_3.json"; sourceTree = "<group>"; };
+		4A083805D43B471620AA80F8 /* new_concept_book_4.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new_concept_book_4.json"; sourceTree = "<group>"; };
+		F98B523EBDFB48E90C3DBCFC /* NewConcept-SOURCE.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "NewConcept-SOURCE.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1603,6 +1613,11 @@
 				00AB9632534B859C40BB94FE /* Earthworm-LICENSE.txt */,
 				689ADC6CCBD4A85F25103272 /* Xingrong-SOURCE.md */,
 				3D2B08D7A14CA7015D7633D4 /* xingrong_courses.json */,
+				F98B523EBDFB48E90C3DBCFC /* NewConcept-SOURCE.md */,
+				4A083805D43B471620AA80F8 /* new_concept_book_4.json */,
+				7E7E32221091B431C61AD864 /* new_concept_book_3.json */,
+				C0710849A2A7F506689E9EFB /* new_concept_book_2.json */,
+				C524569A5F61D4A59F2C495C /* new_concept_book_1.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1698,6 +1713,11 @@
 				FE0C26C32C7FC92B47B184D8 /* Earthworm-LICENSE.txt in Resources */,
 				FC7FAB29E62597DC9E509ADB /* Xingrong-SOURCE.md in Resources */,
 				4E380678A73CD9AD715EEDDC /* xingrong_courses.json in Resources */,
+				DEDB7D4911C8D95552C9E245 /* NewConcept-SOURCE.md in Resources */,
+				442BA660445C77A2E18FF4FC /* new_concept_book_4.json in Resources */,
+				52F6FAC743322EAE4D921C3D /* new_concept_book_3.json in Resources */,
+				58A8729BBB1F31E1DE5DE226 /* new_concept_book_2.json in Resources */,
+				30B09E49E58776BDE5D7B2A1 /* new_concept_book_1.json in Resources */,
 				849227082F3C878F00447E0C /* Assets.xcassets in Resources */,
 				8492270C2F8F000100447E0C /* PrivacyInfo.xcprivacy in Resources */,
 				840D1E6E2F67B6A6002C330E /* Localizable.strings in Resources */,

@@ -43,10 +43,19 @@ struct LLSentenceCourse: Decodable, Identifiable {
     let category: String
     let title: String
     let words: [Item]
+    var collectionID: String? = nil
+    var collectionTitle: String? = nil
+    var sourceTitle: String { collectionTitle ?? "星荣句式" }
 
     var preview: String {
         words.first(where: { $0.en.split(separator: " ").count >= 4 })?.en ?? words.first?.en ?? ""
     }
+}
+
+struct LLCourseCollection: Decodable, Identifiable {
+    let id: String
+    let title: String
+    let courses: [LLSentenceCourse]
 }
 
 struct LLCourseProgress: Codable {

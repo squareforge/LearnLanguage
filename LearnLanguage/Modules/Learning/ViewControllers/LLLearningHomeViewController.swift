@@ -50,7 +50,8 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
     private let subtitleLabel = NSTextField(labelWithString: "选择词库或课程，在悬浮面板中练习。")
     private let resumeLabel = NSTextField(labelWithString: "")
     private let resumeButton = NSButton(title: "继续学习", target: nil, action: nil)
-    private let tabs = NSSegmentedControl(labels: ["词库练习", "星荣句式"], trackingMode: .selectOne, target: nil, action: nil)
+    private let tabs = NSSegmentedControl(labels: ["词库练习", "课程练习"], trackingMode: .selectOne, target: nil, action: nil)
+    private let collectionSelector = NSPopUpButton()
     private let search = NSSearchField()
     private let summary = NSTextField(labelWithString: "")
     private let tableView = NSTableView()
@@ -58,6 +59,9 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
     private let emptyLabel = NSTextField(wrappingLabelWithString: "")
     private var lists: [WordList] = []
     private var courses: [LLSentenceCourse] = []
+    private var collections: [LLCourseCollection] = []
+    private var selectedCollectionID = "xingrong"
+    private var selectedCollection: LLCourseCollection? { collections.first { $0.id == selectedCollectionID } }
     private var visibleListIndices: [Int] = []
     private var visibleCourseIndices: [Int] = []
     private var courseError: String?
@@ -69,6 +73,9 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
         setupUI()
         let last = LLMMKVManager.shared.string(forKey: "learning.last_source")
         tabs.selectedSegment = last.hasPrefix("course:") ? 1 : 0
+        if let collection = try? LLCourseRepository.shared.collections().first(where: { collection in
+            collection.courses.contains { "course:\($0.id)" == last }
+        }) { selectedCollectionID = collection.id }
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSources), name: .learningPracticeProgressChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSources), name: .learnLanguageReloadWordLists, object: nil)
         reloadSources()
@@ -100,6 +107,9 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
         resumeButton.snp.makeConstraints { $0.trailing.equalToSuperview().offset(-12); $0.centerY.equalToSuperview() }
         tabs.target = self
         tabs.action = #selector(changeTab)
+        collectionSelector.target = self
+        collectionSelector.action = #selector(changeCollection)
+        collectionSelector.setAccessibilityLabel("课程系列与册数")
         search.placeholderString = "搜索词库或课号"
         search.delegate = self
         summary.font = .systemFont(ofSize: 11)
@@ -129,13 +139,14 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
         footer.target = self
         footer.action = #selector(openCredits)
 
-        for element in [titleLabel, subtitleLabel, resumeCard, tabs, search, summary, scroll, emptyLabel, footer] { view.addSubview(element) }
+        for element in [titleLabel, subtitleLabel, resumeCard, tabs, search, collectionSelector, summary, scroll, emptyLabel, footer] { view.addSubview(element) }
         titleLabel.snp.makeConstraints { $0.top.equalToSuperview().offset(28); $0.leading.equalToSuperview().offset(28) }
         subtitleLabel.snp.makeConstraints { $0.top.equalTo(titleLabel.snp.bottom).offset(6); $0.leading.equalTo(titleLabel) }
         resumeCard.snp.makeConstraints { $0.leading.trailing.equalToSuperview().inset(28); $0.top.equalTo(subtitleLabel.snp.bottom).offset(20); $0.height.equalTo(54) }
         tabs.snp.makeConstraints { $0.leading.equalTo(titleLabel); $0.top.equalTo(resumeCard.snp.bottom).offset(22); $0.width.equalTo(220) }
         search.snp.makeConstraints { $0.trailing.equalToSuperview().offset(-28); $0.centerY.equalTo(tabs); $0.leading.greaterThanOrEqualTo(tabs.snp.trailing).offset(16); $0.width.equalTo(180).priority(.high) }
-        summary.snp.makeConstraints { $0.leading.equalTo(titleLabel); $0.top.equalTo(tabs.snp.bottom).offset(12) }
+        collectionSelector.snp.makeConstraints { $0.leading.equalTo(titleLabel); $0.top.equalTo(tabs.snp.bottom).offset(12); $0.width.equalTo(250) }
+        summary.snp.makeConstraints { $0.leading.equalTo(titleLabel); $0.top.equalTo(collectionSelector.snp.bottom).offset(8) }
         scroll.snp.makeConstraints { $0.leading.trailing.equalToSuperview().inset(28); $0.top.equalTo(summary.snp.bottom).offset(12); $0.bottom.equalTo(footer.snp.top).offset(-8) }
         emptyLabel.snp.makeConstraints { $0.center.equalTo(scroll); $0.width.equalTo(scroll).offset(-32) }
         footer.snp.makeConstraints { $0.leading.equalTo(titleLabel); $0.bottom.equalToSuperview().offset(-14) }
@@ -143,12 +154,19 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
 
     @objc private func reloadSources() {
         lists = LLWordListStorage.shared.allLists().filter { $0.entryCount > 0 }
-        do { courses = try LLCourseRepository.shared.courses(); courseError = nil }
+        do {
+            collections = try LLCourseRepository.shared.collections()
+            courses = collections.flatMap(\.courses)
+            collectionSelector.removeAllItems()
+            collectionSelector.addItems(withTitles: collections.map(\.title))
+            collectionSelector.selectItem(at: collections.firstIndex { $0.id == selectedCollectionID } ?? 0)
+            courseError = nil
+        }
         catch { courseError = error.localizedDescription }
         let last = LLPracticePanelController.shared.session?.source.id ?? LLMMKVManager.shared.string(forKey: "learning.last_source")
         if let course = courses.first(where: { "course:\($0.id)" == last }) {
             let progress = LLCourseRepository.shared.progress(for: course.id)
-            resumeLabel.stringValue = "星荣句式 · \(course.title) · 已完成 \(progress.completedCount(total: course.words.count))/\(course.words.count)"
+            resumeLabel.stringValue = "\(course.sourceTitle) · \(course.title) · 已完成 \(progress.completedCount(total: course.words.count))/\(course.words.count)"
         } else if let list = (lists.first(where: { "wordlist:\($0.id)" == last }) ?? lists.first(where: { $0.id == LLSettingsStore.shared.currentListId })) {
             resumeLabel.stringValue = "词库练习 · \(list.name)"
         } else { resumeLabel.stringValue = "从一个词库或第一课开始" }
@@ -157,19 +175,27 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
     }
 
     @objc private func changeTab() { search.stringValue = ""; applyFilter(); if tableView.numberOfRows > 0 { tableView.scrollRowToVisible(0) } }
+    @objc private func changeCollection() {
+        guard collections.indices.contains(collectionSelector.indexOfSelectedItem) else { return }
+        selectedCollectionID = collections[collectionSelector.indexOfSelectedItem].id
+        changeTab()
+    }
     func controlTextDidChange(_ obj: Notification) { applyFilter() }
 
     private func applyFilter() {
         let query = search.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         visibleListIndices = lists.indices.filter { query.isEmpty || lists[$0].name.localizedCaseInsensitiveContains(query) || lists[$0].category.contains(query) }
-        visibleCourseIndices = courses.indices.filter { query.isEmpty || courses[$0].title.contains(query) || String($0 + 1) == query }
+        visibleCourseIndices = courses.indices.filter { courses[$0].collectionID == selectedCollectionID && (query.isEmpty || courses[$0].title.localizedCaseInsensitiveContains(query)) }
         if showingCourses {
-            summary.stringValue = "\(courses.count) 课 · \(courses.reduce(0) { $0 + $1.words.count }) 个递进练习项 · 顺序练习，自动续接"
+            let selected = selectedCollection?.courses ?? []
+            summary.stringValue = "\(selected.count) 课 · \(selected.reduce(0) { $0 + $1.words.count }) 个练习项 · 顺序练习，自动续接"
         } else { summary.stringValue = "\(lists.count) 个词库 · 按每日新词与复习计划练习" }
+        collectionSelector.isHidden = !showingCourses
+        footer.title = selectedCollectionID == "xingrong" ? "课程来源：Earthworm / 星荣课程" : "课程来源：本地 LRC · 译文与英式音标为生成参考"
         footer.isHidden = !showingCourses
         let isEmpty = showingCourses ? visibleCourseIndices.isEmpty : visibleListIndices.isEmpty
         emptyLabel.isHidden = !isEmpty
-        emptyLabel.stringValue = showingCourses && courseError != nil ? courseError! : query.isEmpty ? "暂无学习内容，请先到词库管理添加词库。" : "没有找到匹配内容，请换个关键词。"
+        emptyLabel.stringValue = showingCourses && courseError != nil ? courseError! : query.isEmpty ? (showingCourses ? "暂无可用课程。" : "暂无学习内容，请先到词库管理添加词库。") : "没有找到匹配内容，请换个关键词。"
         tableView.reloadData()
     }
 
@@ -216,12 +242,19 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
         let last = LLMMKVManager.shared.string(forKey: "learning.last_source")
         if let course = courses.first(where: { "course:\($0.id)" == last }) { startCourse(course) }
         else if let list = (lists.first(where: { "wordlist:\($0.id)" == last }) ?? lists.first(where: { $0.id == LLSettingsStore.shared.currentListId })) { startList(list) }
-        else if showingCourses, let course = courses.first { startCourse(course) }
+        else if showingCourses, let course = selectedCollection?.courses.first { startCourse(course) }
         else if let list = lists.first { startList(list) }
         else if let course = courses.first { startCourse(course) }
     }
     @objc private func openCredits() {
         let alert = NSAlert()
+        if selectedCollectionID != "xingrong" {
+            alert.messageText = "新概念课程来源"
+            alert.informativeText = "课文由用户提供的四册 LRC 整理，保留原课号，去除开场提示并合并跨行句子。\n\n中文为机器翻译，逐词英式 IPA 为 eSpeak NG 生成参考，均非教材官方标注。播放使用 Apple 系统语音。"
+            alert.addButton(withTitle: "知道了")
+            alert.runModal()
+            return
+        }
         alert.messageText = "星荣课程来源"
         alert.informativeText = "课程文字、释义、音标与顺序来自 cuixueshe / Earthworm。\n\n上游采用 GNU AGPL v3.0，课程保留原始顺序。"
         alert.addButton(withTitle: "查看上游")

@@ -181,7 +181,7 @@ struct PracticeUITests {
         check(controller.session?.isWordComplete == true, "Opening a restored course connects its session to the keyboard input controller")
 
         // Finish the penultimate bundled lesson, then continue into a saved final lesson.
-        let courses = try LLCourseRepository.shared.courses()
+        let courses = try LLCourseRepository.shared.collections()[0].courses
         let penultimate = courses[courses.count - 2]
         let last = courses.last!
         for course in [penultimate, last] {
@@ -209,6 +209,73 @@ struct PracticeUITests {
         check(LLMMKVManager.shared.string(forKey: "learning.last_source") == "course:\(last.id)", "Next lesson becomes the remembered learning source")
         finishVisibleItem()
         check(controller.session?.isFinished == true && restoredNextCourseButton.isHidden, "Finishing the final lesson does not offer a next lesson")
+
+        // The course selector separates all four imported books from Xingrong.
+        let importedHome = LLLearningHomeViewController()
+        main.contentViewController = importedHome
+        app.setActivationPolicy(.regular)
+        main.makeKeyAndOrderFront(nil)
+        pump()
+        let collectionSelector = descendants(importedHome.view).compactMap { $0 as? NSPopUpButton }.first!
+        check(collectionSelector.numberOfItems == 5, "The home page offers Xingrong and all four New Concept books")
+        let importedTable = descendants(importedHome.view).compactMap { $0 as? NSTableView }.first!
+        for (book, count) in [72, 96, 60, 48].enumerated() {
+            collectionSelector.selectItem(at: book + 1)
+            NSApp.sendAction(collectionSelector.action!, to: collectionSelector.target, from: collectionSelector)
+            check(importedTable.numberOfRows == count, "Each New Concept book displays only its own lessons")
+        }
+        collectionSelector.selectItem(at: 2)
+        NSApp.sendAction(collectionSelector.action!, to: collectionSelector.target, from: collectionSelector)
+        let importedCell = importedTable.view(atColumn: 0, row: 0, makeIfNecessary: true)!
+        descendants(importedCell).compactMap { $0 as? NSButton }.first!.performClick(nil)
+        pump()
+        check(controller.session?.source.title.hasPrefix("新概念英语第二册") == true, "A New Concept row opens its own collection instead of being labelled Xingrong")
+        check(LLPronunciationManager.shared.spoken.last == "Last week I went to the theatre.", "New Concept playback uses the existing Apple speech entry point with the original sentence")
+        let importedSurface = restoredPanel.initialFirstResponder!
+        let ipa = descendants(importedSurface).compactMap { $0 as? NSTextField }.first { $0.stringValue.contains("/θ") }!
+        check(!ipa.isHidden, "Multiword New Concept exercises display their British IPA")
+        let soundsBeforeImportedTyping = LLTypingSoundManager.shared.completionCount
+        for (index, token) in "Last week I went to the theatre".split(separator: " ").enumerated() {
+            if index > 0 { send(" ", keyCode: 49, to: restoredPanel) }
+            for character in token { send(String(character), to: restoredPanel) }
+        }
+        check(controller.session?.isItemComplete == true && controller.session?.isMeaningRevealed == true, "The original sentence completes without typing its full stop and immediately reveals Chinese")
+        check(LLTypingSoundManager.shared.completionCount == soundsBeforeImportedTyping + 1, "New Concept completion plays the existing success cue once")
+        send(" ", keyCode: 49, to: restoredPanel)
+        check(controller.session?.item?.text == "I had a very good seat.", "One Space saves the New Concept sentence and advances")
+        controller.hide()
+        let resumeHome = LLLearningHomeViewController()
+        main.contentViewController = resumeHome
+        _ = resumeHome.view
+        let restoredSelector = descendants(resumeHome.view).compactMap { $0 as? NSPopUpButton }.first!
+        check(restoredSelector.indexOfSelectedItem == 2, "Reopening learning home restores the selected New Concept book")
+
+        // Long fourth-book sentences must remain reachable in the compact floating panel.
+        let longest = try LLCourseRepository.shared.collections()[4].courses.flatMap(\.words).max { $0.en.count < $1.en.count }!
+        let longCourse = LLSentenceCourse(id: "ui-long-sentence", category: "", title: "长句显示", words: [longest],
+            collectionID: "new-concept-book-4", collectionTitle: "新概念英语第四册")
+        controller.start(source: LLCoursePracticeSource(course: longCourse))
+        pump()
+        let longSurface = restoredPanel.initialFirstResponder!
+        let longDisplay = descendants(longSurface).compactMap { $0 as? LLPracticeTextView }.first!
+        let textScroll = descendants(longDisplay).compactMap { $0 as? NSScrollView }.first!
+        let document = textScroll.documentView!
+        check(document.frame.height > textScroll.contentSize.height, "A long sentence has a scrollable document instead of clipped text")
+        let longTokens = controller.session!.tokens
+        for (index, token) in longTokens.enumerated() {
+            if index == longTokens.count - 1 {
+                check(document.visibleRect.minY > 0, "Typing follows the active word into the lower part of a long sentence")
+            }
+            for character in token { send(String(character), to: restoredPanel) }
+            if index < longTokens.count - 1 { send(" ", keyCode: 49, to: restoredPanel) }
+        }
+        check(controller.session!.isItemComplete && document.visibleRect.minY < 1, "Completion reveals Chinese and returns the long sentence to its beginning")
+        let wheel = CGEvent(scrollWheelEvent2Source: nil, units: .pixel, wheelCount: 1, wheel1: -80, wheel2: 0, wheel3: 0)!
+        longSurface.scrollWheel(with: NSEvent(cgEvent: wheel)!)
+        check(document.visibleRect.minY > 0, "The typing surface forwards wheel scrolling to the long sentence")
+        document.scrollToVisible(NSRect(x: 0, y: document.bounds.maxY - 1, width: 1, height: 1))
+        check(document.visibleRect.maxY >= document.bounds.maxY - 1, "The complete sentence ending remains accessible by scrolling")
+        check(restoredPanel.firstResponder === longSurface, "Scrolling a sentence preserves the keyboard input target")
         controller.hide()
         main.close()
         print("Passed \(assertions) native practice UI checks.")

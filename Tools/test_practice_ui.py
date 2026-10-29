@@ -24,7 +24,8 @@ with tempfile.TemporaryDirectory(prefix='learnlanguage-practice-ui-') as directo
         'CFBundlePackageType': 'APPL',
         'LSUIElement': True,
     }))
-    shutil.copyfile(root / 'LearnLanguage/Modules/Learning/Resources/xingrong_courses.json', bundle / 'Resources/xingrong_courses.json')
+    for resource in (root / 'LearnLanguage/Modules/Learning/Resources').glob('*.json'):
+        shutil.copyfile(resource, bundle / 'Resources' / resource.name)
     sources = [
         'LearnLanguage/Base/Models/LLAppSettings.swift',
         'LearnLanguage/Base/Models/LLWordFeedback.swift',

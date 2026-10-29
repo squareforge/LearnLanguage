@@ -3,6 +3,7 @@ import SnapKit
 
 private final class LLPracticeInputView: NSView {
     var onKeyDown: ((NSEvent) -> Void)?
+    var onScrollWheel: ((NSEvent) -> Void)?
     override var acceptsFirstResponder: Bool { true }
     override var needsPanelToBecomeKey: Bool { true }
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
@@ -11,13 +12,14 @@ private final class LLPracticeInputView: NSView {
         // Labels and stack views belong to the typing surface. Only actual controls take clicks.
         var candidate: NSView? = hit
         while let view = candidate, view !== self {
-            if view is NSButton { return hit }
+            if view is NSButton || view is NSScroller { return hit }
             candidate = view.superview
         }
         return self
     }
     override var mouseDownCanMoveWindow: Bool { true }
     override func keyDown(with event: NSEvent) { onKeyDown?(event) }
+    override func scrollWheel(with event: NSEvent) { onScrollWheel?(event) }
     override func mouseDown(with event: NSEvent) { window?.makeFirstResponder(self); super.mouseDown(with: event) }
 }
 
@@ -29,7 +31,7 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
     private let sourceLabel = NSTextField(labelWithString: "")
     private let positionLabel = NSTextField(labelWithString: "")
     private let meaningLabel = NSTextField(wrappingLabelWithString: "")
-    private let phoneticLabel = NSTextField(labelWithString: "")
+    private let phoneticLabel = NSTextField(wrappingLabelWithString: "")
     private let exampleLabel = NSTextField(wrappingLabelWithString: "")
     private let statusLabel = NSTextField(labelWithString: "")
     private let textView = LLPracticeTextView()
@@ -47,6 +49,7 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
     override func loadView() {
         let input = LLPracticeInputView(frame: NSRect(x: 0, y: 0, width: 480, height: 280))
         input.onKeyDown = { [weak self] in self?.handleKey($0) }
+        input.onScrollWheel = { [weak self] in self?.textView.scrollWheel(with: $0) }
         view = input
     }
 
@@ -77,10 +80,12 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         positionLabel.stringValue = session.source.positionText
         textView.isHidden = session.isFinished
         exampleLabel.isHidden = session.isFinished || session.item?.example == nil
-        phoneticLabel.stringValue = session.tokens.count == 1 ? session.item?.phonetic ?? "" : ""
-        phoneticLabel.isHidden = phoneticLabel.stringValue.isEmpty
+        phoneticLabel.stringValue = session.item?.phonetic ?? ""
+        phoneticLabel.toolTip = session.showHint || session.isItemComplete ? session.item?.phonetic : nil
+        phoneticLabel.isHidden = session.isFinished || phoneticLabel.stringValue.isEmpty || (!session.showHint && !session.isItemComplete)
         meaningLabel.stringValue = session.item?.meaning ?? "本轮练习完成"
         meaningLabel.isHidden = !session.isFinished && (session.reviewsMeaningBeforeAdvancing ? !session.isMeaningRevealed : !settings.typingPracticeShowMeaning)
+        meaningLabel.toolTip = meaningLabel.isHidden ? nil : session.item?.meaning
         meaningLabel.font = .systemFont(ofSize: session.isFinished ? 22 : 15, weight: .medium)
         exampleLabel.stringValue = session.item?.example ?? ""
         continueButton.isHidden = !session.isFinished
@@ -121,6 +126,9 @@ final class LLPracticeFloatingViewController: NSViewController, NSPopoverDelegat
         phoneticLabel.font = .systemFont(ofSize: 11)
         phoneticLabel.textColor = .tertiaryLabelColor
         phoneticLabel.alignment = .center
+        phoneticLabel.maximumNumberOfLines = 3
+        phoneticLabel.lineBreakMode = .byTruncatingTail
+        phoneticLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         exampleLabel.alignment = .center
         exampleLabel.font = .systemFont(ofSize: 12)
         exampleLabel.textColor = .secondaryLabelColor

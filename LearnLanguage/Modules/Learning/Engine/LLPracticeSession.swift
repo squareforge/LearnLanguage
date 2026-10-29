@@ -32,6 +32,22 @@ final class LLPracticeSession {
     var isWordComplete: Bool { !currentToken.isEmpty && typedCount >= currentToken.count }
     var isItemComplete: Bool { !tokens.isEmpty && wordIndex == tokens.count - 1 && isWordComplete }
     var isFinished: Bool { item == nil }
+    private var ignoresPunctuation: Bool {
+        (source as? LLCoursePracticeSource)?.course.collectionID?.hasPrefix("new-concept-book-") == true
+    }
+
+    private func requiresInput(_ characters: [Character], at index: Int) -> Bool {
+        let character = characters[index]
+        if character.isLetter || character.isNumber { return true }
+        return (character == "'" || character == "-") && index > 0 && index + 1 < characters.count
+            && characters[index - 1].isLetter && characters[index + 1].isLetter
+    }
+
+    private func skipPunctuation() {
+        guard ignoresPunctuation else { return }
+        let characters = Array(currentToken)
+        while typedCount < characters.count && !requiresInput(characters, at: typedCount) { typedCount += 1 }
+    }
 
     static func tokens(in text: String) -> [String] {
         text.replacingOccurrences(of: "’", with: "'")
@@ -45,14 +61,17 @@ final class LLPracticeSession {
         guard item != nil, !currentToken.isEmpty, !isWordComplete else { return .ignored }
         let normalized = character == "’" || character == "‘" ? Character("'") : character
         let target = Array(currentToken)[typedCount]
+        if ignoresPunctuation, !normalized.isLetter, !normalized.isNumber, normalized != target { return .ignored }
         if normalized.lowercased() == target.lowercased() {
             typedCount += 1
+            skipPunctuation()
             lastInputWasError = false
             return isItemComplete ? .itemCompleted : .correct
         }
         errorCount += 1
         lastInputWasError = true
         typedCount = 0
+        skipPunctuation()
         if autoShowAnswerAfterErrors > 0 && errorCount >= autoShowAnswerAfterErrors {
             showHint = true
             usedHint = true
@@ -63,6 +82,11 @@ final class LLPracticeSession {
     func backspace() {
         guard item != nil else { return }
         typedCount = max(0, typedCount - 1)
+        if ignoresPunctuation {
+            let characters = Array(currentToken)
+            while typedCount > 0 && !requiresInput(characters, at: typedCount) { typedCount -= 1 }
+            skipPunctuation()
+        }
         lastInputWasError = false
     }
 
@@ -75,6 +99,7 @@ final class LLPracticeSession {
         } else {
             wordIndex += 1
             typedCount = 0
+            skipPunctuation()
             lastInputWasError = false
         }
         return true
@@ -123,8 +148,10 @@ final class LLPracticeSession {
     private func loadCurrentItem() {
         item = source.currentItem
         tokens = Self.tokens(in: item?.text ?? "")
+        if ignoresPunctuation { tokens = tokens.filter { $0.contains { $0.isLetter || $0.isNumber } } }
         wordIndex = 0
         typedCount = 0
+        skipPunctuation()
         errorCount = 0
         showHint = defaultShowHint
         usedHint = false

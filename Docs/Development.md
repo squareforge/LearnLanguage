@@ -24,6 +24,7 @@
 
 ```bash
 python3 Tools/validate_resources.py
+python3 Tools/validate_new_concept_courses.py
 python3 Tools/test_learning.py
 python3 Tools/test_translation.py
 python3 Tools/test_storage.py
@@ -60,6 +61,27 @@ python3 Tools/import_xingrong_courses.py
 ```
 
 也可通过 `--source-dir /path/to/earthworm` 使用固定版本的干净上游仓库。
+
+新概念由 `new_concept_book_1.json` 至 `new_concept_book_4.json` 分册保存，每个文件包含 `id`、`title` 和 `courses`。第一册 72 篇、第二册 96 篇、第三册 60 篇、第四册 48 篇，共 4,319 个句子。星荣的旧课程 ID 与进度键保留；下一课只在各自系列或当前册内查找。
+
+从本地四册 LRC 重新生成（不读取 MP3）：
+
+```bash
+# 生成工具依赖，仅开发时使用；应用运行不需要 Python 或 eSpeak。
+HOMEBREW_NO_AUTO_UPDATE=1 brew install espeak-ng
+uv venv --python python3 /tmp/learnlanguage-course-tools
+uv pip install --python /tmp/learnlanguage-course-tools/bin/python phonemizer==3.4.0
+
+PHONEMIZER_ESPEAK_LIBRARY="$(brew --prefix espeak-ng)/lib/libespeak-ng.dylib" \
+  /tmp/learnlanguage-course-tools/bin/python Tools/import_new_concept_courses.py \
+  --source-dir /path/to/英音 --cache-dir /path/to/translation-cache
+```
+
+首次导入会向 Google Translate 发送课文文字以生成中文参考译文，不发送音频；缓存已有时无需再次请求。`Tools/new_concept_overrides.json` 保存抽查后的译文和常见音标修订，重新生成会保留这些修订。课程 JSON 已包含译文和 IPA，正常构建不需要这些生成工具或外网。`--parse-only --output-dir /tmp/course-preview` 可仅检查英文解析。
+
+`new_concept_import_audit.json` 记录每份 LRC 的编码、SHA-256、移除内容与练习数；验证脚本检查四册课号、来源、中文覆盖和音标分组。Swift 练习测试额外将全部新概念句子逐字送入输入引擎，检查无需输入外围标点就能完成。
+
+新概念的译文和音标属于生成参考，未逐句人工审校；详见[来源说明](../LearnLanguage/Modules/Learning/Resources/NewConcept-SOURCE.md)。重新分句或调整条目顺序会影响以序号保存的已有进度，应作为内容升级处理。
 
 课程进度以课号和条目序号区分，保存在 MMKV 的 `learning.course_progress.v1`，随应用备份导出；词库学习沿用每日队列和 WCDB 学习记录。
 
