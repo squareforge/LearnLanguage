@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
-"""Import the user's four LRC books, with cached Chinese translation and British IPA.
+"""Import the user's four LRC books, with aligned TXT translations and British IPA.
 
 Generation dependencies: phonemizer==3.4.0, espeak-ng==1.52.0.
 Only LRC files are read; originals and MP3s are never modified or copied.
 """
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
 from pathlib import Path
 import re
 import tempfile
-import time
-import urllib.parse
-import urllib.request
+
+from import_new_concept_translations import apply_reference_translations, TRANSLATION_SOURCE
 
 ROOT = Path(__file__).resolve().parents[1]
 RESOURCES = ROOT / 'LearnLanguage/Modules/Learning/Resources'
@@ -111,24 +109,6 @@ def parse_course(path, book):
     }
 
 
-def translate(text):
-    query = urllib.parse.urlencode({'client': 'gtx', 'sl': 'en', 'tl': 'zh-CN', 'dt': 't', 'q': text})
-    request = urllib.request.Request('https://translate.googleapis.com/translate_a/single?' + query,
-                                     headers={'User-Agent': 'LearnLanguage course importer'})
-    for attempt in range(5):
-        try:
-            with urllib.request.urlopen(request, timeout=40) as response:
-                data = json.load(response)
-            result = ''.join(part[0] or '' for part in data[0])
-            if not result.strip():
-                raise ValueError('Empty translation')
-            return result
-        except Exception:
-            if attempt == 4:
-                raise
-            time.sleep(2 ** attempt)
-
-
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     data = json.dumps(value, ensure_ascii=False, indent=2) + '\n'
@@ -136,39 +116,6 @@ def write_json(path, value):
         handle.write(data)
         temp = Path(handle.name)
     temp.replace(path)
-
-
-def translate_course(course, cache):
-    texts = [item['en'] for item in course['words']]
-    digest = hashlib.sha256(json.dumps(texts, ensure_ascii=False).encode()).hexdigest()
-    path = cache / (digest + '.json')
-    if path.exists():
-        translations = json.loads(path.read_text())
-    else:
-        # Newlines maintain sentence alignment while translating a lesson in context.
-        translations = []
-        batch = []
-        def flush():
-            if not batch:
-                return
-            translated = translate('\n'.join(batch)).splitlines()
-            translated = [line.strip() for line in translated if line.strip()]
-            if len(translated) != len(batch):
-                translated = [translate(line).strip() for line in batch]
-            translations.extend(translated)
-            batch.clear()
-        for text in texts:
-            if sum(len(t) for t in batch) + len(text) > 2500:
-                flush()
-            batch.append(text)
-        flush()
-        if len(translations) != len(texts) or any(not re.search('[\u3400-\u9fff]', s) for s in translations):
-            raise ValueError('Translation needs review: ' + course['id'])
-        write_json(path, translations)
-    if len(translations) != len(texts):
-        raise ValueError('Invalid cache: ' + course['id'])
-    for item, zh in zip(course['words'], translations):
-        item['zh'] = OVERRIDES['translations'].get(item['en'], zh)
 
 
 def generate_ipa(books):
@@ -206,7 +153,7 @@ def generate_ipa(books):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-dir', type=Path, required=True)
-    parser.add_argument('--cache-dir', type=Path, required=True, help='Stores generated sentence translations for repeatable offline rebuilds')
+    parser.add_argument('--cache-dir', type=Path, help=argparse.SUPPRESS)  # Accept the obsolete argument for older local commands.
     parser.add_argument('--output-dir', type=Path, default=RESOURCES)
     parser.add_argument('--parse-only', action='store_true')
     args = parser.parse_args()
@@ -230,7 +177,7 @@ def main():
         if numbers != expected:
             raise ValueError('Missing or duplicated lesson numbers in book ' + str(book))
         books.append({'id': 'new-concept-book-' + str(book), 'title': '新概念英语' + BOOK_NAMES[book],
-                      'schemaVersion': 1, 'translation': 'Google Translate en → zh-CN; generated reference translation',
+                      'schemaVersion': 1, 'translation': TRANSLATION_SOURCE,
                       'phonetics': 'eSpeak NG 1.52.0 en-gb-x-rp; generated word-separated IPA reference',
                       'courses': courses})
         report.append({'book': book, 'lessons': audits})
@@ -239,14 +186,9 @@ def main():
         write_json(args.output_dir / 'new_concept_parsed.json', books)
         write_json(args.output_dir / 'new_concept_import_audit.json', report)
         return
-    args.cache_dir.mkdir(parents=True, exist_ok=True)
-    all_courses = [course for book in books for course in book['courses']]
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(translate_course, course, args.cache_dir): course for course in all_courses}
-        for index, future in enumerate(as_completed(futures), 1):
-            future.result()
-            if index % 10 == 0 or index == len(all_courses):
-                print('Translated {}/{} lessons'.format(index, len(all_courses)), flush=True)
+    # Never regenerate the old machine translations over the supplied reference.
+    # Alignment checks the exact English sequence before applying any translation.
+    apply_reference_translations(books)
     generate_ipa(books)
     for index, book in enumerate(books, 1):
         write_json(args.output_dir / 'new_concept_book_{}.json'.format(index), book)

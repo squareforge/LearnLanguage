@@ -191,7 +191,7 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
             summary.stringValue = "\(selected.count) 课 · \(selected.reduce(0) { $0 + $1.words.count }) 个练习项 · 顺序练习，自动续接"
         } else { summary.stringValue = "\(lists.count) 个词库 · 按每日新词与复习计划练习" }
         collectionSelector.isHidden = !showingCourses
-        footer.title = selectedCollectionID == "xingrong" ? "课程来源：Earthworm / 星荣课程" : "课程来源：本地 LRC · 译文与英式音标为生成参考"
+        footer.title = selectedCollectionID == "xingrong" ? "课程来源：Earthworm / 星荣课程" : "课程来源：本地 LRC / TXT · 中文参考译文"
         footer.isHidden = !showingCourses
         let isEmpty = showingCourses ? visibleCourseIndices.isEmpty : visibleListIndices.isEmpty
         emptyLabel.isHidden = !isEmpty
@@ -250,7 +250,7 @@ final class LLLearningHomeViewController: NSViewController, NSTableViewDataSourc
         let alert = NSAlert()
         if selectedCollectionID != "xingrong" {
             alert.messageText = "新概念课程来源"
-            alert.informativeText = "课文由用户提供的四册 LRC 整理，保留原课号，去除开场提示并合并跨行句子。\n\n中文为机器翻译，逐词英式 IPA 为 eSpeak NG 生成参考，均非教材官方标注。播放使用 Apple 系统语音。"
+            alert.informativeText = "课文由用户提供的四册 LRC 整理，中文按配套 TXT 的参考译文逐句对应，调整合译、语序与明显文字错误；资料缺译处按英文补齐。\n\n逐词英式 IPA 为 eSpeak NG 生成参考。播放使用 Apple 系统语音。"
             alert.addButton(withTitle: "知道了")
             alert.runModal()
             return

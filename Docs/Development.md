@@ -74,14 +74,23 @@ uv pip install --python /tmp/learnlanguage-course-tools/bin/python phonemizer==3
 
 PHONEMIZER_ESPEAK_LIBRARY="$(brew --prefix espeak-ng)/lib/libespeak-ng.dylib" \
   /tmp/learnlanguage-course-tools/bin/python Tools/import_new_concept_courses.py \
-  --source-dir /path/to/英音 --cache-dir /path/to/translation-cache
+  --source-dir /path/to/英音
 ```
 
-首次导入会向 Google Translate 发送课文文字以生成中文参考译文，不发送音频；缓存已有时无需再次请求。`Tools/new_concept_overrides.json` 保存抽查后的译文和常见音标修订，重新生成会保留这些修订。课程 JSON 已包含译文和 IPA，正常构建不需要这些生成工具或外网。`--parse-only --output-dir /tmp/course-preview` 可仅检查英文解析。
+中文使用用户提供的 `1to4` 目录内 276 份 TXT 的“参考译文”，不再请求在线翻译。`Tools/new_concept_reference_translations.json` 保存原文子句、逐项对应关系、源文件与英文序列 SHA-256，以及缺译补齐、语序调整、明显错误修订的说明。`Tools/new_concept_overrides.json` 仅保存常见音标修订。课程 JSON 已包含译文和 IPA，正常构建不需要这些生成工具或外网。`--parse-only --output-dir /tmp/course-preview` 可仅检查英文解析。
+
+仅重新应用中文对应记录，或校验原 TXT 来源（不需要第三方 Python 包）：
+
+```bash
+python3 Tools/import_new_concept_translations.py
+python3 Tools/import_new_concept_translations.py --check --source-dir /path/to/1to4
+```
+
+对应工具先校验全部课程的英文序列，再修改中文。遇到英文分句变更或 TXT 哈希变化会报错，要求复核对应关系，防止重导入覆盖已修正的译文。更新对应关系后，重新运行中文导入和资源校验即可。
 
 `new_concept_import_audit.json` 记录每份 LRC 的编码、SHA-256、移除内容与练习数；验证脚本检查四册课号、来源、中文覆盖和音标分组。Swift 练习测试额外将全部新概念句子逐字送入输入引擎，检查无需输入外围标点就能完成。
 
-新概念的译文和音标属于生成参考，未逐句人工审校；详见[来源说明](../LearnLanguage/Modules/Learning/Resources/NewConcept-SOURCE.md)。重新分句或调整条目顺序会影响以序号保存的已有进度，应作为内容升级处理。
+中文以提供的参考译文为依据，已核对低匹配度和拆分合并等例外，仍可能包含资料中未发现的错误；IPA 仍属于生成参考。详见[来源说明](../LearnLanguage/Modules/Learning/Resources/NewConcept-SOURCE.md)。此次中文更新不改变英文、音标、课号、条目数量与顺序。重新分句或调整条目顺序会影响以序号保存的已有进度，应作为内容升级处理。
 
 课程进度以课号和条目序号区分，保存在 MMKV 的 `learning.course_progress.v1`，随应用备份导出；词库学习沿用每日队列和 WCDB 学习记录。
 

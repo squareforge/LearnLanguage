@@ -64,6 +64,6 @@ open LearnLanguage.xcworkspace
 
 星荣课程来自 [Earthworm](https://github.com/cuixueshe/earthworm)。仓库保留了[课程来源与固定版本](LearnLanguage/Modules/Learning/Resources/Xingrong-SOURCE.md)及上游 [GNU AGPL v3.0 许可原文](LearnLanguage/Modules/Learning/Resources/Earthworm-LICENSE.txt)。
 
-新概念课文由用户提供的 LRC 整理，一册一个 JSON；中文和英式音标为生成参考，非教材官方标注，详见[来源与生成说明](LearnLanguage/Modules/Learning/Resources/NewConcept-SOURCE.md)。
+新概念课文由用户提供的 LRC 整理，一册一个 JSON；中文对应配套 TXT 的参考译文，缺译处补齐，英式音标为生成参考。详见[来源与整理说明](LearnLanguage/Modules/Learning/Resources/NewConcept-SOURCE.md)。
 
 本项目尚未指定整体许可证；第三方代码与资源遵循各自的许可，课程来源说明中列有分发要求。
